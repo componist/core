@@ -10,7 +10,7 @@ composer require laravel/jetstream
 
 ```bash
 
-composer require reinholdjesse/core
+composer require componist/core
 ```
 
 ### Delete default Files
@@ -63,13 +63,13 @@ run seed with
 
 ```bash
 # Settings
- php artisan db:seed --class="Reinholdjesse\Core\Seeders\SettingsTableSeeder"
+ php artisan db:seed --class="Componist\Core\Seeders\SettingsTableSeeder"
 
 # Menu
- php artisan db:seed --class="Reinholdjesse\Core\Seeders\MenuTableSeeder"
+ php artisan db:seed --class="Componist\Core\Seeders\MenuTableSeeder"
 
 # Menu Item
-php artisan db:seed --class="Reinholdjesse\Core\Seeders\MenuItemTableSeeder"
+php artisan db:seed --class="Componist\Core\Seeders\MenuItemTableSeeder"
 
 ```
 

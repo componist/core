@@ -1,6 +1,6 @@
 <?php
 
-use Reinholdjesse\Core\Facades\Component;
+use Componist\Core\Facades\Component;
 
 if (! function_exists('setting')) {
     function setting($key)

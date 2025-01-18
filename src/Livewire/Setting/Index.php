@@ -1,11 +1,11 @@
 <?php
 
-namespace Reinholdjesse\Core\Livewire\Setting;
+namespace Componist\Core\Livewire\Setting;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use Reinholdjesse\Core\Models\Setting;
-use Reinholdjesse\Core\Traits\addLivewireControlleFunctions;
+use Componist\Core\Models\Setting;
+use Componist\Core\Traits\addLivewireControlleFunctions;
 
 class Index extends Component
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Reinholdjesse\Core\Controllers;
+namespace Componist\Core\Controllers;
 
 use App\Http\Controllers\Controller;
-use Reinholdjesse\Core\Models\MenuItem;
+use Componist\Core\Models\MenuItem;
 
 class PageController extends Controller
 {

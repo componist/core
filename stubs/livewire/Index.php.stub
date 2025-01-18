@@ -1,10 +1,10 @@
 <?php
 
-namespace Reinholdjesse\Notifications\Livewire\Notification\Message;
+namespace Componist\Notifications\Livewire\Notification\Message;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Reinholdjesse\Core\Traits\addLivewireControlleFunctions;
+use Componist\Core\Traits\addLivewireControlleFunctions;
 
 class Index extends Component
 {

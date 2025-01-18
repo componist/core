@@ -1,6 +1,6 @@
 <?php
 
-namespace Reinholdjesse\Core\Traits;
+namespace Componist\Core\Traits;
 
 trait addLivewireControlleFunctions
 {

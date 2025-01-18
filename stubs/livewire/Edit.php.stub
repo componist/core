@@ -1,9 +1,9 @@
 <?php
 
-namespace Reinholdjesse\Notifications\Livewire\Notification\Message;
+namespace Componist\Notifications\Livewire\Notification\Message;
 
 use Livewire\Component;
-use Reinholdjesse\Core\Traits\addLivewireControlleFunctions;
+use Componist\Core\Traits\addLivewireControlleFunctions;
 
 class Edit extends Component
 {

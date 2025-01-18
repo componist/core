@@ -1,6 +1,6 @@
 <?php
 
-namespace Reinholdjesse\Core\Livewire\Element;
+namespace Componist\Core\Livewire\Element;
 
 use Exception;
 use Illuminate\Support\Facades\Http;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Reinholdjesse\Core\View\Components\Element;
+namespace Componist\Core\View\Components\Element;
 
 use Closure;
 use Illuminate\View\Component;

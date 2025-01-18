@@ -1,6 +1,6 @@
 <?php
 
-namespace Reinholdjesse\Core\Livewire\Element;
+namespace Componist\Core\Livewire\Element;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;

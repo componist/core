@@ -6,8 +6,8 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './vendor/reinholdjesse/**/*.blade.php',
-        './packages/reinholdjesse/**/*.blade.php',
+        './vendor/componist/**/*.blade.php',
+        './packages/componist/**/*.blade.php',
     ],
 
     theme: {

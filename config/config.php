@@ -1,11 +1,11 @@
 <?php
 
-use Reinholdjesse\Core\View\Components\AppLayout;
-use Reinholdjesse\Core\View\Components\DashboardLayout;
-use Reinholdjesse\Core\View\Components\Element\Datepicker;
-use Reinholdjesse\Core\View\Components\Element\DropFile;
-use Reinholdjesse\Core\View\Components\Element\Modal;
-use Reinholdjesse\Core\View\Components\GuestLayout;
+use Componist\Core\View\Components\AppLayout;
+use Componist\Core\View\Components\DashboardLayout;
+use Componist\Core\View\Components\Element\Datepicker;
+use Componist\Core\View\Components\Element\DropFile;
+use Componist\Core\View\Components\Element\Modal;
+use Componist\Core\View\Components\GuestLayout;
 
 return [
 
@@ -40,15 +40,15 @@ return [
      */
 
     'livewire' => [
-        'markdown-x' => Reinholdjesse\Core\Livewire\Element\MarkdownX::class,
-        'select2' => Reinholdjesse\Core\Livewire\Element\Select2::class,
-        'element.hex-colors' => Reinholdjesse\Core\Livewire\Element\HexColors::class,
+        'markdown-x' => Componist\Core\Livewire\Element\MarkdownX::class,
+        'select2' => Componist\Core\Livewire\Element\Select2::class,
+        'element.hex-colors' => Componist\Core\Livewire\Element\HexColors::class,
 
-        'component::setting.index', Reinholdjesse\Core\Livewire\Setting\Index::class,
-        'component::menu.index', Reinholdjesse\Core\Livewire\Menu\Index::class,
-        'component::menu.edit', Reinholdjesse\Core\Livewire\Menu\Edit::class,
-        'component::menu-item.index', Reinholdjesse\Core\Livewire\MenuItem\Index::class,
-        'component::menu-item.edit', Reinholdjesse\Core\Livewire\MenuItem\Edit::class,
+        'component::setting.index', Componist\Core\Livewire\Setting\Index::class,
+        'component::menu.index', Componist\Core\Livewire\Menu\Index::class,
+        'component::menu.edit', Componist\Core\Livewire\Menu\Edit::class,
+        'component::menu-item.index', Componist\Core\Livewire\MenuItem\Index::class,
+        'component::menu-item.edit', Componist\Core\Livewire\MenuItem\Edit::class,
     ],
 
     /*

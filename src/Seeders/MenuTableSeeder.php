@@ -1,9 +1,9 @@
 <?php
 
-namespace Reinholdjesse\Core\Seeders;
+namespace Componist\Core\Seeders;
 
 use Illuminate\Database\Seeder;
-use Reinholdjesse\Core\Models\Menu;
+use Componist\Core\Models\Menu;
 
 class MenuTableSeeder extends Seeder
 {

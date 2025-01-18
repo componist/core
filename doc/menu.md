@@ -11,7 +11,7 @@
 
 
 ## Template Optionen
-Pfad zu der Datei **reinholdjesse/core/resources/views/template/menu/**
+Pfad zu der Datei **componist/core/resources/views/template/menu/**
 
 - account
 - admin

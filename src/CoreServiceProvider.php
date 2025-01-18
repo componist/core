@@ -1,6 +1,6 @@
 <?php
 
-namespace Reinholdjesse\Core;
+namespace Componist\Core;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Reinholdjesse\Core\Seeders;
+namespace Componist\Core\Seeders;
 
 use Illuminate\Database\Seeder;
-use Reinholdjesse\Core\Models\Setting;
+use Componist\Core\Models\Setting;
 
 class SettingsTableSeeder extends Seeder
 {

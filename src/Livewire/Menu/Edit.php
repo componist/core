@@ -1,6 +1,6 @@
 <?php
 
-namespace Reinholdjesse\Core\Livewire\Menu;
+namespace Componist\Core\Livewire\Menu;
 
 use Livewire\Component;
 

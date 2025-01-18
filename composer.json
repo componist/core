@@ -1,8 +1,8 @@
 {
-    "name": "reinholdjesse/core",
+    "name": "componist/core",
     "autoload": {
         "psr-4": {
-            "Reinholdjesse\\Core\\": "src/"
+            "Componist\\Core\\": "src/"
         }
     },
     "authors": [
@@ -14,12 +14,11 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Reinholdjesse\\Core\\CoreServiceProvider"
+                "Componist\\Core\\CoreServiceProvider"
             ]
         }
     },
-    "require": {
-    },
+    "require": {},
     "minimum-stability": "dev",
     "prefer-stable": true
 }

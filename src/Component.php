@@ -1,11 +1,11 @@
 <?php
 
-namespace Reinholdjesse\Core;
+namespace Componist\Core;
 
 use Illuminate\Support\Str;
-use Reinholdjesse\Core\Models\Menu;
-use Reinholdjesse\Core\Models\MenuItem;
-use Reinholdjesse\Core\Models\Setting;
+use Componist\Core\Models\Menu;
+use Componist\Core\Models\MenuItem;
+use Componist\Core\Models\Setting;
 
 class Component
 {
