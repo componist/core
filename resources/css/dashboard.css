@@ -1,0 +1,22 @@
+@import './componentes/animations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+body{
+    margin: 0 !important;
+}
+
+[x-cloak] { display: none !important; }
+
+
+.backend-background-image{
+    background-image: url('../../public/images/system/background/7230.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+}

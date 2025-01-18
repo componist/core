@@ -1,0 +1,43 @@
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseAnimation{
+    0%{
+        opacity:1
+    }
+    50%{
+        opacity:.5
+    }
+    to{
+        opacity:1
+    }
+}
+.bell-ring-animation{
+    animation: ringAnimation 1s infinite ease-in-out;
+}
+@keyframes ringAnimation{
+    0% {
+        transform: rotate(0) scale(1) skew(1deg)
+    }
+    10% {
+        transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    20% {
+        transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    30% {
+        transform: rotate(-25deg) scale(1) skew(1deg)
+    }
+    40% {
+        transform: rotate(25deg) scale(1) skew(1deg)
+    }
+    50% {
+        transform: rotate(0) scale(1) skew(1deg)
+    }
+    100% {
+        transform: rotate(0) scale(1) skew(1deg)
+    }
+}

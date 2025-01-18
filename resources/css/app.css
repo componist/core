@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+[x-cloak] { display: none !important; }
+
+
+.background-image-top-left{
+  background-image: url();
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+.background-image-top-right{
+  background-image: url();
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+
+.background-image-bottom-left{
+  background-image: url();
+  background-position: bottom left; 
+  background-repeat: no-repeat;
+}
+
+.background-image-bottom-right{
+  background-image: url();
+  background-position: bottom right; 
+  background-repeat: no-repeat;
+}
+
+.background-image-center-center{
+  background-image: url();
+  background-position: center center; 
+  background-repeat: no-repeat;
+}
