@@ -1,16 +1,22 @@
 {
     "name": "componist/core",
-    "autoload": {
-        "psr-4": {
-            "Componist\\Core\\": "src/"
-        }
-    },
+    "description": "....coming soon",
+    "keywords": [],
+    "homepage": "",
+    "license": "MIT",
     "authors": [
         {
             "name": "Reinhold Jesse",
             "email": "info@componist.dev"
         }
     ],
+    "require": {},
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Componist\\Core\\": "src/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
@@ -18,8 +24,6 @@
             ]
         }
     },
-    "require": {},
-    "license": "MIT",
     "minimum-stability": "stable",
     "prefer-stable": true
 }
