@@ -6,8 +6,8 @@
 {{ menu('admin', 'admin') }}
 ```
 
-- erste admin für den namen des menus in der datenbank
-- das zweite admin für das template wie es dargestellt werden soll
+- erstes 'admin' für den namen des menus in der datenbank
+- zweite 'admin' für das template wie es dargestellt werden soll
 
 
 ## Template Optionen

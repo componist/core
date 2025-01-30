@@ -7,8 +7,8 @@
     },
     "authors": [
         {
-            "name": "Reinhold-Jesse",
-            "email": "info@componist.de"
+            "name": "Reinhold Jesse",
+            "email": "info@componist.dev"
         }
     ],
     "extra": {
@@ -19,6 +19,7 @@
         }
     },
     "require": {},
-    "minimum-stability": "dev",
+    "license": "MIT",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
