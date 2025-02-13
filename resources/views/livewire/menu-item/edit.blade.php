@@ -47,17 +47,36 @@
                         <x:component::form.input wire:model.live="order" type="text" name="order" />
                         <x:component::form.input-error :for="$order" />
                     </div>
-                    <div class="py-3">
-                        <x:component::form.label value="Name" />
-                        <x:component::form.input wire:model.live="name" type="text" name="name" />
-                        <x:component::form.input-error :for="$name" />
-                    </div>
 
-                    <div class="py-3">
-                        <x:component::form.label value="Slug" />
-                        <x:component::form.input wire:model.live="slug" type="text" name="slug" />
-                        <x:component::form.input-error :for="$slug" />
-                    </div>
+                    @if ($type != 'parent')
+                        <div class="py-3">
+                            <x:component::form.label value="Name" />
+                            <x:component::form.input wire:model.live="name" type="text" name="name" />
+                            <x:component::form.input-error :for="$name" />
+                            @if ($type == 'url' && $name == null)
+                                <p class="mt-2 text-xs text-red-500">Bitte hier Url eingeben</p>
+                            @endif
+                        </div>
+                    @endif
+
+
+                    @if ($type == 'url')
+                        <div class="py-3">
+                            <x:component::form.label value="Slug" />
+                            <x:component::form.input wire:model.live="slug" type="text" name="slug" />
+                            <x:component::form.input-error :for="$slug" />
+                        </div>
+                    @endif
+
+
+                    @if ($type == 'page')
+                        <div class="py-3">
+                            <x:component::form.label value="Page View Path" />
+                            <x:component::form.input wire:model.live="view_path" type="text" name="view_path" />
+                            <x:component::form.input-error :for="$view_path" />
+                        </div>
+                    @endif
+
                 </div>
                 <div class="grid grid-cols-2 gap-4 px-4 text-right bg-gray-100 py-7 sm:px-6">
                     <x:component::button.cancel wire:click="cloasEditWindow" class="w-full" />

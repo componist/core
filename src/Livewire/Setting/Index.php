@@ -6,7 +6,9 @@ use Illuminate\View\View;
 use Livewire\Component;
 use Componist\Core\Models\Setting;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Livewire\Attributes\Title;
 
+#[Title('Settings')] 
 class Index extends Component
 {
     use addLivewireControlleFunctions;

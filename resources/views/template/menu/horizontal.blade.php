@@ -40,6 +40,12 @@
                                 class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
                         </li>
                     @endif
+                    @if (Route::has($item->view_path))
+                        <li>
+                            <a href="{{ route($item->view_path) }}" target="{{ $item->target }}"
+                                class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                        </li>
+                    @endif
                 @else
                     <li>
                         <a href="{{ url($item->name) }}" target="{{ $item->target }}"
@@ -51,6 +57,12 @@
                     @if (Route::has($item->name))
                         <li>
                             <a href="{{ route($item->name) }}" target="{{ $item->target }}"
+                                class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                        </li>
+                    @endif
+                    @if (Route::has($item->view_path))
+                        <li>
+                            <a href="{{ route($item->view_path) }}" target="{{ $item->target }}"
                                 class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
                         </li>
                     @endif

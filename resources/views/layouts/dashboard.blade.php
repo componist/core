@@ -24,7 +24,7 @@
     <meta name="msapplication-TileImage" content="{{ url('favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#18306a">
 
-    <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title ?? null }} @yield('title') - {{ config('app.name', 'Laravel') }}</title>
 
     @livewireStyles
 
@@ -70,7 +70,9 @@
                         @if (Auth::user())
                             <div class="flex items-center gap-5">
 
-                                {{-- @livewire('notification.component.message-counter') --}}
+                                <a href="{{ route('componist.core.notification') }}">
+                                    @livewire('notification.componist-core-notification-bell')
+                                </a>
 
                                 <div class="relative ml-3" x-data="{ open: false }" @click.away="open = false"
                                     @close.stop="open = false">
@@ -80,16 +82,15 @@
                                                 class="flex items-center gap-2 pr-3 text-sm transition border-2 border-transparent rounded-full focus:outline-none ">
                                                 <img class="object-cover w-8 h-8 rounded-full"
                                                     src="{{ asset(Auth::user()->profile_photo_url) }}"
-                                                    alt="{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}" />
+                                                    alt="{{ Auth::user()->name }}" />
                                                 <span
-                                                    class="text-gray-400 hover:text-dashboard-500 default-transition">{{ Auth::user()->firstname }}
-                                                    {{ Auth::user()->lastname }}</span>
+                                                    class="text-gray-400 hover:text-dashboard-500 default-transition">{{ Auth::user()->name }}</span>
                                             </button>
                                         @else
                                             <span class="inline-flex rounded-md">
                                                 <button type="button"
                                                     class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:text-dashboard-500 focus:outline-none">
-                                                    {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
+                                                    {{ Auth::user()->name }}
 
                                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                                         viewBox="0 0 20 20" fill="currentColor">

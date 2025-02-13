@@ -28,4 +28,12 @@ class MenuItem extends Model
     {
         return $this->hasOne(Page::class, 'id', 'page_id');
     }
+
+
+    public static function createPageConfigFile()
+    {
+        $configFile = file_get_contents(__DIR__.'../../../stubs/settings/pages.stub');
+
+        dump($configFile);
+    }
 }

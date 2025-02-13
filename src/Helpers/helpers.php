@@ -10,6 +10,13 @@ if (! function_exists('setting')) {
 }
 
 if (! function_exists('menu')) {
+    /**
+     * get menu by name with childrens
+     *
+     * @param  string  $menuName
+     * @param  string  $type
+     * @return Component
+     */
     function menu(string $menuName, ?string $type = null)
     {
         return Component::model('Menu')->display($menuName, $type);

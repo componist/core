@@ -27,7 +27,12 @@ class Menu extends Model
 
             // dd($items);
 
-            if (isset($type) && ! empty($type)) {
+            if(isset($type) && $type == 'array'){
+                return $items;
+            }
+
+            if (isset($type) && ! empty($type) && ($type == 'account' or $type == 'admin' or $type == 'horizontal' or $type == 'vertical')) {
+               
                 return new HtmlString(View::make('component::template.menu.'.$type, ['items' => $items])->render());
             }
 

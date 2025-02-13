@@ -21,15 +21,18 @@
 
             <div class="overflow-x-auto bg-white shadow md:rounded-lg">
                 <div class="flex gap-3 text-sm bg-gray-100">
-                    <div class="w-[50px] p-2"></div>
+                    <div class="w-[50px] p-4"></div>
                     <div class="w-[350px] p-4 font-semibold text-left text-gray-700">
                         <p class="">Title</p>
+                    </div>
+                    <div class="p-4 font-semibold text-center text-gray-700">
+                        <p>Status</p>
                     </div>
                     <div class="p-4 font-semibold text-center text-gray-700">
                         <p>Type</p>
                     </div>
                     <div class="p-4 font-semibold text-left text-gray-700">
-                        <p>Name</p>
+                        <p>Name / File Path</p>
                     </div>
                 </div>
 
@@ -37,7 +40,7 @@
                 <ul wire:sortable="reorder" wire:sortable-group="reorderChildes" class="divide-y divide-gray-200">
                     @foreach ($content as $value)
                         <li x-data="{ open: false }" class="text-gray-500 hover:bg-gray-50"
-                            wire:key="group-{{ $value->id }}" wire:sortable.item="{{ $value->id }}">
+                            wire:key="group-{{ $value['id'] }}" wire:sortable.item="{{ $value['id'] }}">
                             <div class="flex items-center justify-between ">
                                 <div class="flex items-center gap-3">
                                     <div class="w-[50px] flex items-center justify-center text-gray-300 cursor-pointer hover:text-dashboard-500 p-4"
@@ -47,7 +50,7 @@
                                     <div class="w-[350px] p-4">
                                         @if (count($value['children']) > 0)
                                             <button @click.prevent="open = ! open" class="flex gap-1">
-                                                <span>{{ $value->title }}</span>
+                                                <span>{{ $value['title'] }}</span>
 
                                                 <template x-if="open">
                                                     <x:component::icon.arrow-up class="text-dashboard-500" />
@@ -58,28 +61,60 @@
                                                 </template>
                                             </button>
                                         @else
-                                            {{ $value->title }}
+                                            {{ $value['title'] }}
                                         @endif
+                                    </div>
+                                    <div class="p-4 font-semibold text-center text-gray-700">
+                                        <x:component::form.toggle wire:change="toggle({{ $value['id'] }},'status')"
+                                            status="{{ $value['status'] }}" />
                                     </div>
 
                                     <div class="text-center">
-                                        {{ $value->type }}
+                                        @switch($value['type'])
+                                            @case('page')
+                                                <span
+                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-yellow-500 rounded-full">{{ $value['type'] }}</span>
+                                            @break
+
+                                            @case('parent')
+                                                <span
+                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-green-500 rounded-full">{{ $value['type'] }}</span>
+                                            @break
+
+                                            @case('route')
+                                                <span
+                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-blue-500 rounded-full">{{ $value['type'] }}</span>
+                                            @break
+
+                                            @case('url')
+                                                <span
+                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-orange-500 rounded-full">{{ $value['type'] }}</span>
+                                            @break
+
+                                            @default
+                                                <span
+                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-red-500 rounded-full">{{ $value['type'] }}</span>
+                                        @endswitch
+
                                     </div>
 
-                                    <div class="text-left">
-                                        @if ($value->type == 'route' or $value->type == 'page')
-                                            @if (Route::has($value->name))
-                                                <a href="{{ route($value->name) }}" target="_blank"
-                                                    class="hover:text-dashboard-500">{{ $value->name }}</a>
+                                    <div class="p-4 text-left">
+                                        @if ($value['type'] == 'route' or $value['type'] == 'page')
+                                            @if (Route::has($value['name']))
+                                                <a href="{{ route($value['name']) }}" target="_blank"
+                                                    class="hover:text-dashboard-500">{{ $value['name'] }}</a>
+                                            @elseif(Route::has($value['view_path']))
+                                                <a href="{{ route($value['view_path']) }}" target="_blank"
+                                                    class="hover:text-dashboard-500">{{ $value['view_path'] }}</a>
                                             @else
                                                 <span class="text-sm font-bold text-red-500">Route wurde nicht
                                                     gefunden</span>
                                             @endif
                                         @endif
 
-                                        @if ($value->type == 'url')
-                                            <a href="{{ url($value->name) }}" target="_blank"
-                                                class="hover:text-dashboard-500">{{ $value->name }}</a>
+                                        @if ($value['type'] == 'url')
+                                            <a href="{{ url($value['name']) }}" target="_blank"
+                                                class="hover:text-dashboard-500">{{ $value['name'] }}</a>
                                         @endif
                                     </div>
 
@@ -87,7 +122,7 @@
 
                                 <div class="flex justify-end gap-2 p-4">
 
-                                    <x:component::button.edit wire:click.prevent="edit({{ $value->id }})"
+                                    <x:component::button.edit wire:click.prevent="edit({{ $value['id'] }})"
                                         type="button" />
 
 
@@ -107,7 +142,7 @@
                                             </div>
                                             <div class="flex justify-center mt-7">
                                                 <h3 class="text-lg font-bold text-center text-gray-700">
-                                                    {{ $value->title }} <br />unwiderruflich löschen?</h3>
+                                                    {{ $value['title'] }} <br />unwiderruflich löschen?</h3>
                                             </div>
                                         </x-slot:content>
 
@@ -115,7 +150,7 @@
                                             <button @click.prevent="modal=false" type="button"
                                                 class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
-                                            <button wire:click='deleteEntry({{ $value->id }})'
+                                            <button wire:click='deleteEntry({{ $value['id'] }})'
                                                 @click.prevent="modal=false" type="button"
                                                 class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>
                                         </x-slot:controller>
@@ -126,7 +161,7 @@
                             @if (count($value['children']) > 0)
                                 <div x-cloak x-show="open" class="border-t border-gray-200">
                                     <ul class="border-l-8 divide-y border-dashboard-500 divide-primary-300"
-                                        wire:sortable-group.item-group="{{ $value->id }}">
+                                        wire:sortable-group.item-group="{{ $value['id'] }}">
 
                                         @foreach ($value->children->sortBy('order') as $children)
                                             <li class="text-gray-500 bg-dashboard-100 hover:bg-dashboard-500 hover:text-white"
@@ -142,14 +177,42 @@
                                                             {{ $children['title'] }}
                                                         </div>
                                                         <div class="p-4">
-                                                            {{ $children['type'] }}
+                                                            @switch($children['type'])
+                                                                @case('page')
+                                                                    <span
+                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-yellow-500 rounded-full">{{ $children['type'] }}</span>
+                                                                @break
+
+                                                                @case('parent')
+                                                                    <span
+                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-green-500 rounded-full">{{ $children['type'] }}</span>
+                                                                @break
+
+                                                                @case('route')
+                                                                    <span
+                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-blue-500 rounded-full">{{ $children['type'] }}</span>
+                                                                @break
+
+                                                                @case('url')
+                                                                    <span
+                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-orange-500 rounded-full">{{ $children['type'] }}</span>
+                                                                @break
+
+                                                                @default
+                                                                    <span
+                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-red-500 rounded-full">{{ $children['type'] }}</span>
+                                                            @endswitch
                                                         </div>
-                                                        <div class="">
+                                                        <div class="p-4">
                                                             @if ($children['type'] == 'route' or $children['type'] == 'page')
                                                                 @if (Route::has($children['name']))
                                                                     <a href="{{ route($children['name']) }}"
                                                                         target="_blank"
                                                                         class="hover:text-dashboard-900">{{ $children['name'] }}</a>
+                                                                @elseif(Route::has($value['view_path']))
+                                                                    <a href="{{ route($value['view_path']) }}"
+                                                                        target="_blank"
+                                                                        class="hover:text-dashboard-500">{{ $value['view_path'] }}</a>
                                                                 @else
                                                                     <span class="text-sm font-bold text-red-500">Route
                                                                         wurde
@@ -200,7 +263,8 @@
                                                                 <button @click.prevent="modal=false" type="button"
                                                                     class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
-                                                                <button wire:click='deleteEntry({{ $children['id'] }})'
+                                                                <button
+                                                                    wire:click='deleteEntry({{ $children['id'] }})'
                                                                     @click.prevent="modal=false" type="button"
                                                                     class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>
                                                             </x-slot:controller>

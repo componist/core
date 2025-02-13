@@ -1,12 +1,5 @@
 <?php
 
-use Componist\Core\View\Components\AppLayout;
-use Componist\Core\View\Components\DashboardLayout;
-use Componist\Core\View\Components\Element\Datepicker;
-use Componist\Core\View\Components\Element\DropFile;
-use Componist\Core\View\Components\Element\Modal;
-use Componist\Core\View\Components\GuestLayout;
-
 return [
 
     /*
@@ -21,13 +14,13 @@ return [
      */
 
     'components' => [
-        'component::layouts.app' => AppLayout::class,
-        config('core.template.dashboard') => DashboardLayout::class,
-        'component::layouts.guest' => GuestLayout::class,
+        'layouts.app' => Componist\Core\View\Components\AppLayout::class,
+        config('core.template.dashboard') => Componist\Core\View\Components\DashboardLayout::class,
+        'layouts.guest' => Componist\Core\View\Components\GuestLayout::class,
 
-        'component::element.modal' => Modal::class,
-        'component::element.datepicker' => Datepicker::class,
-        'component::element.drop-file' => DropFile::class,
+        'element.modal' => Componist\Core\View\Components\Element\Modal::class,
+        'element.datepicker' => Componist\Core\View\Components\Element\Datepicker::class,
+        'element.drop-file' => Componist\Core\View\Components\Element\DropFile::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -44,11 +37,17 @@ return [
         'select2' => Componist\Core\Livewire\Element\Select2::class,
         'element.hex-colors' => Componist\Core\Livewire\Element\HexColors::class,
 
-        'component::setting.index', Componist\Core\Livewire\Setting\Index::class,
-        'component::menu.index', Componist\Core\Livewire\Menu\Index::class,
-        'component::menu.edit', Componist\Core\Livewire\Menu\Edit::class,
-        'component::menu-item.index', Componist\Core\Livewire\MenuItem\Index::class,
-        'component::menu-item.edit', Componist\Core\Livewire\MenuItem\Edit::class,
+        'setting.index' => Componist\Core\Livewire\Setting\Index::class,
+        'setting.test-mail-notification' => Componist\Core\Livewire\Setting\TestMailNotification::class, 
+
+        'menu.index' => Componist\Core\Livewire\Menu\Index::class,
+        'menu.edit' => Componist\Core\Livewire\Menu\Edit::class,
+        'menu-item.index' => Componist\Core\Livewire\MenuItem\Index::class,
+        'menu-item.edit' => Componist\Core\Livewire\MenuItem\Edit::class,
+
+        'notification.componist-core-notification-bell' => \Componist\Core\Livewire\Notification\ComponistCoreNotificationBell::class,
+        'notification.componist-core-notification' => \Componist\Core\Livewire\Notification\Notification::class,
+        'notification.componist-core-notification-show' => \Componist\Core\Livewire\Notification\NotificationShow::class,
     ],
 
     /*

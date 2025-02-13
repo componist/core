@@ -18,6 +18,10 @@
                         <x:component::menu.dropdown-link href="{{ route($item->name) }}">
                             {{ $item->title }}
                         </x:component::menu.dropdown-link>
+                    @elseif(Route::has($item->view_path))
+                        <x:component::menu.dropdown-link href="{{ route($item->view_path) }}">
+                            {{ $item->title }}
+                        </x:component::menu.dropdown-link>
                     @endif
                 @else
                     <x:component::menu.dropdown-link href="{{ url($item->name) }}">
@@ -29,6 +33,11 @@
                     @if (Route::has($item->name))
                         <x:component::menu.link href="{{ route($item->name) }}" target="{{ $item->target }}"
                             active="{{ request()->routeIs($item->name) }}">
+                            {{ $item->title }}
+                        </x:component::menu.link>
+                    @elseif(Route::has($item->view_path))
+                        <x:component::menu.link href="{{ route($item->view_path) }}" target="{{ $item->target }}"
+                            active="{{ request()->routeIs($item->view_path) }}">
                             {{ $item->title }}
                         </x:component::menu.link>
                     @endif

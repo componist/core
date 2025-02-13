@@ -2,13 +2,15 @@
 
 namespace Componist\Core\Livewire\MenuItem;
 
-use Illuminate\Support\Str;
-use Illuminate\View\View;
 use Livewire\Component;
+use Illuminate\View\View;
+use Illuminate\Support\Str;
+use Livewire\Attributes\Title;
 use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
 use Componist\Core\Traits\addLivewireControlleFunctions;
 
+#[Title('Menu Item')] 
 class Index extends Component
 {
     use addLivewireControlleFunctions;
@@ -37,6 +39,8 @@ class Index extends Component
 
     public ?string $name = null;
 
+    public ?string $view_path = null;
+
     protected $rules = [
         'title' => 'required|min:3',
         'type' => 'required|string|max:255',
@@ -45,6 +49,7 @@ class Index extends Component
         'order' => 'required|numeric',
         'name' => 'nullable|string|max:255',
         'slug' => 'nullable|string|max:255',
+        'view_path' => 'nullable|string|max:255',
     ];
 
     public function mount(Menu $id): void
@@ -54,10 +59,16 @@ class Index extends Component
 
     public function render(): View
     {
-
-        if ($this->slug == null && $this->slug == '' && ! empty($this->title)) {
-            $this->slug = Str::slug($this->title);
+        if($this->type == 'url'){
+            if ($this->slug == null && $this->slug == '' && ! empty($this->title)) {
+                $this->slug = Str::slug($this->title);
+            }
         }
+
+        if($this->type == 'page' && $this->view_path == null){
+            $this->view_path = 'page.';
+        }
+        
 
         $this->content = MenuItem::with('children')
             ->where('menu_id', $this->menu['id'])
@@ -88,6 +99,7 @@ class Index extends Component
         $this->order = $menuItem['order'];
         $this->name = $menuItem['name'];
         $this->slug = $menuItem['slug'];
+        $this->view_path = $menuItem['view_path'];
 
         $this->openEditWindow();
     }
@@ -121,6 +133,11 @@ class Index extends Component
         $query['slug'] = $this->slug;
 
         $query['name'] = $this->name;
+        $query['view_path'] = $this->view_path;
+
+        if($this->type == 'page'){
+            dump('create new page config file');
+        }
 
         if ($query->save()) {
             $this->cloasEditWindow();
@@ -177,5 +194,15 @@ class Index extends Component
         $this->order = null;
         $this->name = null;
         $this->slug = null;
+        $this->view_path = null;
+    }
+
+    public function toggle(int $id, string $field): void
+    {
+        $temp = MenuItem::findOrFail($id);
+        $temp->$field = ! $temp->$field;
+        $temp->save();
+
+        // create page config file
     }
 }
