@@ -74,6 +74,7 @@
                             <x:component::form.label value="Page View Path" />
                             <x:component::form.input wire:model.live="view_path" type="text" name="view_path" />
                             <x:component::form.input-error :for="$view_path" />
+                            <p class="mt-2 text-xs text-red-500">Page wenn nicht existiert wird erstellt.</p>
                         </div>
                     @endif
 

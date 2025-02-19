@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('componist_core_notifications', function (Blueprint $table) {
             $table->id();
 			$table->integer('user_id');
-			$table->integer('read');
-			$table->timestamp('read_at')->timestamps('read_at')->nullable();
+			$table->integer('read')->default(0);
+			$table->timestamp('read_at')->nullable();
 			$table->string('title',255)->nullable();
 			$table->text('message')->nullable();
 			$table->timestamps();

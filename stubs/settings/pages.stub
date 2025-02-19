@@ -1,6 +1,5 @@
 <?php
 
 return [
-  'start' => 'page.start',
-  'blog' => 'page.blog',
+  [array]
 ];

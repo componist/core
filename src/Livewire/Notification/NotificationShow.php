@@ -3,8 +3,10 @@
 namespace Componist\Core\Livewire\Notification;
 
 use Livewire\Component;
+use Livewire\Attributes\Title;
 use Componist\Core\Models\ComponistCoreNotification;
 
+#[Title('Notification show')] 
 class NotificationShow extends Component
 {
     public string $title = '';

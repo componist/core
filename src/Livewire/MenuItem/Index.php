@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Title;
 use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
+use Illuminate\Support\Facades\Artisan;
 use Componist\Core\Traits\addLivewireControlleFunctions;
 
 #[Title('Menu Item')] 
@@ -65,8 +66,20 @@ class Index extends Component
             }
         }
 
-        if($this->type == 'page' && $this->view_path == null){
-            $this->view_path = 'page.';
+        if($this->type == 'page'){
+
+            if($this->slug == null && $this->slug == '' && ! empty($this->title)){
+
+                if($this->view_path == null && $this->view_path == ''){
+                    $this->view_path = 'page.'.Str::slug($this->title);
+                }
+                
+                if($this->name == null && $this->name == ''){
+                    $this->name = $this->view_path;
+                }
+            }else{
+                $this->view_path = 'page.';
+            }
         }
         
 
@@ -118,6 +131,8 @@ class Index extends Component
 
             if ($this->type == 'page') {
                 $this->slug = Str::slug($this->title);
+
+                MenuItem::createStubPage($this->view_path);
             }
         }
 
@@ -135,13 +150,18 @@ class Index extends Component
         $query['name'] = $this->name;
         $query['view_path'] = $this->view_path;
 
-        if($this->type == 'page'){
-            dump('create new page config file');
-        }
+        
 
         if ($query->save()) {
+            
+            if($this->type == 'page'){
+                MenuItem::createPageConfigFile();
+            }
+
             $this->cloasEditWindow();
             $this->clearValue();
+
+            
 
             // TODO: flash message
             $this->bannerMessage('success', 'Menu wurde erfolgreich erstellt.');
@@ -153,7 +173,14 @@ class Index extends Component
 
     public function deleteEntry(MenuItem $menuItem): void
     {
+        $type = $menuItem['type'];
+        
         if ($menuItem->delete()) {
+
+            if($type == 'page'){
+                MenuItem::createPageConfigFile();
+            }
+            
             // TODO: flash message
         }
         // TODO: flash message
@@ -203,6 +230,8 @@ class Index extends Component
         $temp->$field = ! $temp->$field;
         $temp->save();
 
-        // create page config file
+        if($temp['type'] == 'page'){
+            MenuItem::createPageConfigFile();
+        }
     }
 }

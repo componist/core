@@ -1,0 +1,10 @@
+@extends(config('core.template.app'))
+
+@section('title', 'title')
+@section('description', 'description')
+@section('keywords', 'keywords')
+
+
+@section('content')
+   Hello Word!!!!
+@endsection

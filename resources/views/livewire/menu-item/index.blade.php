@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center gap-1">
             <h2 class="font-semibold leading-tight">
-                {{ $menu['name'] }} {{ __('Menu Items') }}
+                {{ __('Menu Items') }} - <span class="text-teal-500">{{ $menu['name'] }}</span>
             </h2>
         </div>
     </x-slot>
