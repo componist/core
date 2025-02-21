@@ -3,7 +3,6 @@
 namespace Componist\Core\Notifications\Setting;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -41,9 +40,9 @@ class SendTestMailNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->subject('Test-E-Mail erfolgreich versendet – Einstellungen sind in Ordnung')
-        ->greeting('Hallo,')
-        ->line('wir freuen uns, dir mitteilen zu können, dass die Test-E-Mail erfolgreich versendet wurde und alle Einstellungen korrekt konfiguriert sind. Deine E-Mail-Konfiguration ist somit vollständig in Ordnung und funktionsfähig.');
+            ->subject('Test-E-Mail erfolgreich versendet – Einstellungen sind in Ordnung')
+            ->greeting('Hallo,')
+            ->line('wir freuen uns, dir mitteilen zu können, dass die Test-E-Mail erfolgreich versendet wurde und alle Einstellungen korrekt konfiguriert sind. Deine E-Mail-Konfiguration ist somit vollständig in Ordnung und funktionsfähig.');
     }
 
     /**

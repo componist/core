@@ -2,8 +2,8 @@
 
 namespace Componist\Core\Seeders;
 
-use Illuminate\Database\Seeder;
 use Componist\Core\Models\Menu;
+use Illuminate\Database\Seeder;
 
 class MenuTableSeeder extends Seeder
 {

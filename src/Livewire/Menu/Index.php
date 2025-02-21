@@ -2,13 +2,13 @@
 
 namespace Componist\Core\Livewire\Menu;
 
-use Livewire\Component;
-use Illuminate\View\View;
-use Livewire\Attributes\Title;
 use Componist\Core\Models\Menu;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Illuminate\View\View;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
-#[Title('Menus')] 
+#[Title('Menus')]
 class Index extends Component
 {
     use addLivewireControlleFunctions;

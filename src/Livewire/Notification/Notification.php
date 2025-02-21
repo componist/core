@@ -2,13 +2,13 @@
 
 namespace Componist\Core\Livewire\Notification;
 
-use Livewire\Component;
-use Livewire\WithPagination;
-use Livewire\Attributes\Title;
 use Componist\Core\Models\ComponistCoreNotification;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+use Livewire\WithPagination;
 
-#[Title('Notification')] 
+#[Title('Notification')]
 class Notification extends Component
 {
     use addLivewireControlleFunctions;
@@ -16,15 +16,14 @@ class Notification extends Component
 
     public ?string $search = null;
 
-    
     public function render()
     {
-        $content = ComponistCoreNotification::where('user_id',auth()->user()->id)
-        ->where('title', 'LIKE', '%'.trim($this->search).'%')
-        ->orderBy('created_at','desc')
-        ->paginate(10);
+        $content = ComponistCoreNotification::where('user_id', auth()->user()->id)
+            ->where('title', 'LIKE', '%'.trim($this->search).'%')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
-        return view('component::livewire.notification.componist-core-notification',compact('content'))->layout(config('core.template.dashboard'));
+        return view('component::livewire.notification.componist-core-notification', compact('content'))->layout(config('core.template.dashboard'));
     }
 
     public function delete(int $id): void

@@ -19,8 +19,8 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('componist.co
         Route::get('menu/items/{id}', Componist\Core\Livewire\MenuItem\Index::class)->name('menu.items');
     }
 
-    Route::get('notification',Componist\Core\Livewire\Notification\Notification::class)->name('notification');
-    Route::get('notification/{componistCoreNotification}',Componist\Core\Livewire\Notification\NotificationShow::class)->name('notification.show');
+    Route::get('notification', Componist\Core\Livewire\Notification\Notification::class)->name('notification');
+    Route::get('notification/{componistCoreNotification}', Componist\Core\Livewire\Notification\NotificationShow::class)->name('notification.show');
 });
 
 Route::view('404', 'component::error.404')->name('404');
@@ -30,14 +30,11 @@ Route::view('404', 'component::error.404')->name('404');
 // Route::get('/{pageslug}', [\Componist\Core\Controllers\PageController::class, 'index'])->name('page');
 
 // dd(config('pages'));
-if(config()->has('pages')){
-    foreach(config('pages') as $url => $viewPath){
+if (config()->has('pages')) {
+    foreach (config('pages') as $url => $viewPath) {
         Route::view($url, $viewPath)->name($viewPath);
-    } 
+    }
 }
-
-
-
 
 // $test = MenuItem::where('type','page')->get()->toArray();
 

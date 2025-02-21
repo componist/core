@@ -2,9 +2,9 @@
 
 namespace Componist\Notifications\Livewire\Notification\Message;
 
+use Componist\Core\Traits\addLivewireControlleFunctions;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Componist\Core\Traits\addLivewireControlleFunctions;
 
 class Index extends Component
 {

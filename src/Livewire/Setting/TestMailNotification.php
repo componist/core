@@ -2,21 +2,20 @@
 
 namespace Componist\Core\Livewire\Setting;
 
-use Livewire\Component;
-use Livewire\Attributes\Validate;
-use Illuminate\Support\Facades\Notification;
 use Componist\Core\Notifications\Setting\SendTestMailNotification;
+use Illuminate\Support\Facades\Notification;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class TestMailNotification extends Component
 {
     #[Validate]
     public string $email = '';
 
-
     protected function rules()
     {
         return [
-            'email' => 'required|email:rfc,dns'
+            'email' => 'required|email:rfc,dns',
         ];
     }
 
@@ -25,11 +24,12 @@ class TestMailNotification extends Component
         return view('component::livewire.setting.test-mail-notification');
     }
 
-    public function sendTestMail(){
+    public function sendTestMail()
+    {
 
         $validated = $this->validate();
 
-        if($validated['email']){
+        if ($validated['email']) {
 
             Notification::route('mail', $validated['email'])->notify(new SendTestMailNotification);
 

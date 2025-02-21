@@ -2,8 +2,8 @@
 
 namespace Componist\Notifications\Livewire\Notification\Message;
 
-use Livewire\Component;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Livewire\Component;
 
 class Create extends Component
 {

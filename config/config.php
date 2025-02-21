@@ -38,7 +38,7 @@ return [
         'element.hex-colors' => Componist\Core\Livewire\Element\HexColors::class,
 
         'setting.index' => Componist\Core\Livewire\Setting\Index::class,
-        'setting.test-mail-notification' => Componist\Core\Livewire\Setting\TestMailNotification::class, 
+        'setting.test-mail-notification' => Componist\Core\Livewire\Setting\TestMailNotification::class,
 
         'menu.index' => Componist\Core\Livewire\Menu\Index::class,
         'menu.edit' => Componist\Core\Livewire\Menu\Edit::class,

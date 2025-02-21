@@ -2,23 +2,24 @@
 
 namespace Componist\Core\Livewire\Notification;
 
-use Livewire\Component;
-use Livewire\Attributes\Title;
 use Componist\Core\Models\ComponistCoreNotification;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
-#[Title('Notification show')] 
+#[Title('Notification show')]
 class NotificationShow extends Component
 {
     public string $title = '';
 
     public ?string $message = null;
 
-    public function mount(ComponistCoreNotification $componistCoreNotification){
+    public function mount(ComponistCoreNotification $componistCoreNotification)
+    {
 
         $this->title = $componistCoreNotification['title'];
         $this->message = $componistCoreNotification['message'];
-        
-        if($componistCoreNotification['read'] == 0){
+
+        if ($componistCoreNotification['read'] == 0) {
 
             $componistCoreNotification['read'] = 1;
             $componistCoreNotification['read_at'] = date('Y-m-d H:i:s');

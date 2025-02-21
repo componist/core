@@ -3,7 +3,6 @@
 namespace Componist\Core\Notifications\ComponistCoreNotification;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,12 +11,13 @@ class MessageNotification extends Notification
     use Queueable;
 
     private $params = null;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(array $params = null)
+    public function __construct(?array $params = null)
     {
         $this->params = $params;
     }
@@ -41,7 +41,7 @@ class MessageNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)       
+        return (new MailMessage)
             ->subject('eine neue benachrichtigung')
             ->greeting('Hallo,')
             ->line('eine neue benachrichtigung im ihren postfach')

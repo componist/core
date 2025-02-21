@@ -4,7 +4,7 @@
         @if ($content > 0)
             <div
                 class="absolute flex items-center justify-center w-6 h-6 text-xs bg-red-500 rounded-full shadow-sm -top-2 -right-2">
-                <span class="items-center text-center text-white -ml-[1px] -mt-[1px]">{{ $content }}</span>
+                <span class="items-center text-center text-white">{{ $content }}</span>
             </div>
         @endif
 

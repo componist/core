@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-			$table->string('key',255)->unique();
-			$table->string('display_name',255);
-			$table->text('value')->nullable();
-			$table->string('type',255);
-			$table->integer('order')->default(1);
-			$table->string('group',255)->nullable();
-			$table->timestamps();
+            $table->string('key', 255)->unique();
+            $table->string('display_name', 255);
+            $table->text('value')->nullable();
+            $table->string('type', 255);
+            $table->integer('order')->default(1);
+            $table->string('group', 255)->nullable();
+            $table->timestamps();
         });
     }
 

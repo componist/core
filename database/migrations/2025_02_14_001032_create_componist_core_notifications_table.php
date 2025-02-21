@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('componist_core_notifications', function (Blueprint $table) {
             $table->id();
-			$table->integer('user_id');
-			$table->integer('read')->default(0);
-			$table->timestamp('read_at')->nullable();
-			$table->string('title',255)->nullable();
-			$table->text('message')->nullable();
-			$table->timestamps();
-			$table->softDeletes();
+            $table->integer('user_id');
+            $table->integer('read')->default(0);
+            $table->timestamp('read_at')->nullable();
+            $table->string('title', 255)->nullable();
+            $table->text('message')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

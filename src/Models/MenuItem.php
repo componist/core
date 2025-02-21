@@ -29,50 +29,50 @@ class MenuItem extends Model
         return $this->hasOne(Page::class, 'id', 'page_id');
     }
 
-
     public static function createPageConfigFile(): bool
     {
-        if($pages = MenuItem::where('type', 'page')->where('status',1)->get()->toArray()){
+        if ($pages = MenuItem::where('type', 'page')->where('status', 1)->get()->toArray()) {
             $liste = '';
-            foreach($pages as $page){
-                $liste .= "'".$page['slug']."'"." => "."'".$page['view_path']."',\r\n\t";
+            foreach ($pages as $page) {
+                $liste .= "'".$page['slug']."'".' => '."'".$page['view_path']."',\r\n\t";
             }
             $stub = file_get_contents(__DIR__.'../../../stubs/settings/pages.stub');
-      
+
             $content = str_replace('[array]', $liste, $stub);
 
-            if(file_put_contents(config_path('pages.php'), $content)){
+            if (file_put_contents(config_path('pages.php'), $content)) {
                 return true;
             }
         }
+
         return false;
     }
 
     public static function createStubPage(string $slug): bool
     {
-        $explode = explode('.',trim($slug));
+        $explode = explode('.', trim($slug));
 
         $countExplodes = count($explode) - 1;
 
         $view_path = __DIR__.'../../../../../../resources/views';
 
-        foreach($explode as $key => $path){
+        foreach ($explode as $key => $path) {
 
-            $view_path .= '/'.$path; 
+            $view_path .= '/'.$path;
 
-            if($countExplodes == $key){
+            if ($countExplodes == $key) {
                 // file
                 $file = $view_path.'.blade.php';
-                
-                if(!file_exists($file)){
-                    $stub =  file_get_contents(__DIR__.'../../../stubs/view/page.stub');
+
+                if (! file_exists($file)) {
+                    $stub = file_get_contents(__DIR__.'../../../stubs/view/page.stub');
                     file_put_contents($file, $stub);
 
                     return true;
                 }
-            }else{
+            } else {
                 // folder
-                if(!is_dir($view_path)){
+                if (! is_dir($view_path)) {
                     mkdir($view_path);
                 }
             }

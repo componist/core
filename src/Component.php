@@ -2,10 +2,10 @@
 
 namespace Componist\Core;
 
-use Illuminate\Support\Str;
 use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
 use Componist\Core\Models\Setting;
+use Illuminate\Support\Str;
 
 class Component
 {

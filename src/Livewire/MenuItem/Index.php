@@ -2,16 +2,15 @@
 
 namespace Componist\Core\Livewire\MenuItem;
 
-use Livewire\Component;
-use Illuminate\View\View;
-use Illuminate\Support\Str;
-use Livewire\Attributes\Title;
 use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
-use Illuminate\Support\Facades\Artisan;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
-#[Title('Menu Item')] 
+#[Title('Menu Item')]
 class Index extends Component
 {
     use addLivewireControlleFunctions;
@@ -60,28 +59,27 @@ class Index extends Component
 
     public function render(): View
     {
-        if($this->type == 'url'){
+        if ($this->type == 'url') {
             if ($this->slug == null && $this->slug == '' && ! empty($this->title)) {
                 $this->slug = Str::slug($this->title);
             }
         }
 
-        if($this->type == 'page'){
+        if ($this->type == 'page') {
 
-            if($this->slug == null && $this->slug == '' && ! empty($this->title)){
+            if ($this->slug == null && $this->slug == '' && ! empty($this->title)) {
 
-                if($this->view_path == null && $this->view_path == ''){
+                if ($this->view_path == null && $this->view_path == '') {
                     $this->view_path = 'page.'.Str::slug($this->title);
                 }
-                
-                if($this->name == null && $this->name == ''){
+
+                if ($this->name == null && $this->name == '') {
                     $this->name = $this->view_path;
                 }
-            }else{
+            } else {
                 $this->view_path = 'page.';
             }
         }
-        
 
         $this->content = MenuItem::with('children')
             ->where('menu_id', $this->menu['id'])
@@ -150,18 +148,14 @@ class Index extends Component
         $query['name'] = $this->name;
         $query['view_path'] = $this->view_path;
 
-        
-
         if ($query->save()) {
-            
-            if($this->type == 'page'){
+
+            if ($this->type == 'page') {
                 MenuItem::createPageConfigFile();
             }
 
             $this->cloasEditWindow();
             $this->clearValue();
-
-            
 
             // TODO: flash message
             $this->bannerMessage('success', 'Menu wurde erfolgreich erstellt.');
@@ -174,13 +168,13 @@ class Index extends Component
     public function deleteEntry(MenuItem $menuItem): void
     {
         $type = $menuItem['type'];
-        
+
         if ($menuItem->delete()) {
 
-            if($type == 'page'){
+            if ($type == 'page') {
                 MenuItem::createPageConfigFile();
             }
-            
+
             // TODO: flash message
         }
         // TODO: flash message
@@ -230,7 +224,7 @@ class Index extends Component
         $temp->$field = ! $temp->$field;
         $temp->save();
 
-        if($temp['type'] == 'page'){
+        if ($temp['type'] == 'page') {
             MenuItem::createPageConfigFile();
         }
     }

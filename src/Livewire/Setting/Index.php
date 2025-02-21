@@ -2,13 +2,13 @@
 
 namespace Componist\Core\Livewire\Setting;
 
-use Illuminate\View\View;
-use Livewire\Component;
 use Componist\Core\Models\Setting;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Illuminate\View\View;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
-#[Title('Settings')] 
+#[Title('Settings')]
 class Index extends Component
 {
     use addLivewireControlleFunctions;
