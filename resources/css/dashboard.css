@@ -15,11 +15,12 @@ body{
 
 
 .backend-background-image{
-    background-image: url('../../public/images/system/background/7230.jpg');
+    background-image: url('../../public/images/system/background/background.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
 }
+
 
 
 .bell-ring-animation{
@@ -40,7 +41,7 @@ body{
         transform: rotate(-25deg) scale(1) skew(1deg);
     }
     40%{
-        ransform: rotate(25deg) scale(1) skew(1deg);
+        transform: rotate(25deg) scale(1) skew(1deg);
     }
     50%{
         transform: rotate(0) scale(1) skew(1deg);

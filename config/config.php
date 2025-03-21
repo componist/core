@@ -15,7 +15,8 @@ return [
 
     'components' => [
         'layouts.app' => Componist\Core\View\Components\AppLayout::class,
-        config('core.template.dashboard') => Componist\Core\View\Components\DashboardLayout::class,
+        //config('core.template.dashboard') => Componist\Core\View\Components\DashboardLayout::class,
+        'layouts.dashboard' => Componist\Core\View\Components\DashboardLayout::class,
         'layouts.guest' => Componist\Core\View\Components\GuestLayout::class,
 
         'element.modal' => Componist\Core\View\Components\Element\Modal::class,
