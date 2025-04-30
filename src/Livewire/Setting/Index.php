@@ -79,7 +79,7 @@ class Index extends Component
             'value' => $value,
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
-        $this->emit('saved'.$id);
+        $this->dispatch('saved'.$id);
     }
 
     public function deleteEntry(Setting $setting): void

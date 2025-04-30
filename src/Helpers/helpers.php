@@ -5,7 +5,13 @@ use Componist\Core\Facades\Component;
 if (! function_exists('setting')) {
     function setting($key)
     {
-        return Component::setting($key);
+        $result = Component::setting($key);
+        if (isset($result[0])) {
+            return $result[0];
+        }
+
+        return $result;
+
     }
 }
 
@@ -22,11 +28,13 @@ if (! function_exists('menu')) {
 }
 
 if (! function_exists('HTML_Minifier')) {
-    function HTML_Minifier($string){
+    function HTML_Minifier($string)
+    {
         $string = preg_replace('/\s+/', ' ', $string);
         $string = preg_replace('/\t+/', '', $string);
         $string = preg_replace('/\r+/', '', $string);
         $string = preg_replace('/\n+/', '', $string);
+
         return $string;
     }
 }

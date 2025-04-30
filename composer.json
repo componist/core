@@ -6,8 +6,9 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Reinhold Jesse",
-            "email": "info@componist.dev"
+            "name": "Componist Developer",
+            "email": "info@componist.dev",
+            "role": "Developer"
         }
     ],
     "require": {},
@@ -24,6 +25,6 @@
             ]
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

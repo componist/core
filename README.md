@@ -89,3 +89,10 @@ npm run build
 ```
 
 ---
+
+
+## Open
+- [ ] Login System
+- - login erst die email eingeben (email zwischen speichern) mal schauen wer alles versuch sich einzulogen
+- - im account settings hast du die wahl wie du dich einlogen willst mit password oder email token
+- - standart ist passwort

@@ -21,7 +21,6 @@ class CoreServiceProvider extends ServiceProvider
             return new Component;
         });
 
-        
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'coreConfig');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -35,7 +34,6 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->loadHelpers();
 
-        
     }
 
     /**
