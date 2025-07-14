@@ -112,11 +112,12 @@
                                         class="absolute right-0 z-50 mt-2 origin-top-right bg-white rounded-md shadow-lg w-44">
 
                                         <div
-                                            class="text-sm text-left rounded-md shadow-sm ring-1 ring-black ring-opacity-5">
+                                            class="overflow-hidden text-sm text-left rounded-md shadow-sm ring-1 ring-black ring-opacity-5">
                                             <div class="block px-4 py-2 text-xs text-gray-400">
                                                 {{ __('Manage Account') }}
                                             </div>
 
+                                            ich bin hier
                                             {{ menu('account-manager', 'account') }}
 
 
