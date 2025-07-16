@@ -13,7 +13,7 @@
 
             @if (!empty($content))
 
-                <div class="" x-data="{ tab: '{{ array_key_first($content->toArray()) }}' }">
+                <div class="" x-data="{ tab: '{{ array_key_first($content) }}' }">
                     <div class="flex overflow-x-auto flex-nowrap">
                         <ul class="flex gap-2">
                             @foreach ($content as $key => $value)
@@ -42,9 +42,9 @@
                                             <div class="bg-white rounded-md shadow-sm p-7">
                                                 <div class="flex items-center justify-between gap-5 px-2 mb-5">
                                                     <div class="items-center gap-5 md:flex ">
-                                                        <h3 class="font-bold">{{ $value->display_name }}</h3>
+                                                        <h3 class="font-bold">{{ $value['display_name'] }}</h3>
                                                         <code
-                                                            class="px-3 py-1 text-sm text-white rounded-full cursor-pointer bg-dashboard-500 hover:bg-dashboard-600">setting('{{ $value->key }}')</code>
+                                                            class="px-3 py-1 text-sm text-white rounded-full cursor-pointer bg-dashboard-500 hover:bg-dashboard-600">setting('{{ $value['key'] }}')</code>
                                                     </div>
                                                     <div class="flex justify-end gap-5">
                                                         <x:component::element.modal>
@@ -67,7 +67,8 @@
                                                                 <div class="flex justify-center mt-7">
                                                                     <h3
                                                                         class="text-lg font-bold text-center text-gray-700">
-                                                                        {{ $value->display_name }} <br />unwiderruflich
+                                                                        {{ $value['display_name'] }}
+                                                                        <br />unwiderruflich
                                                                         löschen?
                                                                     </h3>
                                                                 </div>
@@ -77,7 +78,7 @@
                                                                 <button @click.prevent="modal=false" type="button"
                                                                     class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
-                                                                <button wire:click='deleteEntry({{ $value->id }})'
+                                                                <button wire:click='deleteEntry({{ $value['id'] }})'
                                                                     @click.prevent="modal=false" type="button"
                                                                     class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>
                                                             </x-slot:controller>
@@ -85,24 +86,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="">
-                                                    @if ($value->type == 'text')
+                                                    @if ($value['type'] == 'text')
                                                         <x:component::form.input
-                                                            wire:keydown.debounce.500ms="input($event.target.value, {{ $value->id }})"
-                                                            type="text" value="{{ $value->value }}" />
+                                                            wire:keydown.debounce.500ms="input($event.target.value, {{ $value['id'] }})"
+                                                            type="text" value="{{ $value['value'] }}" />
 
                                                         <x:component::action-message class="mr-3"
-                                                            on="saved{{ $value->id }}">
+                                                            on="saved{{ $value['id'] }}">
                                                             {{ __('Saved.') }}
                                                         </x:component::action-message>
                                                     @endif
 
-                                                    @if ($value->type == 'text_area')
+                                                    @if ($value['type'] == 'text_area')
                                                         <x:component::form.textarea
-                                                            wire:keydown.debounce.500ms="input($event.target.value, {{ $value->id }})"
-                                                            value="{{ $value->value }}" />
+                                                            wire:keydown.debounce.500ms="input($event.target.value, {{ $value['id'] }})"
+                                                            value="{{ $value['value'] }}" />
 
                                                         <x:component::action-message class="mr-3"
-                                                            on="saved{{ $value->id }}">
+                                                            on="saved{{ $value['id'] }}">
                                                             {{ __('Saved.') }}
                                                         </x:component::action-message>
                                                     @endif
@@ -152,8 +153,8 @@
                         <x:component::form.label value="Gruppe" />
                         <x:component::form.select wire:model.live="group" name="group" required>
                             <x:component::form.select-option name="" value="Bestehende Gruppe auswählen" />
-                            <x:component::form.select-option name="site" value="Site" />
-                            <x:component::form.select-option name="admin" value="Admin" />
+                            <x:component::form.select-option name="Site" value="Site" />
+                            <x:component::form.select-option name="Admin" value="Admin" />
                         </x:component::form.select>
                         <x:component::form.input-error :for="$group" />
                     </div>

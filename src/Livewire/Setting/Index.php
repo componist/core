@@ -48,7 +48,9 @@ class Index extends Component
                 ->orderBy('order', 'asc')->get()
         );
 
-        $this->content = $collection->groupBy('group');
+        $this->content = $collection->groupBy('group')->toArray();
+
+        // dd($this->content);
 
         return view('component::livewire.setting.index')->layout(config('core.template.dashboard'));
     }
