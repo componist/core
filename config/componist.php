@@ -19,4 +19,6 @@ return [
 
     'dark_mode' => true,
 
+    'auth' => ['auth'],
+
 ];

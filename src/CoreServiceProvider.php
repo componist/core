@@ -21,7 +21,7 @@ class CoreServiceProvider extends ServiceProvider
             return new Component;
         });
 
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'coreConfig');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'componistConfig');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadSeedsFrom(__DIR__.'/../database/seeders');
@@ -65,8 +65,8 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views/backend/dashboard.blade.php' => resource_path('views/dashboard.blade.php'),
             // configs
             __DIR__.'/../config/markdownx.php' => config_path('markdownx.php'),
-            __DIR__.'/../config/core.php' => config_path('core.php'),
-        ], 'core.install');
+            __DIR__.'/../config/componist.php' => config_path('componist.php'),
+        ], 'componist.core.install');
 
         $this->publishes([
             // core components
@@ -103,15 +103,15 @@ class CoreServiceProvider extends ServiceProvider
 
     private function bootBladeComponents()
     {
-        foreach (config('coreConfig.components', []) as $alias => $component) {
-            Blade::component(config('coreConfig.prefix').$alias, $component);
+        foreach (config('componistConfig.components', []) as $alias => $component) {
+            Blade::component(config('componistConfig.prefix').$alias, $component);
         }
     }
 
     private function bootLivewireComponents()
     {
-        foreach (config('coreConfig.livewire', []) as $alias => $component) {
-            Livewire::component(config('coreConfig.prefix').$alias, $component);
+        foreach (config('componistConfig.livewire', []) as $alias => $component) {
+            Livewire::component(config('componistConfig.prefix').$alias, $component);
         }
     }
 }

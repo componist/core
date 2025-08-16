@@ -120,17 +120,17 @@
                                             {{ menu('account-manager', 'account') }}
 
 
-                                            <div class="border-t border-gray-100"></div>
+                                            {{-- <div class="border-t border-gray-100"></div> --}}
 
                                             <!-- Authentication -->
-                                            <form method="POST" action="{{ route('logout') }}" x-data>
+                                            {{-- <form method="POST" action="{{ route('logout') }}" x-data>
                                                 @csrf
                                                 <x:component::menu.account-link href="{{ route('logout') }}"
                                                     class="flex items-center gap-2" @click.prevent="$root.submit();">
                                                     {{ __('Log Out') }}
                                                     <x:component::icon.logout class="h-5 text-red-500" />
                                                 </x:component::menu.account-link>
-                                            </form>
+                                            </form> --}}
                                         </div>
                                     </div>
                                 </div>
