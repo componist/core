@@ -17,7 +17,6 @@
 </head>
 
 <body class="bg-gray-200">
-    components -> layouts -> guest.blade.php
     <div class="font-sans antialiased text-gray-900">
         @if (isset($slot))
             {{ $slot }}

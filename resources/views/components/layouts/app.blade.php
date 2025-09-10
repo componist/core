@@ -24,7 +24,6 @@
 </head>
 
 <body class="font-sans antialiased">
-    components -> layouts -> app.blade.php
     <x-banner />
 
     <div class="">
