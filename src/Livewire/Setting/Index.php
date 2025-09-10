@@ -52,7 +52,7 @@ class Index extends Component
 
         // dd($this->content);
 
-        return view('component::livewire.setting.index')->layout(config('core.template.dashboard'));
+        return view('component::livewire.setting.index')->layout(config('componist.template.dashboard'));
     }
 
     public function createNewSettingEntry(): void

@@ -21,7 +21,7 @@ class MenuItemTableSeeder extends Seeder
                 'title' => 'Dashboard',
                 'type' => 'route',
                 'order' => '1',
-                'name' => 'dashboard',
+                'name' => 'dashboard.index',
                 'created_at' => date('Y-m-d H:i:s'),
             ])->save();
         }
