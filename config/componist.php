@@ -13,8 +13,8 @@ return [
     ],
 
     'template' => [
-        'dashboard' => 'component::layouts.dashboard', // config('core.template.dashboard')
-        'app' => 'component::layouts.app', // config('core.template.app')
+        'dashboard' => Componist\Core\View\Components\DashboardLayout::class,
+        'app' => Componist\Core\View\Components\GuestLayout::class,
     ],
 
     'dark_mode' => true,

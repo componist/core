@@ -32,6 +32,6 @@ class NotificationShow extends Component
 
     public function render()
     {
-        return view('component::livewire.notification.componist-core-notification-show')->layout(config('core.template.dashboard'));
+        return view('component::livewire.notification.componist-core-notification-show')->layout(config('componist.template.dashboard'));
     }
 }

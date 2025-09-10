@@ -1,11 +1,24 @@
 @import './componentes/animations.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/componist/core/resources/view/**/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
 
-
-
+@theme {
+  --color-dashboard-50: oklch(0.984 0.014 180.72);
+  --color-dashboard-100: oklch(0.953 0.051 180.801);
+  --color-dashboard-200: oklch(0.91 0.096 180.426);
+  --color-dashboard-300: oklch(0.855 0.138 181.071);
+  --color-dashboard-400: oklch(0.777 0.152 181.912);
+  --color-dashboard-500: oklch(0.704 0.14 182.503);
+  --color-dashboard-600: oklch(0.6 0.118 184.704);
+  --color-dashboard-700: oklch(0.511 0.096 186.391);
+  --color-dashboard-800: oklch(0.437 0.078 188.216);
+  --color-dashboard-900: oklch(0.386 0.063 188.416);
+  --color-dashboard-950: oklch(0.277 0.046 192.524);
+}
 
 body{
     margin: 0 !important;

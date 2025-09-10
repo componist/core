@@ -8,6 +8,6 @@ class Edit extends Component
 {
     public function render()
     {
-        return view('component::livewire.menu-item.edit')->layout(config('core.template.dashboard'));
+        return view('component::livewire.menu-item.edit')->layout(config('componist.template.dashboard'));
     }
 }

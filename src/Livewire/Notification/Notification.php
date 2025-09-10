@@ -23,7 +23,7 @@ class Notification extends Component
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('component::livewire.notification.componist-core-notification', compact('content'))->layout(config('core.template.dashboard'));
+        return view('component::livewire.notification.componist-core-notification', compact('content'))->layout(config('componist.template.dashboard'));
     }
 
     public function delete(int $id): void

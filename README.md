@@ -9,11 +9,11 @@ folgende Komponente sind am Board
 
 
 
-### Require Packages
+<!-- ### Require Packages
 
 ```bash
 composer require laravel/jetstream
-```
+``` -->
 
 ### Install Packages
 
@@ -48,7 +48,7 @@ del ./package.json
 
 ```bash
 #Configuration Install
-php artisan vendor:publish --tag=core.install
+php artisan vendor:publish --tag=componist.core.install
 
 # Blade Componentes Publishe (optional)
 php artisan vendor:publish --tag=core.publishes

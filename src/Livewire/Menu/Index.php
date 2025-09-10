@@ -25,7 +25,7 @@ class Index extends Component
     {
         $this->content = Menu::all();
 
-        return view('component::livewire.menu.index')->layout(config('core.template.dashboard'));
+        return view('component::livewire.menu.index')->layout(config('componist.template.dashboard'));
     }
 
     public function edit(Menu $menu): void

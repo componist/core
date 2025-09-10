@@ -86,7 +86,7 @@ class Index extends Component
             ->whereNull('parent_id')
             ->orderBy('order')->get();
 
-        return view('component::livewire.menu-item.index')->layout(config('core.template.dashboard'));
+        return view('component::livewire.menu-item.index')->layout(config('componist.template.dashboard'));
     }
 
     public function create(): void
