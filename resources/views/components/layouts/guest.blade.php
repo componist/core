@@ -21,7 +21,9 @@
         @if (isset($slot))
             {{ $slot }}
         @endif
+
         @yield('content')
+
     </div>
 </body>
 

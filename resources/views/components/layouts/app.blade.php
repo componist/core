@@ -24,7 +24,6 @@
 </head>
 
 <body class="font-sans antialiased">
-    <x-banner />
 
     <div class="">
 

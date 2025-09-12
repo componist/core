@@ -28,7 +28,7 @@ body{
 
 
 .backend-background-image{
-    background-image: url('../../public/images/system/background/background.png');
+    /* background-image: url('../../public/images/system/background/background.png'); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
