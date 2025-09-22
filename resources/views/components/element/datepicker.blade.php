@@ -13,13 +13,13 @@
                 <span x-text="dateView"></span>
                 <template x-if="dateView">
                     <button @click.prevent="clear()" type="button"
-                        class="relative z-10 flex items-center justify-center w-6 h-6 text-gray-300 hover:text-gray-700">
+                        class="relative z-10 flex items-center justify-center w-6 h-6 text-slate-300 hover:text-slate-700">
                         <x:component::icon.close class="h-9 hover:text-dashboard-500" />
                     </button>
                 </template>
 
             </div>
-            <x:component::icon.calendar class="text-gray-400 w-7" />
+            <x:component::icon.calendar class="text-slate-400 w-7" />
         </div>
     </div>
 
@@ -27,35 +27,35 @@
         x-transition:enter="transition ease-out duration-100 transform" x-transition:enter-start="opacity-0 scale-30"
         x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-75 transform"
         x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-        class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center px-5 bg-gray-500 backdrop-blur-sm bg-opacity-70">
+        class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center px-5 bg-slate-500/70 backdrop-blur-sm">
 
-        <div @click.outside="showDatepicker = false" class=" p-4 mt-12 bg-gray-200 rounded-lg shadow w-[22rem]">
+        <div @click.outside="showDatepicker = false" class=" p-4 mt-12 bg-slate-200 rounded-lg shadow w-[22rem]">
             <div class="flex items-center justify-between mb-2">
                 <div>
-                    <span x-text="MONTH_NAMES[month]" class="text-lg font-bold text-gray-800"></span>
-                    <span x-text="year" class="ml-1 text-lg font-normal text-gray-600"></span>
+                    <span x-text="MONTH_NAMES[month]" class="text-lg font-bold text-slate-800"></span>
+                    <span x-text="year" class="ml-1 text-lg font-normal text-slate-600"></span>
                 </div>
                 <div>
                     <button type="button"
-                        class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-gray-100"
+                        class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-slate-100"
                         @click.prevent="if (month == 0) {
                         year--;
                         month = 12;
                     } month--; getNoOfDays()">
-                        <svg class="inline-flex w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24"
+                        <svg class="inline-flex w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
                     <button type="button"
-                        class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-gray-100"
+                        class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-slate-100"
                         @click.prevent="if (month == 11) {
                             month = 0;
                             year++;
                         } else {
                             month++;
                         } getNoOfDays()">
-                        <svg class="inline-flex w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24"
+                        <svg class="inline-flex w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
@@ -65,7 +65,7 @@
 
             <div class="grid grid-cols-7 gap-1 my-5">
                 <template x-for="(day, index) in DAYS" :key="index">
-                    <div x-text="day" class="text-xs font-semibold text-center text-gray-800"></div>
+                    <div x-text="day" class="text-xs font-semibold text-center text-slate-800"></div>
                 </template>
             </div>
 
@@ -79,10 +79,10 @@
                         class="w-full h-[42px] flex items-center justify-center text-md leading-loose text-center rounded shadow-sm cursor-pointer default-transition"
                         :class="{
                             'bg-dashboard-700 text-white': isToday(date) == true,
-                            'text-gray-600 bg-gray-100 hover:text-white hover:bg-dashboard-500': isToday(date) ==
+                            'text-slate-600 bg-slate-100 hover:text-white hover:bg-dashboard-500': isToday(date) ==
                                 false &&
                                 isSelectedDate(date) == false,
-                            'bg-dashboard-500 text-white hover:bg-opacity-75': isSelectedDate(date) == true
+                            'bg-dashboard-500 text-white hover:bg-white/75': isSelectedDate(date) == true
                         }">
                     </div>
                 </template>

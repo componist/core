@@ -1,7 +1,7 @@
 <div>
     @if ($openEdit)
         <div
-            class="fixed top-0 bottom-0 left-0 right-0 z-50 items-center justify-center p-3 overflow-y-auto bg-gray-900 lg:flex bg-opacity-70 backdrop-blur-sm">
+            class="fixed top-0 bottom-0 left-0 right-0 z-50 items-center justify-center p-3 overflow-y-auto bg-slate-900/70 lg:flex backdrop-blur-sm">
             <div class="w-full overflow-hidden bg-white rounded-md shadow-sm lg:w-6/12">
                 <div class="px-5 py-5">
                     <div class="py-3">
@@ -79,7 +79,7 @@
                     @endif
 
                 </div>
-                <div class="grid grid-cols-2 gap-4 px-4 text-right bg-gray-100 py-7 sm:px-6">
+                <div class="grid grid-cols-2 gap-4 px-4 text-right bg-slate-100 py-7 sm:px-6">
                     <x:component::button.cancel wire:click="cloasEditWindow" class="w-full" />
 
                     <button wire:click="update" type="button"

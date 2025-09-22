@@ -15,23 +15,23 @@
 
 </head>
 
-<body class="py-12 antialiased bg-gray-200">
+<body class="py-12 antialiased bg-slate-200">
 
     <div class="container mx-auto">
         <div class="grid grid-cols-1 gap-7">
             @if (is_array($content))
                 <h2
-                    class="mb-3 text-4xl font-extrabold leading-none text-center text-gray-900 md:text-5xl xl:text-6xl dark:text-white">
+                    class="mb-3 text-4xl font-extrabold leading-none text-center text-slate-900 md:text-5xl xl:text-6xl dark:text-white">
                     Blade Komponente übersicht</h2>
                 @foreach ($content as $element)
-                    <div class="bg-gray-100 border p-7">
+                    <div class="bg-slate-100 border p-7">
                         @if (is_array($element))
                             {{-- is array --}}
                             @if (isset($element['name']) && !empty($element['name']))
                                 <div class="flex items-center">
                                     <span class="mr-3 text-6xl text-dashboard-500">#</span>
                                     <h3
-                                        class="max-w-lg mb-3 text-4xl font-extrabold leading-none text-gray-900 md:text-5xl xl:text-6xl dark:text-white">
+                                        class="max-w-lg mb-3 text-4xl font-extrabold leading-none text-slate-900 md:text-5xl xl:text-6xl dark:text-white">
                                         {{ $element['name'] }}
                                     </h3>
                                 </div>

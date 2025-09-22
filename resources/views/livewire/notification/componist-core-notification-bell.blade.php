@@ -1,5 +1,5 @@
 <div wire:poll.90s>
-    <div class="relative w-8 h-8 text-gray-300 hover:text-teal-500">
+    <div class="relative w-8 h-8 text-slate-300 hover:text-teal-500">
         <x:component::icon.notification class="w-8 h-8 {{ $content > 0 ? 'bell-ring-animation' : '' }}" />
         @if ($content > 0)
             <div

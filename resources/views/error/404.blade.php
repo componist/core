@@ -15,7 +15,7 @@
 
 </head>
 
-<body class="flex items-center justify-center h-screen bg-gray-200">
+<body class="flex items-center justify-center h-screen bg-slate-200">
 
 
     <h1 class="font-bold text-7xl">404</h1>

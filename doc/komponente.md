@@ -49,13 +49,13 @@ http:your-url/**dashboard/componente/resources/view**
             </div>
         </div>
         <div class="flex justify-center mt-7">
-            <h3 class="text-lg font-bold text-center text-gray-700">unwiderruflich löschen?</h3>
+            <h3 class="text-lg font-bold text-center text-slate-700">unwiderruflich löschen?</h3>
         </div>
     </x-slot:content>
 
     <x-slot:controller>
         <button @click.prevent="modal=false" type="button"
-            class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
+            class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
         <button @click.prevent="modal=false" type="button"
             class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>

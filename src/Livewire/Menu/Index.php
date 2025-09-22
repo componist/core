@@ -15,17 +15,15 @@ class Index extends Component
 
     public ?string $name = null;
 
-    public $content;
-
     public bool $openEdit = false;
 
     public ?int $editId = null;
 
     public function render(): View
     {
-        $this->content = Menu::all();
+        $content = Menu::all();
 
-        return view('component::livewire.menu.index')->layout(config('componist.template.dashboard'));
+        return view('component::livewire.menu.index', compact('content'))->layout(config('componist.template.dashboard'));
     }
 
     public function edit(Menu $menu): void

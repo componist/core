@@ -18,12 +18,12 @@
                         <ul class="flex gap-2">
                             @foreach ($content as $key => $value)
                                 <li @click.prevent="tab = '{{ $key }}'"
-                                    class="block py-3 font-semibold text-center cursor-pointer w-52 rounded-t-md hover:bg-gray-50"
+                                    class="block py-3 font-semibold text-center cursor-pointer w-52 rounded-t-md hover:bg-slate-50"
                                     :class="{
                                     
                                     
-                                        'bg-gray-100 text-teal-500': tab === '{{ $key }}',
-                                        'text-gray-500 bg-gray-300': tab != '{{ $key }}'
+                                        'bg-slate-100 text-teal-500': tab === '{{ $key }}',
+                                        'text-slate-500 bg-slate-300': tab != '{{ $key }}'
                                     
                                     }">
                                     {{ $key }}
@@ -32,7 +32,7 @@
                         </ul>
                     </div>
 
-                    <div class="mb-12 bg-gray-100 px-7 rounded-tr-md rounded-br-md rounded-bl-md py-7">
+                    <div class="mb-12 bg-slate-100 px-7 rounded-tr-md rounded-br-md rounded-bl-md py-7">
 
                         @foreach ($content as $key => $setting)
                             <div x-show="tab === '{{ $key }}'">
@@ -52,7 +52,7 @@
 
                                                                 <button @click.prevent="modal=true" type="button">
                                                                     <x:component::icon.delete
-                                                                        class="text-gray-300 hover:text-gray-700" />
+                                                                        class="text-slate-300 hover:text-slate-700" />
                                                                 </button>
 
                                                             </x-slot:trigger>
@@ -66,7 +66,7 @@
                                                                 </div>
                                                                 <div class="flex justify-center mt-7">
                                                                     <h3
-                                                                        class="text-lg font-bold text-center text-gray-700">
+                                                                        class="text-lg font-bold text-center text-slate-700">
                                                                         {{ $value['display_name'] }}
                                                                         <br />unwiderruflich
                                                                         löschen?
@@ -76,7 +76,7 @@
 
                                                             <x-slot:controller>
                                                                 <button @click.prevent="modal=false" type="button"
-                                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
+                                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
                                                                 <button wire:click='deleteEntry({{ $value['id'] }})'
                                                                     @click.prevent="modal=false" type="button"
@@ -123,7 +123,7 @@
 
 
             <div class="">
-                <h3 class="font-bold text-center text-gray-500 mb-7">Neue Einstellung</h3>
+                <h3 class="font-bold text-center text-slate-500 mb-7">Neue Einstellung</h3>
                 <div class="grid grid-cols-1 gap-4 bg-white rounded-md md:grid-cols-4 p-7">
                     <div class="">
                         <x:component::form.label value="Name" />

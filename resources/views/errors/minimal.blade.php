@@ -18,7 +18,7 @@
                 <h1 class="font-bold text-app-500 text-8xl md:text-[8rem] xl:text-[13rem] drop-shadow-sm">
                     @yield('code')
                 </h1>
-                <p class="text-lg text-gray-600 uppercase">@yield('message')</p>
+                <p class="text-lg text-slate-600 uppercase">@yield('message')</p>
             </div>
         </div>
 

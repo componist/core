@@ -1,5 +1,5 @@
 <div x-data="{ open: false }" class="relative">
-    <button @click.prevent="open = ! open" type="button" class="flex items-center text-gray-500">
+    <button @click.prevent="open = ! open" type="button" class="flex items-center text-slate-500">
         <x:component::icon.more-horiz />
     </button>
     <div x-show="open" x-cloak @click.outside="open = false"

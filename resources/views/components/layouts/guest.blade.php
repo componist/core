@@ -16,8 +16,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-200">
-    <div class="font-sans antialiased text-gray-900">
+<body class="bg-slate-200">
+    <div class="font-sans antialiased text-slate-900">
         @if (isset($slot))
             {{ $slot }}
         @endif

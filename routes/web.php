@@ -1,6 +1,5 @@
 <?php
 
-use Componist\Core\Models\MenuItem;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(config('componist.auth'))->prefix('dashboard')->name('componist.core.')->group(function () {
@@ -30,20 +29,8 @@ Route::view('404', 'component::error.404')->name('404');
 // Route::get('/{pageslug}', [\Componist\Core\Controllers\PageController::class, 'index'])->name('page');
 
 // dd(config('pages'));
-if (config()->has('pages')) {
-    foreach (config('pages') as $url => $viewPath) {
-        Route::view($url, $viewPath)->name($viewPath);
-    }
-}
-
-// $test = MenuItem::where('type','page')->get()->toArray();
-
-// dd($test);
-
-// try {
-//     $pages = MenuItem::get();
-
-//     dd($pages);
-// } catch (Exception $e) {
-//     dd($e);
+// if (config()->has('pages')) {
+//     foreach (config('pages') as $url => $viewPath) {
+//         Route::view($url, $viewPath)->name($viewPath);
+//     }
 // }

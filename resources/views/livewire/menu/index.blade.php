@@ -22,9 +22,9 @@
                 <x:component::table.wrapper>
                     <x-slot:head>
                         <x:component::table.row>
-                            <x:component::table.cell class="w-3/12 font-semibold text-left text-gray-700">Name
+                            <x:component::table.cell class="w-3/12 font-semibold text-left text-slate-700">Name
                             </x:component::table.cell>
-                            <x:component::table.cell class="w-3/12 font-semibold text-left text-gray-700">Snippet
+                            <x:component::table.cell class="w-3/12 font-semibold text-left text-slate-700">Snippet
                             </x:component::table.cell>
                             <x:component::table.cell></x:component::table.cell>
                         </x:component::table.row>
@@ -32,9 +32,9 @@
 
                     <x-slot:body>
                         @foreach ($content as $value)
-                            <x:component::table.row class="hover:bg-gray-50">
+                            <x:component::table.row class="hover:bg-slate-50">
 
-                                <x:component::table.cell class="text-gray-500">{{ $value->name }}
+                                <x:component::table.cell class="text-slate-500">{{ $value->name }}
                                 </x:component::table.cell>
 
                                 <x:component::table.cell><code
@@ -68,14 +68,14 @@
                                                 </div>
                                             </div>
                                             <div class="flex justify-center mt-7">
-                                                <h3 class="text-lg font-bold text-center text-gray-700">
+                                                <h3 class="text-lg font-bold text-center text-slate-700">
                                                     {{ $value->name }} <br />unwiderruflich löschen?</h3>
                                             </div>
                                         </x-slot:content>
 
                                         <x-slot:controller>
                                             <button @click.prevent="modal=false" type="button"
-                                                class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
+                                                class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
                                             <button wire:click='deleteEntry({{ $value->id }})'
                                                 @click.prevent="modal=false" type="button"

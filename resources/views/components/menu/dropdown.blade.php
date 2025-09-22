@@ -1,6 +1,6 @@
 <div x-data="{ open: false }" class="mx-4">
     <button x-on:click="open = ! open"
-        class="flex items-center justify-between w-full py-3 text-gray-600 transition-all duration-200 ease-linear hover:text-dashboard-500">
+        class="flex items-center justify-between w-full py-3 text-slate-600 transition-all duration-200 ease-linear hover:text-dashboard-500">
 
         {{ $trigger }}
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

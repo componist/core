@@ -6,7 +6,7 @@
     @if (count($item->children) > 0)
         <li x-data="{ open: false }" class="relative">
             <button @click.prevent="open = ! open"
-                class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}
+                class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}
                 <x:component::icon.arrow-down />
             </button>
             <ul x-cloak x-show="open" click.outside="open = false"
@@ -14,7 +14,7 @@
                 x-transition:enter-start="opacity-0 scale-30" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in duration-75 transform"
                 x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                class="relative z-10 flex flex-col font-normal divide-y divide-gray-100 rounded shadow bg-gray-50 md:absolute w-44 dark:bg-gray-700 dark:divide-gray-600">
+                class="relative z-10 flex flex-col font-normal divide-y divide-gray-100 rounded shadow bg-slate-50 md:absolute w-44 dark:bg-slate-700 dark:divide-gray-600">
                 @include('component::template.menu.vertical', [
                     'items' => $item->children,
                     'type' => 'children',
@@ -28,18 +28,18 @@
                 @if (Route::has($item->name))
                     <li>
                         <a href="{{ route($item->name) }}" target="{{ $item->target }}"
-                            class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                            class="block px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}</a>
                     </li>
                 @elseif(Route::has($item->view_path))
                     <li>
                         <a href="{{ route($item->view_path) }}" target="{{ $item->target }}"
-                            class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                            class="block px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}</a>
                     </li>
                 @endif
             @else
                 <li>
                     <a href="{{ url($item->name) }}" target="{{ $item->target }}"
-                        class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                        class="block px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}</a>
                 </li>
             @endif
         @else
@@ -47,18 +47,18 @@
                 @if (Route::has($item->name))
                     <li>
                         <a href="{{ route($item->name) }}" target="{{ $item->target }}"
-                            class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                            class="block px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}</a>
                     </li>
                 @elseif(Route::has($item->view_path))
                     <li>
                         <a href="{{ route($item->view_path) }}" target="{{ $item->target }}"
-                            class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                            class="block px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}</a>
                     </li>
                 @endif
             @else
                 <li>
                     <a href="{{ url($item->url) }}" target="{{ $item->target }}"
-                        class="block px-4 py-2 text-gray-600 hover:text-dashboard-500">{{ $item->title }}</a>
+                        class="block px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}</a>
                 </li>
             @endif
         @endif

@@ -29,7 +29,7 @@
         class="absolute left-0 bg-white border rounded shadow-sm top-14 w-96">
         <ul class="divide-y divide-gray-200">
             <template x-for="(category, index) in filtered()">
-                <li class="p-3 cursor-pointer hover:bg-gray-50" x-text="category.name"
+                <li class="p-3 cursor-pointer hover:bg-slate-50" x-text="category.name"
                     @click.prevent="add(category), open = false">
                 </li>
             </template>

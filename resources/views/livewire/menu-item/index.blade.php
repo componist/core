@@ -20,18 +20,18 @@
             </div>
 
             <div class="overflow-x-auto bg-white shadow md:rounded-lg">
-                <div class="flex gap-3 text-sm bg-gray-100">
+                <div class="flex gap-3 text-sm bg-slate-100">
                     <div class="w-[50px] p-4"></div>
-                    <div class="w-[350px] p-4 font-semibold text-left text-gray-700">
+                    <div class="w-[350px] p-4 font-semibold text-left text-slate-700">
                         <p class="">Title</p>
                     </div>
-                    <div class="p-4 font-semibold text-center text-gray-700">
+                    <div class="p-4 font-semibold text-center text-slate-700">
                         <p>Status</p>
                     </div>
-                    <div class="p-4 font-semibold text-center text-gray-700">
+                    <div class="p-4 font-semibold text-center text-slate-700">
                         <p>Type</p>
                     </div>
-                    <div class="p-4 font-semibold text-left text-gray-700">
+                    <div class="p-4 font-semibold text-left text-slate-700">
                         <p>Name / File Path</p>
                     </div>
                 </div>
@@ -39,11 +39,11 @@
 
                 <ul wire:sortable="reorder" wire:sortable-group="reorderChildes" class="divide-y divide-gray-200">
                     @foreach ($content as $value)
-                        <li x-data="{ open: false }" class="text-gray-500 hover:bg-gray-50"
+                        <li x-data="{ open: false }" class="text-slate-500 hover:bg-slate-50"
                             wire:key="group-{{ $value['id'] }}" wire:sortable.item="{{ $value['id'] }}">
                             <div class="flex items-center justify-between ">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-[50px] flex items-center justify-center text-gray-300 cursor-pointer hover:text-dashboard-500 p-4"
+                                    <div class="w-[50px] flex items-center justify-center text-slate-300 cursor-pointer hover:text-dashboard-500 p-4"
                                         wire:sortable.handle>
                                         <x:component::icon.drag-indicator />
                                     </div>
@@ -64,7 +64,7 @@
                                             {{ $value['title'] }}
                                         @endif
                                     </div>
-                                    <div class="p-4 font-semibold text-center text-gray-700">
+                                    <div class="p-4 font-semibold text-center text-slate-700">
                                         <x:component::form.toggle wire:change="toggle({{ $value['id'] }},'status')"
                                             status="{{ $value['status'] }}" />
                                     </div>
@@ -141,14 +141,14 @@
                                                 </div>
                                             </div>
                                             <div class="flex justify-center mt-7">
-                                                <h3 class="text-lg font-bold text-center text-gray-700">
+                                                <h3 class="text-lg font-bold text-center text-slate-700">
                                                     {{ $value['title'] }} <br />unwiderruflich löschen?</h3>
                                             </div>
                                         </x-slot:content>
 
                                         <x-slot:controller>
                                             <button @click.prevent="modal=false" type="button"
-                                                class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
+                                                class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
                                             <button wire:click='deleteEntry({{ $value['id'] }})'
                                                 @click.prevent="modal=false" type="button"
@@ -164,7 +164,7 @@
                                         wire:sortable-group.item-group="{{ $value['id'] }}">
 
                                         @foreach ($value->children->sortBy('order') as $children)
-                                            <li class="text-gray-500 bg-dashboard-100 hover:bg-dashboard-500 hover:text-white"
+                                            <li class="text-slate-500 bg-dashboard-100 hover:bg-dashboard-500 hover:text-white"
                                                 wire:key="children-{{ $children['id'] }}"
                                                 wire:sortable-group.item="{{ $children['id'] }}">
                                                 <div class="flex items-center justify-between ">
@@ -253,7 +253,7 @@
                                                                 </div>
                                                                 <div class="flex justify-center mt-7">
                                                                     <h3
-                                                                        class="text-lg font-bold text-center text-gray-700">
+                                                                        class="text-lg font-bold text-center text-slate-700">
                                                                         {{ $children['title'] }} <br />unwiderruflich
                                                                         löschen?</h3>
                                                                 </div>
@@ -261,7 +261,7 @@
 
                                                             <x-slot:controller>
                                                                 <button @click.prevent="modal=false" type="button"
-                                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
+                                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
                                                                 <button
                                                                     wire:click='deleteEntry({{ $children['id'] }})'

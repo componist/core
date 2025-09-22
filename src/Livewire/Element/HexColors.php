@@ -37,7 +37,7 @@ class HexColors extends Component
     public function setColor(string $color): void
     {
         $this->selectedColor = $color;
-        $this->emit($this->event, $color, $this->rowId);
+        $this->dispatch($this->event, $color, $this->rowId);
     }
 
     private function colorsList(): array

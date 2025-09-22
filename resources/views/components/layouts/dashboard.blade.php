@@ -31,7 +31,7 @@
     @vite(['resources/css/dashboard.css', 'resources/js/dashboard.js'])
 </head>
 
-<body class="bg-gray-200">
+<body class="bg-slate-200">
     <x:component::flash-message on="saved" />
 
     <div x-data="{ isOpen: true }" class="flex h-screen">
@@ -60,7 +60,7 @@
         </div>
         <div :class="isOpen ? 'left-0' : 'left-96'" class="relative w-full transition-all duration-300 ease-linear">
             <div class="shadow-sm bg-dashboard-900 backend-background-image">
-                <div class="bg-gray-900 bg-opacity-50">
+                <div class="bg-slate-900/50">
                     <div class="flex justify-between pl-5 pr-10 py-7">
                         <button x-on:click="isOpen = ! isOpen" type="button"
                             class="text-white hover:text-dashboard-500">
@@ -84,12 +84,12 @@
                                                     src="{{ asset(Auth::user()->profile_photo_url) }}"
                                                     alt="{{ Auth::user()->name }}" />
                                                 <span
-                                                    class="text-gray-400 hover:text-dashboard-500 default-transition">{{ Auth::user()->name }}</span>
+                                                    class="text-slate-400 hover:text-dashboard-500 default-transition">{{ Auth::user()->name }}</span>
                                             </button>
                                         @else
                                             <span class="inline-flex rounded-md">
                                                 <button type="button"
-                                                    class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:text-dashboard-500 focus:outline-none">
+                                                    class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 transition bg-white border border-transparent rounded-md text-slate-500 hover:text-dashboard-500 focus:outline-none">
                                                     {{ Auth::user()->name }}
 
                                                     <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -112,8 +112,8 @@
                                         class="absolute right-0 z-50 mt-2 origin-top-right bg-white rounded-md shadow-lg w-44">
 
                                         <div
-                                            class="overflow-hidden text-sm text-left rounded-md shadow-sm ring-1 ring-black ring-opacity-5">
-                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                            class="overflow-hidden text-sm text-left rounded-md shadow-sm ring-1 ring-black/5">
+                                            <div class="block px-4 py-2 text-xs text-slate-400">
                                                 {{ __('Manage Account') }}
                                             </div>
 

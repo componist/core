@@ -2,7 +2,7 @@
     <div x-data="{ open: false }" class="relative">
 
         @if ($selectedColor)
-            <button type="button" @click.prevent="open = ! open" class=" border-2 rounded-md shadow-sm w-9 h-9"
+            <button type="button" @click.prevent="open = ! open" class="border-2 rounded-md shadow-sm  w-9 h-9"
                 style="background-color: {{ $selectedColor }}">
             </button>
         @else
@@ -16,7 +16,7 @@
             x-transition:enter-start="opacity-0 scale-30" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-75 transform"
             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-            class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center px-5 bg-gray-500 backdrop-blur-sm bg-opacity-70">
+            class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center px-5 bg-slate-500/70 backdrop-blur-sm">
             <div @click.outside="open=false" class="grid grid-cols-1 gap-0 overflow-y-auto w-[336px] max-h-96">
                 @foreach ($colorListe as $tint)
                     <div class="flex gap-0">

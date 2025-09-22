@@ -23,9 +23,9 @@
                     <x:component::table.wrapper>
                         <x-slot:head>
                             <x:component::table.row>
-                                <x:component::table.cell class="font-semibold text-left text-gray-700">Title
+                                <x:component::table.cell class="font-semibold text-left text-slate-700">Title
                                 </x:component::table.cell>
-                                <x:component::table.cell class="font-semibold text-left text-gray-700">Datum
+                                <x:component::table.cell class="font-semibold text-left text-slate-700">Datum
                                 </x:component::table.cell>
 
                                 <x:component::table.cell></x:component::table.cell>
@@ -34,7 +34,7 @@
 
                         <x-slot:body>
                             @foreach ($content as $value)
-                                <x:component::table.row class="hover:bg-gray-50">
+                                <x:component::table.row class="hover:bg-slate-50">
                                     <x:component::table.cell class="text-sm whitespace-nowrap">
                                         {{ $value->title }}
                                     </x:component::table.cell>
@@ -65,14 +65,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex justify-center mt-7">
-                                                    <h3 class="text-lg font-bold text-center text-gray-700">
+                                                    <h3 class="text-lg font-bold text-center text-slate-700">
                                                         Eintrag Unwiderruflich löschen?</h3>
                                                 </div>
                                             </x-slot:content>
 
                                             <x-slot:controller>
                                                 <button @click.prevent="modal=false" type="button"
-                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-gray-300 border border-transparent rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
+                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
 
                                                 <button wire:click="delete('{{ $value->id }}')"
                                                     @click.prevent="modal=false" type="button"
