@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
-    @livewireStyles
+    {{-- @livewireStyles --}}
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    @vite(['resources/css/dashboard.css', 'resources/js/dashboard.js', 'resources/js/tinymce.js'])
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    {{-- @vite(['resources/css/dashboard.css', 'resources/js/dashboard.js', 'resources/js/tinymce.js']) --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     {{-- <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script> --}}
 
 </head>
@@ -24,7 +26,7 @@
                     class="mb-3 text-4xl font-extrabold leading-none text-center text-slate-900 md:text-5xl xl:text-6xl dark:text-white">
                     Blade Komponente übersicht</h2>
                 @foreach ($content as $element)
-                    <div class="bg-slate-100 border p-7">
+                    <div class="border bg-slate-100 p-7">
                         @if (is_array($element))
                             {{-- is array --}}
                             @if (isset($element['name']) && !empty($element['name']))
@@ -111,7 +113,7 @@
         </div>
     </div>
 
-    @livewireScripts
+    {{-- @livewireScripts --}}
 
 </body>
 
