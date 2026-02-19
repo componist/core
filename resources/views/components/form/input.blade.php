@@ -2,5 +2,5 @@
 
 <input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
     'class' =>
-        'outline-primary-300 py-3 px-5 w-full border border-dashboard-300 focus:border-dashboard-300 focus:ring focus:ring-dashboard-500/70 rounded-md focus:outline-none bg-white',
+        'outline-dashboard-300 py-3 px-5 w-full border border-dashboard-300 focus:border-dashboard-300 focus:ring focus:ring-dashboard-500/70 rounded-md focus:outline-none bg-white',
 ]) !!}>

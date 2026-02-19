@@ -145,7 +145,7 @@
                     @endif
                 </div>
             </div>
-            <main class="">
+            <main class="pb-14">
                 {{ $slot }}
             </main>
         </div>

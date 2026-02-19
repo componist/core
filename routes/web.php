@@ -10,16 +10,16 @@ Route::middleware(config('componist.auth'))->prefix('dashboard')->name('componis
     }
 
     if (config('componist.routes.settings')) {
-        Route::get('settings', Componist\Core\Livewire\Setting\Index::class)->name('settings');
+        Route::livewire('settings', Componist\Core\Livewire\Setting\Index::class)->name('settings');
     }
 
     if (config('componist.routes.menu')) {
-        Route::get('menu', Componist\Core\Livewire\Menu\Index::class)->name('menus');
-        Route::get('menu/items/{id}', Componist\Core\Livewire\MenuItem\Index::class)->name('menu.items');
+        Route::livewire('menu', Componist\Core\Livewire\Menu\Index::class)->name('menus');
+        Route::livewire('menu/items/{id}', Componist\Core\Livewire\MenuItem\Index::class)->name('menu.items');
     }
 
-    Route::get('notification', Componist\Core\Livewire\Notification\Notification::class)->name('notification');
-    Route::get('notification/{componistCoreNotification}', Componist\Core\Livewire\Notification\NotificationShow::class)->name('notification.show');
+    Route::livewire('notification', Componist\Core\Livewire\Notification\Notification::class)->name('notification');
+    Route::livewire('notification/{componistCoreNotification}', Componist\Core\Livewire\Notification\NotificationShow::class)->name('notification.show');
 });
 
 Route::view('404', 'component::error.404')->name('404');

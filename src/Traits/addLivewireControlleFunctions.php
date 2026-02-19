@@ -77,6 +77,7 @@ trait addLivewireControlleFunctions
 
     public function cancel()
     {
+        dd('okay');
         return redirect()->route($this->routeIndex);
     }
 }

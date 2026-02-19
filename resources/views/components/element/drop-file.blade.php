@@ -18,8 +18,8 @@
                 isUploading= true;
 
                 const files = $event.dataTransfer.files;
-                console.log('{{ $name }} {{ $multiple }}');
-                if (event.dataTransfer.files.length > 1 && '{{ $multiple }}') {
+                console.log('{{ $name }} {{ isset($multiple) ? $multiple : null }}');
+                if (event.dataTransfer.files.length > 1 && '{{ isset($multiple) ? $multiple : null }}') {
                     console.log('multi');
                     @this.uploadMultiple('{{ $name }}', files,
                         () => {
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <input id="{{ $id }}" type="file" class="hidden" {{ $attributes->wire('model') }}
-                @if ($multiple) multiple @endif />
+                @if (isset($multiple) && $multiple) multiple @endif />
         </label>
     </div>
 </div>
