@@ -221,7 +221,7 @@
                                                                 @endif
                                                             @endif
 
-                                                            @if ($children['url'] == 'url')
+                                                            @if ($children['type'] == 'url')
                                                                 <a href="{{ $children['name'] }}" target="_blank"
                                                                     class="hover:text-dashboard-900">{{ $children['name'] }}</a>
                                                             @endif

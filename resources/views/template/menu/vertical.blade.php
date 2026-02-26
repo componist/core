@@ -57,7 +57,7 @@
                 @endif
             @else
                 <li>
-                    <a href="{{ url($item->url) }}" target="{{ $item->target }}"
+                    <a href="{{ url($item->name) }}" target="{{ $item->target }}"
                         class="block px-4 py-2 text-slate-600 hover:text-dashboard-500">{{ $item->title }}</a>
                 </li>
             @endif
