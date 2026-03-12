@@ -35,12 +35,22 @@ trait addLivewireControlleFunctions
         unset($this->filter[$key]);
     }
 
+    /**
+     * Zentrale Toast-Meldung (für alle Packages).
+     * Zeigt eine Toast-Notification über die Komponente component::toast-message.
+     */
+    public function toastMessage(string $style, string $message, ?int $durationMs = null): void
+    {
+        $this->dispatch('toast-message', style: $style, message: $message, duration: $durationMs);
+        $this->dispatch('banner-message', style: $style, message: $message, duration: $durationMs);
+    }
+
+    /**
+     * @deprecated Bitte toastMessage() verwenden. Bleibt als Alias erhalten.
+     */
     public function bannerMessage(string $type, string $message): void
     {
-        $this->dispatch('banner-message', [
-            'style' => $type,
-            'message' => $message,
-        ]);
+        $this->toastMessage($type, $message);
     }
 
     public function storeAndIndex()
@@ -77,7 +87,6 @@ trait addLivewireControlleFunctions
 
     public function cancel()
     {
-        dd('okay');
         return redirect()->route($this->routeIndex);
     }
 }

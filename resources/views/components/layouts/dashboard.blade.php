@@ -32,7 +32,7 @@
 </head>
 
 <body class="bg-slate-200">
-    <x:component::flash-message on="saved" />
+    <x:component::toast-message />
 
     <div x-data="{ isOpen: true }" class="flex h-screen">
         <div x-cloak :class="isOpen ? '-left-96' : 'left-0'"
@@ -82,7 +82,7 @@
                                                 class="flex items-center gap-2 pr-3 text-sm transition border-2 border-transparent rounded-full focus:outline-none ">
                                                 <img class="object-cover w-8 h-8 rounded-full"
                                                     src="{{ asset(Auth::user()->profile_photo_url) }}"
-                                                    alt="{{ Auth::user()->name }}" />
+                                                    alt="{{ Auth::user()->name }}" onerror="this.style.display='none'" />
                                                 <span
                                                     class="text-slate-400 hover:text-dashboard-500 default-transition">{{ Auth::user()->name }}</span>
                                             </button>
