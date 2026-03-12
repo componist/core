@@ -80,9 +80,17 @@
                                         @if (!empty(Auth::user()->profile_photo_url))
                                             <button
                                                 class="flex items-center gap-2 pr-3 text-sm transition border-2 border-transparent rounded-full focus:outline-none ">
+                                                @php
+                                                    $storagePath = storage_path('app/'.Auth::user()->profile_photo_url);
+                                                    $photoUrl = (file_exists($storagePath) && Route::has('package.users.manager.profile-photo'))
+                                                        ? route('package.users.manager.profile-photo')
+                                                        : null;
+                                                @endphp
+                                                @if ($photoUrl)
                                                 <img class="object-cover w-8 h-8 rounded-full"
-                                                    src="{{ asset(Auth::user()->profile_photo_url) }}"
-                                                    alt="{{ Auth::user()->name }}" onerror="this.style.display='none'" />
+                                                    src="{{ $photoUrl }}"
+                                                    alt="{{ Auth::user()->name }}" />
+                                                @endif
                                                 <span
                                                     class="text-slate-400 hover:text-dashboard-500 default-transition">{{ Auth::user()->name }}</span>
                                             </button>
