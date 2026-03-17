@@ -19,7 +19,8 @@ class Select2 extends Component
 
     public array $list = [];
 
-    public ?int $selected = null;
+    /** @var int|string|null */
+    public $selected = null;
 
     public ?string $name = null;
 
@@ -29,7 +30,10 @@ class Select2 extends Component
 
     public ?string $key = null;
 
-    public function mount(string $table, string $event, string $column, string $order, ?string $filter = null, ?int $selected = null, bool $add_function = false, $key = null): void
+    /**
+     * @param  array<int, string>|null  $items
+     */
+    public function mount(string $table, string $event, string $column, string $order, ?string $filter = null, $selected = null, bool $add_function = false, $key = null, ?array $items = null): void
     {
         $this->table = $table;
         $this->event = $event;
@@ -40,7 +44,13 @@ class Select2 extends Component
         $this->add_function = $add_function;
         $this->key = $key;
 
-        $this->getDatabaseList();
+        if (is_array($items)) {
+            $this->list = array_values(array_map(function (string $value) {
+                return ['id' => $value, 'name' => $value];
+            }, $items));
+        } else {
+            $this->getDatabaseList();
+        }
 
         if (isset($selected) && ! empty($selected)) {
             $tempList = [];
@@ -63,7 +73,10 @@ class Select2 extends Component
         return view('component::livewire.element.select2');
     }
 
-    public function select(int $id, string $name): void
+    /**
+     * @param  int|string  $id
+     */
+    public function select($id, string $name): void
     {
         if ($this->selected === $id) {
             $this->selected = null;
@@ -80,6 +93,18 @@ class Select2 extends Component
     public function add(): void
     {
         $this->search = trim($this->search);
+        if (empty($this->table)) {
+            if (! empty($this->search)) {
+                $this->selected = $this->search;
+                $this->name = $this->search;
+                $this->clearSearch();
+                $this->emitEvent();
+            } else {
+                $this->clearSearch();
+            }
+            return;
+        }
+
         if ($this->add_function === true && ! DB::table($this->table)->where($this->column, $this->search)->exists() && ! empty($this->search)) {
             $this->selected = DB::table($this->table)->insertGetId([
                 $this->column => $this->search,
@@ -110,6 +135,10 @@ class Select2 extends Component
 
     private function getDatabaseList(): void
     {
+        if (empty($this->table)) {
+            return;
+        }
+
         $query = DB::table($this->table);
 
         if ($this->filter) {
@@ -131,9 +160,19 @@ class Select2 extends Component
     private function search(): void
     {
         if (! empty($this->search)) {
-            $this->list = json_decode(json_encode(DB::table($this->table)->where($this->column, 'LIKE', '%'.trim($this->search).'%')->orderBy($this->column, 'asc')->get()->toArray()), true);
+            if (empty($this->table)) {
+                $search = mb_strtolower(trim($this->search));
+                $this->list = array_values(array_filter($this->list, function (array $row) use ($search) {
+                    $value = (string) ($row['name'] ?? '');
+                    return str_contains(mb_strtolower($value), $search);
+                }));
+            } else {
+                $this->list = json_decode(json_encode(DB::table($this->table)->where($this->column, 'LIKE', '%'.trim($this->search).'%')->orderBy($this->column, 'asc')->get()->toArray()), true);
+            }
         } else {
-            $this->getDatabaseList();
+            if (! empty($this->table)) {
+                $this->getDatabaseList();
+            }
         }
     }
 

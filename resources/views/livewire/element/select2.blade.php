@@ -37,7 +37,7 @@
             </div>
             <ul>
                 @foreach ($list as $value)
-                    <li wire:click.prevent="select({{ $value['id'] }},'{{ $value[$column] }}')"
+                    <li wire:click.prevent="select(@js($value['id']),@js($value[$column]))"
                         @click.prevent="isOpen=false"
                         class="relative flex items-center justify-between px-5 py-3 border-t border-gray-300 cursor-pointer text-slate-900 hover:bg-slate-300">
                         <div class="flex items-center">

@@ -5,6 +5,7 @@ namespace Componist\Core\Livewire\MenuItem;
 use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Attributes\Title;
@@ -15,17 +16,30 @@ class Index extends Component
 {
     use addLivewireControlleFunctions;
 
+    protected $listeners = [
+        'menuItemIconSelected' => 'menuItemIconSelected',
+    ];
+
     public array $listOrder = [];
 
     public $menu;
 
     public $content;
 
+    /**
+     * Available icon names from `component::icon.*` anonymous components.
+     *
+     * @var array<int, string>
+     */
+    public array $icons = [];
+
     public bool $openEdit = false;
 
     public ?int $editId = null;
 
     public ?string $title = null;
+
+    public ?string $icon = null;
 
     public string $type = 'route';
 
@@ -43,6 +57,7 @@ class Index extends Component
 
     protected $rules = [
         'title' => 'required|min:3',
+        'icon' => 'nullable|string|max:255',
         'type' => 'required|string|max:255',
         'target' => 'nullable|string|max:10',
         'parent_id' => 'nullable|numeric',
@@ -55,6 +70,16 @@ class Index extends Component
     public function mount(Menu $id): void
     {
         $this->menu = collect($id)->toArray();
+
+        $iconDir = base_path('packages/componist/core/resources/views/components/icon');
+        if (is_dir($iconDir)) {
+            $this->icons = collect(File::files($iconDir))
+                ->map(fn ($file) => $file->getFilename())
+                ->filter(fn (string $name) => str_ends_with($name, '.blade.php'))
+                ->map(fn (string $name) => str_replace('.blade.php', '', $name))
+                ->values()
+                ->all();
+        }
     }
 
     public function render(): View
@@ -104,6 +129,7 @@ class Index extends Component
         $this->editId = $menuItem['id'];
 
         $this->title = $menuItem['title'];
+        $this->icon = $menuItem['icon'] ?? null;
         $this->type = $menuItem['type'];
         $this->target = $menuItem['target'];
         $this->parent_id = $menuItem['parent_id'];
@@ -135,6 +161,7 @@ class Index extends Component
         }
 
         $query['title'] = $this->title;
+        $query['icon'] = $this->icon;
         $query['type'] = $this->type;
 
         if (! empty($this->target)) {
@@ -209,6 +236,7 @@ class Index extends Component
         $this->editId = null;
 
         $this->title = null;
+        $this->icon = null;
         $this->type = 'route';
         $this->target = null;
         $this->parent_id = null;
@@ -227,5 +255,10 @@ class Index extends Component
         if ($temp['type'] == 'page') {
             MenuItem::createPageConfigFile();
         }
+    }
+
+    public function menuItemIconSelected($value = null): void
+    {
+        $this->icon = ! empty($value) ? (string) $value : null;
     }
 }

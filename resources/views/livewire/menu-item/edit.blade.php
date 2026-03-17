@@ -9,6 +9,38 @@
                         <x:component::form.input wire:model.live="title" type="text" name="title" />
                         <x:component::form.input-error :for="$title" />
                     </div>
+
+                    <div class="py-3">
+                        <x:component::form.label value="Icon (optional)" />
+                        @livewire('select2', [
+                            'table' => '',
+                            'event' => 'menuItemIconSelected',
+                            'column' => 'name',
+                            'order' => 'name',
+                            'filter' => '',
+                            'selected' => $icon,
+                            'add_function' => true,
+                            'key' => 'menu-item-icon',
+                            'items' => $icons,
+                        ])
+
+                        @php
+                            $isLocalIcon = !empty($icon) && !str_contains($icon, ':') && !str_starts_with($icon, 'heroicon-');
+                            $localIconView = $isLocalIcon ? 'component::components.icon.' . $icon : null;
+                        @endphp
+                        @if ($isLocalIcon && $localIconView && \Illuminate\Support\Facades\View::exists($localIconView))
+                            <div class="flex items-center gap-2 mt-2 text-slate-500">
+                                <x-dynamic-component :component="'component::icon.' . $icon" class="w-6 h-6" />
+                                <span class="text-xs">{{ $icon }}</span>
+                            </div>
+                        @elseif(! empty($icon))
+                            <div class="flex items-center gap-2 mt-2 text-slate-500">
+                                <x-dynamic-component :component="$icon" class="w-6 h-6" />
+                                <span class="text-xs">{{ $icon }}</span>
+                            </div>
+                        @endif
+                    </div>
+
                     <div class="py-3">
                         <x:component::form.label value="Type" />
                         <x:component::form.select wire:model.live="type">
