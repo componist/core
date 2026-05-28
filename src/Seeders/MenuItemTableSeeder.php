@@ -50,17 +50,6 @@ class MenuItemTableSeeder extends Seeder
             ])->save();
         }
 
-        $value = $this->findRoute('componist.core.componentes');
-        if (! $value->exists) {
-            $value->fill([
-                'menu_id' => '1',
-                'title' => 'Components overflow',
-                'type' => 'route',
-                'order' => '4',
-                'name' => 'componist.core.componentes',
-                'created_at' => date('Y-m-d H:i:s'),
-            ])->save();
-        }
     }
 
     protected function findRoute($key)

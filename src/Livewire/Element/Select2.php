@@ -3,6 +3,7 @@
 namespace Componist\Core\Livewire\Element;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Livewire\Component;
 
 class Select2 extends Component
@@ -44,6 +45,10 @@ class Select2 extends Component
         $this->add_function = $add_function;
         $this->key = $key;
 
+        if (! empty($this->table)) {
+            $this->guardDatabaseConfiguration();
+        }
+
         if (is_array($items)) {
             $this->list = array_values(array_map(function (string $value) {
                 return ['id' => $value, 'name' => $value];
@@ -68,8 +73,6 @@ class Select2 extends Component
 
     public function render()
     {
-        $this->search();
-
         return view('component::livewire.element.select2');
     }
 
@@ -139,11 +142,17 @@ class Select2 extends Component
             return;
         }
 
+        $this->guardDatabaseConfiguration();
+
         $query = DB::table($this->table);
 
         if ($this->filter) {
             $filter = explode(',', $this->filter);
             $filter_row = $filter[0];
+            $allowedColumns = config('componist.select2.allowed_tables.'.$this->table, []);
+            if (! in_array($filter_row, $allowedColumns, true) || ! Schema::hasColumn($this->table, $filter_row)) {
+                abort(422);
+            }
 
             if ($filter[1] === 'NULL') {
                 $filter_val = null;
@@ -154,26 +163,55 @@ class Select2 extends Component
             $query = $query->where($filter_row, $filter_val);
         }
 
-        $this->list = json_decode(json_encode($query->orderBy($this->order, 'asc')->get()->toArray()), true);
+        $this->list = $query
+            ->orderBy($this->order, 'asc')
+            ->limit(50)
+            ->get()
+            ->map(fn ($row) => (array) $row)
+            ->all();
     }
 
-    private function search(): void
+    public function updatedSearch(?string $value): void
     {
-        if (! empty($this->search)) {
-            if (empty($this->table)) {
-                $search = mb_strtolower(trim($this->search));
-                $this->list = array_values(array_filter($this->list, function (array $row) use ($search) {
-                    $value = (string) ($row['name'] ?? '');
-                    return str_contains(mb_strtolower($value), $search);
-                }));
-            } else {
-                $this->list = json_decode(json_encode(DB::table($this->table)->where($this->column, 'LIKE', '%'.trim($this->search).'%')->orderBy($this->column, 'asc')->get()->toArray()), true);
-            }
-        } else {
+        $this->search = is_string($value) ? trim($value) : null;
+
+        if (empty($this->search)) {
             if (! empty($this->table)) {
                 $this->getDatabaseList();
             }
+            return;
         }
+
+        if (empty($this->table)) {
+            $search = mb_strtolower($this->search);
+            $this->list = array_values(array_filter($this->list, function (array $row) use ($search) {
+                $value = (string) ($row['name'] ?? '');
+                return str_contains(mb_strtolower($value), $search);
+            }));
+            return;
+        }
+
+        $this->guardDatabaseConfiguration();
+
+        $query = DB::table($this->table)->where($this->column, 'LIKE', '%'.$this->search.'%');
+
+        if ($this->filter) {
+            $filter = explode(',', $this->filter);
+            $filter_row = $filter[0];
+            $allowedColumns = config('componist.select2.allowed_tables.'.$this->table, []);
+            if (! in_array($filter_row, $allowedColumns, true) || ! Schema::hasColumn($this->table, $filter_row)) {
+                abort(422);
+            }
+            $filter_val = ($filter[1] ?? null) === 'NULL' ? null : ($filter[1] ?? null);
+            $query->where($filter_row, $filter_val);
+        }
+
+        $this->list = $query
+            ->orderBy($this->column, 'asc')
+            ->limit(50)
+            ->get()
+            ->map(fn ($row) => (array) $row)
+            ->all();
     }
 
     private function clearSearch(): void
@@ -184,5 +222,30 @@ class Select2 extends Component
     private function emitEvent(): void
     {
         $this->dispatch($this->event, $this->selected, $this->key);
+    }
+
+    private function guardDatabaseConfiguration(): void
+    {
+        if (! preg_match('/^[a-zA-Z0-9_]+$/', $this->table)) {
+            abort(422);
+        }
+
+        if (! preg_match('/^[a-zA-Z0-9_]+$/', $this->column) || ! preg_match('/^[a-zA-Z0-9_]+$/', $this->order)) {
+            abort(422);
+        }
+
+        $allowedTables = config('componist.select2.allowed_tables', []);
+        $allowedColumns = $allowedTables[$this->table] ?? null;
+        if (! is_array($allowedColumns)) {
+            abort(403);
+        }
+
+        if (! in_array($this->column, $allowedColumns, true) || ! in_array($this->order, $allowedColumns, true)) {
+            abort(403);
+        }
+
+        if (! Schema::hasTable($this->table) || ! Schema::hasColumn($this->table, $this->column) || ! Schema::hasColumn($this->table, $this->order)) {
+            abort(422);
+        }
     }
 }

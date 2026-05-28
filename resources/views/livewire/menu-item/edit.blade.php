@@ -66,9 +66,9 @@
 
                         <x:component::form.select wire:model.live="parent_id" name="parent_id">
                             <x:component::form.select-option name="" value="" />
-                            @foreach (Componist\Core\Models\MenuItem::where('menu_id', $menu['id'])->get() as $value)
-                                <x:component::form.select-option name="{{ $value->id }}"
-                                    value="{{ $value->title }}" />
+                            @foreach ($parentOptions as $value)
+                                <x:component::form.select-option name="{{ $value['id'] }}"
+                                    value="{{ $value['title'] }}" />
                             @endforeach
                         </x:component::form.select>
 

@@ -4,11 +4,13 @@ namespace Componist\Core\Livewire\Menu;
 
 use Componist\Core\Models\Menu;
 use Componist\Core\Traits\addLivewireControlleFunctions;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Menus')]
+#[Layout(\Componist\Core\View\Components\DashboardLayout::class)]
 class Index extends Component
 {
     use addLivewireControlleFunctions;
@@ -19,15 +21,21 @@ class Index extends Component
 
     public ?int $editId = null;
 
-    public function render(): View
+    public function mount(): void
+    {
+        $this->authorizeManage();
+    }
+
+    public function render()
     {
         $content = Menu::all();
 
-        return view('component::livewire.menu.index', compact('content'))->layout(config('componist.template.dashboard'));
+        return view('component::livewire.menu.index', compact('content'));
     }
 
     public function edit(Menu $menu): void
     {
+        $this->authorizeManage();
         $this->clearValue();
 
         $this->editId = $menu['id'];
@@ -38,6 +46,7 @@ class Index extends Component
 
     public function update(): void
     {
+        $this->authorizeManage();
         $this->validate([
             'name' => 'required|string|min:3',
         ]);
@@ -66,6 +75,7 @@ class Index extends Component
 
     public function deleteEntry(Menu $menu): void
     {
+        $this->authorizeManage();
         if ($menu['name'] !== 'admin' && $menu->delete()) {
             // TODO: flash message
             // TODO: flesh message admin menu kann nicht gelöscht werden
@@ -80,5 +90,10 @@ class Index extends Component
     {
         $this->editId = null;
         $this->name = null;
+    }
+
+    private function authorizeManage(): void
+    {
+        Gate::authorize(config('componist.manage_ability', 'componist.core.manage'));
     }
 }

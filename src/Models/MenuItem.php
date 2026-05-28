@@ -50,6 +50,10 @@ class MenuItem extends Model
 
     public static function createStubPage(string $slug): bool
     {
+        if (! preg_match('/^[a-zA-Z0-9_.-]+$/', $slug) || str_contains($slug, '..')) {
+            return false;
+        }
+
         $explode = explode('.', trim($slug));
 
         $countExplodes = count($explode) - 1;
@@ -73,7 +77,7 @@ class MenuItem extends Model
             } else {
                 // folder
                 if (! is_dir($view_path)) {
-                    mkdir($view_path);
+                    mkdir($view_path, 0755, true);
                 }
             }
         }

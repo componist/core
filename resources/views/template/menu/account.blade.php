@@ -18,57 +18,49 @@
             </x:component::menu.dropdown>
         @else
             @if (isset($type) && $type == 'children')
-                @if ($item->type == 'route' or $item->type == 'page')
-                    @if (Route::has($item->name))
-                        <x:component::menu.account-link href="{{ route($item->name) }}">
-                            <span class="flex items-center gap-2">
-                                @include('component::template.menu._icon', ['item' => $item])
-                                <span>{{ $item->title }}</span>
-                            </span>
-                        </x:component::menu.account-link>
-                    @elseif(Route::has($item->view_path))
-                        <x:component::menu.account-link href="{{ route($item->view_path) }}">
+                @php($menuRoute = componist_menu_resolve_route_name($item->name ?? null))
+                @if ($menuRoute !== null && componist_menu_requires_post($item->name ?? null))
+                    <form method="POST" action="{{ route($menuRoute) }}" class="w-full">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center gap-2 w-full px-4 py-2 text-left leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out">
+                            @include('component::template.menu._icon', ['item' => $item])
+                            <span>{{ $item->title }}</span>
+                        </button>
+                    </form>
+                @else
+                    @php($href = componist_menu_href($item))
+                    @if ($href)
+                        <x:component::menu.account-link href="{{ $href }}">
                             <span class="flex items-center gap-2">
                                 @include('component::template.menu._icon', ['item' => $item])
                                 <span>{{ $item->title }}</span>
                             </span>
                         </x:component::menu.account-link>
                     @endif
-                @else
-                    <x:component::menu.account-link href="{{ url($item->name) }}">
-                        <span class="flex items-center gap-2">
-                            @include('component::template.menu._icon', ['item' => $item])
-                            <span>{{ $item->title }}</span>
-                        </span>
-                    </x:component::menu.account-link>
                 @endif
             @else
-                @if ($item->type == 'route' or $item->type == 'page')
-                    @if (Route::has($item->name))
-                        <x:component::menu.account-link href="{{ route($item->name) }}" target="{{ $item->target }}"
-                            active="{{ request()->routeIs($item->name) }}">
-                            <span class="flex items-center gap-2">
-                                @include('component::template.menu._icon', ['item' => $item])
-                                <span>{{ $item->title }}</span>
-                            </span>
-                        </x:component::menu.account-link>
-                    @elseif(Route::has($item->view_path))
-                        <x:component::menu.account-link href="{{ route($item->view_path) }}"
-                            target="{{ $item->target }}" active="{{ request()->routeIs($item->name) }}">
+                @php($menuRoute = componist_menu_resolve_route_name($item->name ?? null))
+                @if ($menuRoute !== null && componist_menu_requires_post($item->name ?? null))
+                    <form method="POST" action="{{ route($menuRoute) }}" class="w-full">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center gap-2 w-full px-4 py-2 text-left leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out">
+                            @include('component::template.menu._icon', ['item' => $item])
+                            <span>{{ $item->title }}</span>
+                        </button>
+                    </form>
+                @else
+                    @php($href = componist_menu_href($item))
+                    @if ($href)
+                        <x:component::menu.account-link href="{{ $href }}" target="{{ $item->target }}"
+                            active="{{ $item->type === 'url' ? (request()->url() == $href ? true : false) : request()->routeIs($item->name ?? '') }}">
                             <span class="flex items-center gap-2">
                                 @include('component::template.menu._icon', ['item' => $item])
                                 <span>{{ $item->title }}</span>
                             </span>
                         </x:component::menu.account-link>
                     @endif
-                @else
-                    <x:component::menu.account-link href="{{ url($item->name) }}" target="{{ $item->target }}"
-                        active="{{ request()->url() == url($item->name) ? true : false }}">
-                        <span class="flex items-center gap-2">
-                            @include('component::template.menu._icon', ['item' => $item])
-                            <span>{{ $item->title }}</span>
-                        </span>
-                    </x:component::menu.account-link>
                 @endif
             @endif
         @endif

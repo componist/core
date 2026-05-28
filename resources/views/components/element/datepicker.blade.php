@@ -1,11 +1,11 @@
 {{-- @php
-    dd($attributes);
+dd($attributes);
 @endphp --}}
 <div x-data="app()" x-init="[initDate($wire.{{ $model }}), getNoOfDays()]" x-cloak class="relative">
 
-    <div x-on:click="showDatepicker = !showDatepicker" x-on:keyup.tab="showDatepicker = !showDatepicker" class="relative">
-        <input type="hidden" name="date" x-ref="date"
-            :value="$wire.set('{{ $model }}', datepickerValue, true)" />
+    <div x-on:click="showDatepicker = !showDatepicker" x-on:keyup.tab="showDatepicker = !showDatepicker"
+        class="relative">
+        <input type="hidden" name="date" x-ref="date" :value="$wire.set('{{ $model }}', datepickerValue, true)" />
 
         <div
             class="flex items-center justify-between w-full h-10 px-3 mt-1 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer items-centerpx-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
@@ -96,7 +96,7 @@
         const MONTH_NAMES = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober",
             "November", "Dezember",
         ];
-        const MONTH_SHORT_NAMES = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez", ];
+        const MONTH_SHORT_NAMES = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",];
         const DAYS = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
         function app() {
@@ -177,8 +177,6 @@
 
                     this.datepickerValue = this.formatDateForDisplay(selectedDate);
                     this.dateView = this.formatForDateView(selectedDate);
-
-                    console.log(date);
                     this.isSelectedDate(date);
 
                     this.showDatepicker = false;
@@ -191,7 +189,7 @@
                     let daysArray = [];
 
                     (dayOfWeek == 0) ?
-                    dayOfWeek = 6: --dayOfWeek;
+                        dayOfWeek = 6 : --dayOfWeek;
 
                     for (var i = 1; i <= dayOfWeek; i++) {
                         blankdaysArray.push(i);

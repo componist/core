@@ -18,53 +18,43 @@
             </x:component::menu.dropdown>
         @else
             @if (isset($type) && $type == 'children')
-                @if ($item->type == 'route' or $item->type == 'page')
-                    @if (Route::has($item->name))
-                        <x:component::menu.dropdown-link href="{{ route($item->name) }}">
-                            <span class="flex items-center gap-2">
-                                @include('component::template.menu._icon', ['item' => $item])
-                                <span>{{ $item->title }}</span>
-                            </span>
-                        </x:component::menu.dropdown-link>
-                    @elseif(Route::has($item->view_path))
-                        <x:component::menu.dropdown-link href="{{ route($item->view_path) }}">
-                            <span class="flex items-center gap-2">
-                                @include('component::template.menu._icon', ['item' => $item])
-                                <span>{{ $item->title }}</span>
-                            </span>
-                        </x:component::menu.dropdown-link>
-                    @endif
-                @else
-                    <x:component::menu.dropdown-link href="{{ url($item->name) }}">
-                        <span class="flex items-center gap-2">
+                @php($menuRoute = componist_menu_resolve_route_name($item->name ?? null))
+                @if ($menuRoute !== null && componist_menu_requires_post($item->name ?? null))
+                    <form method="POST" action="{{ route($menuRoute) }}" class="w-full">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center gap-2 w-full px-4 py-2 text-sm text-left text-slate-300 hover:bg-slate-800 hover:text-white transition">
                             @include('component::template.menu._icon', ['item' => $item])
                             <span>{{ $item->title }}</span>
-                        </span>
-                    </x:component::menu.dropdown-link>
+                        </button>
+                    </form>
+                @else
+                    @php($href = componist_menu_href($item))
+                    @if ($href)
+                        <x:component::menu.dropdown-link href="{{ $href }}">
+                            <span class="flex items-center gap-2">
+                                @include('component::template.menu._icon', ['item' => $item])
+                                <span>{{ $item->title }}</span>
+                            </span>
+                        </x:component::menu.dropdown-link>
+                    @endif
                 @endif
             @else
-                @if ($item->type == 'route' or $item->type == 'page')
-                    @if (Route::has($item->name))
-                        <x:component::menu.link href="{{ route($item->name) }}" target="{{ $item->target }}"
-                            active="{{ request()->routeIs($item->name) }}">
-                            <span class="flex items-center gap-2">
-                                @include('component::template.menu._icon', ['item' => $item])
-                                <span>{{ $item->title }}</span>
-                            </span>
-                        </x:component::menu.link>
-                    @elseif(Route::has($item->view_path))
-                        <x:component::menu.link href="{{ route($item->view_path) }}" target="{{ $item->target }}"
-                            active="{{ request()->routeIs($item->view_path) }}">
-                            <span class="flex items-center gap-2">
-                                @include('component::template.menu._icon', ['item' => $item])
-                                <span>{{ $item->title }}</span>
-                            </span>
-                        </x:component::menu.link>
-                    @endif
+                @php($menuRoute = componist_menu_resolve_route_name($item->name ?? null))
+                @if ($menuRoute !== null && componist_menu_requires_post($item->name ?? null))
+                    <form method="POST" action="{{ route($menuRoute) }}" class="w-full">
+                        @csrf
+                        <button type="submit"
+                            class="flex items-center gap-2 w-full px-4 py-2 text-sm text-left text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                            @include('component::template.menu._icon', ['item' => $item])
+                            <span>{{ $item->title }}</span>
+                        </button>
+                    </form>
                 @else
-                    @if (isset($item->name))
-                        <x:component::menu.link href="{{ url($item->name) }}" target="{{ $item->target }}"
-                            active="{{ request()->url() == url($item->name) ? true : false }}">
+                    @php($href = componist_menu_href($item))
+                    @if ($href)
+                        <x:component::menu.link href="{{ $href }}" target="{{ $item->target }}"
+                            active="{{ $item->type === 'url' ? (request()->url() == $href ? true : false) : request()->routeIs($item->name ?? '') }}">
                             <span class="flex items-center gap-2">
                                 @include('component::template.menu._icon', ['item' => $item])
                                 <span>{{ $item->title }}</span>

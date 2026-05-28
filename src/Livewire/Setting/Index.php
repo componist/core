@@ -4,11 +4,13 @@ namespace Componist\Core\Livewire\Setting;
 
 use Componist\Core\Models\Setting;
 use Componist\Core\Traits\addLivewireControlleFunctions;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Settings')]
+#[Layout(\Componist\Core\View\Components\DashboardLayout::class)]
 class Index extends Component
 {
     use addLivewireControlleFunctions;
@@ -41,22 +43,30 @@ class Index extends Component
         'group' => 'Gruppe',
     ];
 
-    public function render(): View
+    public function mount(): void
     {
-        $collection = collect(
-            Setting::orderBy('group', 'asc')
-                ->orderBy('order', 'asc')->get()
-        );
+        $this->authorizeManage();
+        $this->refreshContent();
+    }
+
+    public function render()
+    {
+        return view('component::livewire.setting.index');
+    }
+
+    private function refreshContent(): void
+    {
+        $collection = Setting::query()
+            ->orderBy('group', 'asc')
+            ->orderBy('order', 'asc')
+            ->get();
 
         $this->content = $collection->groupBy('group')->toArray();
-
-        // dd($this->content);
-
-        return view('component::livewire.setting.index')->layout(config('componist.template.dashboard'));
     }
 
     public function createNewSettingEntry(): void
     {
+        $this->authorizeManage();
         $this->validate();
 
         $setting = new Setting;
@@ -72,11 +82,13 @@ class Index extends Component
         if ($setting->save()) {
             $this->bannerMessage('success', 'Eintrag wurde erfolgreich gespeichert');
             $this->clearValue();
+            $this->refreshContent();
         }
     }
 
     public function input(string $value, int $id): void
     {
+        $this->authorizeManage();
         Setting::where('id', $id)->update([
             'value' => $value,
             'updated_at' => date('Y-m-d H:i:s'),
@@ -86,8 +98,10 @@ class Index extends Component
 
     public function deleteEntry(Setting $setting): void
     {
+        $this->authorizeManage();
         if ($setting->delete()) {
             $this->bannerMessage('success', 'Eintrag wurde erfolgreich gelöscht');
+            $this->refreshContent();
         }
     }
 
@@ -97,5 +111,10 @@ class Index extends Component
         $this->key = null;
         $this->type = null;
         $this->group = null;
+    }
+
+    private function authorizeManage(): void
+    {
+        Gate::authorize(config('componist.manage_ability', 'componist.core.manage'));
     }
 }

@@ -26,27 +26,10 @@
         </li>
     @else
         @if (isset($type) && $type == 'children')
-            @if ($item->type == 'route' or $item->type == 'page')
-                @if (Route::has($item->name))
-                    <li>
-                        <a href="{{ route($item->name) }}" target="{{ $item->target }}"
-                            class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
-                            @include('component::template.menu._icon', ['item' => $item])
-                            <span>{{ $item->title }}</span>
-                        </a>
-                    </li>
-                @elseif(Route::has($item->view_path))
-                    <li>
-                        <a href="{{ route($item->view_path) }}" target="{{ $item->target }}"
-                            class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
-                            @include('component::template.menu._icon', ['item' => $item])
-                            <span>{{ $item->title }}</span>
-                        </a>
-                    </li>
-                @endif
-            @else
+            @php($href = componist_menu_href($item))
+            @if ($href)
                 <li>
-                    <a href="{{ url($item->name) }}" target="{{ $item->target }}"
+                    <a href="{{ $href }}" target="{{ $item->target }}"
                         class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
                         @include('component::template.menu._icon', ['item' => $item])
                         <span>{{ $item->title }}</span>
@@ -54,27 +37,10 @@
                 </li>
             @endif
         @else
-            @if ($item->type == 'route' or $item->type == 'page')
-                @if (Route::has($item->name))
-                    <li>
-                        <a href="{{ route($item->name) }}" target="{{ $item->target }}"
-                            class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
-                            @include('component::template.menu._icon', ['item' => $item])
-                            <span>{{ $item->title }}</span>
-                        </a>
-                    </li>
-                @elseif(Route::has($item->view_path))
-                    <li>
-                        <a href="{{ route($item->view_path) }}" target="{{ $item->target }}"
-                            class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
-                            @include('component::template.menu._icon', ['item' => $item])
-                            <span>{{ $item->title }}</span>
-                        </a>
-                    </li>
-                @endif
-            @else
+            @php($href = componist_menu_href($item))
+            @if ($href)
                 <li>
-                    <a href="{{ url($item->name) }}" target="{{ $item->target }}"
+                    <a href="{{ $href }}" target="{{ $item->target }}"
                         class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
                         @include('component::template.menu._icon', ['item' => $item])
                         <span>{{ $item->title }}</span>

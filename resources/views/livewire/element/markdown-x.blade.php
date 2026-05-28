@@ -1,6 +1,6 @@
 <div class="relative">
-    <div x-data="markdown()" x-ref="markdownX" data-key="{{ $key }}" id="markdown-{{ $key }}"
-        class="relative w-full" x-init="init()">
+    <div x-data="markdown()" x-ref="markdownX" data-key="{{ $key }}" id="markdown-{{ $key }}" class="relative w-full"
+        x-init="init()">
         {{-- MarkdownX Toolbar --}}
         <div id="markdownx-insert-{{ $key }}" :data-insert="editStart"></div>
         <div
@@ -44,11 +44,10 @@
             </div>
             <div
                 class="relative flex items-center h-full px-4 font-medium text-slate-600 cursor-pointer hover:bg-slate-100 dark-hover:bg-dark-950">
-                <input type="file" x-on:change="upload(event, '{{ $key }}')" x-ref="image"
-                    id="image-{{ $key }}" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                    tabindex="-1">
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 cursor-pointer">
+                <input type="file" x-on:change="upload(event, '{{ $key }}')" x-ref="image" id="image-{{ $key }}"
+                    class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" tabindex="-1">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    viewBox="0 0 24 24" class="w-6 h-6 cursor-pointer">
                     <path
                         d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                         class="cursor-pointer"></path>
@@ -61,15 +60,13 @@
             <div x-ref="error" id="error-{{ $key }}"
                 class="absolute top-0 z-40 hidden w-full py-2 text-sm text-center text-red-400 bg-red-50"></div>
             <div x-ref="editorModal" x-show="popup" x-ref="popup" x-on:keydown.escape="cancelModal(); popup=false"
-                x-on:click.away="popup=false" wire:ignore
-                :class="{
+                x-on:click.away="popup=false" wire:ignore :class="{
                     'translate-y-2 scale-100 transition-transform duration-100 ease-in-out': popup,
                     'translate-y-0 scale-95':
                         !popup,
                     'max-w-sm': popupType != 'code',
                     'max-w-4xl pr-10': popupType == 'code'
-                }"
-                class="absolute z-40 w-full max-w-sm transform rounded-lg shadow-sm" x-cloak>
+                }" class="absolute z-40 w-full max-w-sm transform rounded-lg shadow-sm" x-cloak>
                 <div
                     class="absolute left-0 w-4 h-4 -mt-2 ml-3.5 transform rotate-45 bg-white border-t border-l border-gray-200 rounded-tl-sm">
                 </div>
@@ -96,8 +93,7 @@
                 class="absolute z-40 cursor-text" x-cloak>
                 <div x-show="debuggerOpen" x-ref="debugger" class="w-full opacity-75" x-cloak></div>
                 <div x-ref="debugButton" class="relative opacity-0">
-                    <div @click.prevent="debuggerOpen=!debuggerOpen"
-                        :class="{
+                    <div @click.prevent="debuggerOpen=!debuggerOpen" :class="{
                             'text-slate-400 bg-slate-50 hover:text-slate-500': !
                                 debuggerOpen,
                             'text-red-400 hover:text-red-500 bg-red-50': debuggerOpen
@@ -130,12 +126,11 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="relative z-30 overflow-hidden @if (isset($style['height'])) {{ $style['height'] }} @endif">
+            <div class="relative z-30 overflow-hidden @if (isset($style['height'])) {{ $style['height'] }} @endif">
 
-                <div wire:ignore x-ref="placeholder" @click.prevent="$refs.editor.focus()"
-                    id="placeholder-{{ $key }}" x-show="placeholder"
-                    class="absolute z-20 text-slate-400 transition-opacity duration-200 ease-out" x-cloak>Type '/' for
+                <div wire:ignore x-ref="placeholder" @click.prevent="$refs.editor.focus()" id="placeholder-{{ $key }}"
+                    x-show="placeholder" class="absolute z-20 text-slate-400 transition-opacity duration-200 ease-out"
+                    x-cloak>Type '/' for
                     commands </div>
                 <textarea x-ref="editor" id="editor-{{ $key }}" data-key="{{ $key }}"
                     class="editors @if (isset($style['textarea'])) {{ $style['textarea'] }}@else{{ 'w-full h-full mx-auto min-h-screen px-5 md:px-1 pt-5 font-mono leading-loose tracking-tighter border-0 outline-none focus:outline-none sm:x-0 text-lg text-slate-600' }} @endif"
@@ -216,9 +211,9 @@
             <p>To add a numbered list you can simply start with a number and a <span
                     class="p-1 font-mono text-blue-600 bg-blue-100">.</span>, like so:<br><span
                     class="block p-1 pl-5 font-mono text-blue-600 bg-blue-100"> 1. The first item in my list</span></p>
-            <p>For an unordered list, you can add a dash <span
-                    class="p-1 font-mono text-blue-600 bg-blue-100">-</span>, like so:<br><span
-                    class="block p-1 pl-5 font-mono text-blue-600 bg-blue-100"> - The start of my list</span></p>
+            <p>For an unordered list, you can add a dash <span class="p-1 font-mono text-blue-600 bg-blue-100">-</span>,
+                like so:<br><span class="block p-1 pl-5 font-mono text-blue-600 bg-blue-100"> - The start of my
+                    list</span></p>
             <hr>
 
             <h3>Images</h3>
@@ -252,8 +247,8 @@
                 <p>You may also choose the default tabs you wish to show your pen by writing the <span
                         class="p-1 font-mono text-blue-600 bg-blue-100">default-tab</span> like so: (default is result)
                 </p>
-                <p><span
-                        class="p-1 font-mono text-blue-600 bg-blue-100">{% codepen https://codepen.io/your/pen/url default-tab=result,html %}</span>
+                <p><span class="p-1 font-mono text-blue-600 bg-blue-100">{% codepen https://codepen.io/your/pen/url
+                        default-tab=result,html %}</span>
                 </p>
                 <hr>
             @endif
@@ -283,7 +278,8 @@
             @if (in_array('buy_me_a_coffee', config('markdownx.dropdown_items')))
                 <h3>Embedding buymeacoffee.com</h3>
                 <p>You can also embed your "Buy me a coffee" button by writing the following:<br><span
-                        class="p-1 font-mono text-blue-600 bg-blue-100">{% buymeacoffee BUY_ME_A_COFFEE_USERNAME_HERE %}</span>
+                        class="p-1 font-mono text-blue-600 bg-blue-100">{% buymeacoffee BUY_ME_A_COFFEE_USERNAME_HERE
+                        %}</span>
                 </p>
                 <hr>
             @endif
@@ -297,7 +293,7 @@
         const suggestionActiveClasses = 'bg-slate-50 text-white suggestion-active';
         const suggestionItemClasses = 'cursor-pointer hover:bg-slate-50';
 
-        window.markdown = function() {
+        window.markdown = function () {
             return {
                 section: @entangle('section'),
                 autofocus: true,
@@ -317,13 +313,13 @@
                 init() {
                     let that = this;
 
-                    this.$watch('placeholder', function(value) {
+                    this.$watch('placeholder', function (value) {
                         if (!value) {
                             that.repositionPlaceholder();
                         }
                     });
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         //that.placeholder = true;
                         if (that.autofocus) {
                             that.$refs.editor.focus();
@@ -332,7 +328,7 @@
 
                     this.loop();
 
-                    this.$refs.editor.addEventListener('scroll', function(e) {
+                    this.$refs.editor.addEventListener('scroll', function (e) {
 
                         if (that.getCurrentLine() == "") {
                             that.getCursorXY();
@@ -344,7 +340,7 @@
                         that.$refs.debugger.firstChild.scrollTop = that.$refs.editor.scrollTop;
                     });
 
-                    this.$refs.debugger.firstChild.addEventListener('scroll', function(e) {
+                    this.$refs.debugger.firstChild.addEventListener('scroll', function (e) {
                         that.$refs.editor.scrollTop = that.$refs.debugger.firstChild.scrollTop;
                     });
                 },
@@ -670,7 +666,7 @@
                         Object.assign(dropdownSuggestionHTML, {
                             [key]: suggestionHTML.replace('[[ icon ]]', value.icon).replace('[[ title ]]', value
                                 .title).replace('[[ description ]]', value.description).replace('[[ key ]]',
-                                key)
+                                    key)
                         });
                     }
 
@@ -746,7 +742,7 @@
                     }
                     if (dynamicEvent === null) {
                         let event = new Event(dynamicEventName);
-                        this.$refs.editor.addEventListener(dynamicEventName, function(e) {
+                        this.$refs.editor.addEventListener(dynamicEventName, function (e) {
                             /* ... */
                         }, false);
                         dynamicEvent = {
@@ -815,8 +811,8 @@
                     let newLine = '';
                     // if this is a block level item and the line is not empty we want to add a new line before inserting text
                     if (!this.isCurrentLineEmpty && this.suggestionDropdownItems()[selected.dataset.suggestion][
-                            'display'
-                        ] == "block") {
+                        'display'
+                    ] == "block") {
                         newLine = '\n';
                     }
 
@@ -843,7 +839,7 @@
                             this.$refs.editor.setCaretPosition(this.currentCaretPos.start, this.currentCaretPos.end);
                             this.replaceSuggestionText(newLine + '');
                             let that = this;
-                            this.showModalPop(function() {
+                            this.showModalPop(function () {
                                 that.initializeAceEditor();
                                 that.codeEditor.focus();
                             });
@@ -853,7 +849,7 @@
                             this.$refs.modalExecute.dataset.suggestion = "link";
                             this.$refs.editor.setCaretPosition(this.currentCaretPos.start, this.currentCaretPos.end);
                             this.replaceSuggestionText('');
-                            this.showModalPop(function() {
+                            this.showModalPop(function () {
                                 document.getElementById('editor-link-text').focus();
                             });
                             break;
@@ -874,7 +870,7 @@
                             window.livewire.emit('markdown-x-giphy-load', {
                                 key: this.$refs.markdownX.dataset.key
                             });
-                            this.showModalPop(function() {
+                            this.showModalPop(function () {
                                 document.getElementById('editor-giphy-search').focus();
                             });
                             break;
@@ -883,7 +879,7 @@
                             this.$refs.modalExecute.dataset.suggestion = "codepen";
                             this.$refs.editor.setCaretPosition(this.currentCaretPos.start, this.currentCaretPos.end);
                             this.replaceSuggestionText(newLine + '');
-                            this.showModalPop(function() {
+                            this.showModalPop(function () {
                                 document.getElementById('editor-codepen-url').focus();
                             });
                             break;
@@ -892,7 +888,7 @@
                             this.$refs.modalExecute.dataset.suggestion = "codesandbox";
                             this.$refs.editor.setCaretPosition(this.currentCaretPos.start, this.currentCaretPos.end);
                             this.replaceSuggestionText(newLine + '');
-                            this.showModalPop(function() {
+                            this.showModalPop(function () {
                                 document.getElementById('editor-codesandbox-url').focus();
                             });
                             break;
@@ -904,7 +900,7 @@
                             this.$refs.modalExecute.dataset.suggestion = "youtube";
                             this.$refs.editor.setCaretPosition(this.currentCaretPos.start, this.currentCaretPos.end);
                             this.replaceSuggestionText(newLine + '');
-                            this.showModalPop(function() {
+                            this.showModalPop(function () {
                                 document.getElementById('editor-youtube-url').focus();
                             });
                             break;
@@ -913,12 +909,11 @@
                             this.$refs.modalExecute.dataset.suggestion = "buy_me_a_coffee";
                             this.$refs.editor.setCaretPosition(this.currentCaretPos.start, this.currentCaretPos.end);
                             this.replaceSuggestionText(newLine + '');
-                            this.showModalPop(function() {
+                            this.showModalPop(function () {
                                 document.getElementById('editor-buy-me-a-coffee-username').focus();
                             });
                             break;
                         default:
-                            console.log('Warning: Unsure which dropdown item to execute.')
                             break;
                     }
                 },
@@ -986,7 +981,7 @@
                 },
                 handleSpaceFunctionality() {
                     if (this.lineIsStartOfNumberedList(this.getCurrentLine()) || this.lineIsStartOfBulletedList(this
-                            .getCurrentLine())) {
+                        .getCurrentLine())) {
 
                         let editor = this.$refs.editor;
                         // add leading space to line
@@ -1115,7 +1110,7 @@
                         .toLowerCase();
                     const suggestionHTML = this.getSuggestionsHTML();
                     const suggestions = Object.keys(suggestionHTML);
-                    const filteredSuggestions = suggestions.filter(function(entry) {
+                    const filteredSuggestions = suggestions.filter(function (entry) {
                         return entry.replaceAll('_', ' ').includes(filter);
                     });
                     if (!filteredSuggestions.length) {
@@ -1154,7 +1149,7 @@
                         this.clearSuggestionText();
                         this.toggleSuggestionDropdown();
                         let that = this;
-                        setTimeout(function() {
+                        setTimeout(function () {
                             that.selectItem(e.target);
                         }, 1);
                     }
@@ -1215,7 +1210,7 @@
                     // append it to the body
                     this.$refs.dropdown.appendChild(this.dropdownEl);
                     let that = this;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         that.dropdownEl.classList.remove('scale-95');
                         that.dropdownEl.classList.add('scale-100');
                         that.dropdownEl.classList.remove('translate-y-7');
@@ -1294,7 +1289,7 @@
                             case 27:
                                 this.hideSuggestionDropdown();
                                 break;
-                                // Backspace or delete key
+                            // Backspace or delete key
                             case 8:
                                 if (editor.selectionStart <= this.editStart) {
                                     this.toggleSuggestionDropdown();
@@ -1332,7 +1327,7 @@
         }
 
 
-        window.loadDynamicScript = function(url, id) {
+        window.loadDynamicScript = function (url, id) {
             let existingScript = document.getElementById(id);
 
             if (!existingScript) {
@@ -1354,7 +1349,7 @@
                 return;
             }
             let imageText = "![" + event.detail.name + "](" + event.detail.path + ")\r";
-            setTimeout(function() {
+            setTimeout(function () {
                 replaceEditorText(editor.value.replace(event.detail.text, "![" + event.detail.name + "](" +
                     event.detail.path + ")\r"), editor);
             }, 10);
@@ -1379,7 +1374,7 @@
             document.getElementById('giphy-items').innerHTML = giphyContents;
         });
 
-        window.addAnimatedGif = function(content, key) {
+        window.addAnimatedGif = function (content, key) {
             let editor = document.getElementById('editor-' + key);
             let insertionLocationEl = document.getElementById('markdownx-insert-' + key);
             let insertionLocation = parseInt(insertionLocationEl.dataset.insert);
@@ -1394,7 +1389,7 @@
             editor.focus();
         }
 
-        window.replaceEditorText = function(updatedText, editor) {
+        window.replaceEditorText = function (updatedText, editor) {
             // Doing it this way as opposted to setting editor.value of textarea will preserve undo/redo
             editor.focus();
             document.execCommand('selectAll', false);
@@ -1405,17 +1400,17 @@
             document.execCommand('insertHTML', false, tempEl.innerHTML);
         }
 
-        window.showErrorMessage = function(el, message) {
+        window.showErrorMessage = function (el, message) {
             el.classList.remove('hidden');
             el.innerText = message;
-            setTimeout(function() {
+            setTimeout(function () {
                 el.classList.add('hidden');
                 el.innerText = '';
             }, 3000);
         }
 
         /********** TEXT AREA PROTOTYPES **********/
-        HTMLTextAreaElement.prototype.insertAtCaret = function(text) {
+        HTMLTextAreaElement.prototype.insertAtCaret = function (text) {
             text = text || '';
             if (document.selection) {
                 // IE
@@ -1440,7 +1435,7 @@
             }
         };
 
-        HTMLTextAreaElement.prototype.getCaretPosition = function() {
+        HTMLTextAreaElement.prototype.getCaretPosition = function () {
             // IE < 9 Support
             if (document.selection) {
                 this.focus();
@@ -1466,7 +1461,7 @@
             }
         };
 
-        HTMLTextAreaElement.prototype.setCaretPosition = function(start, end) {
+        HTMLTextAreaElement.prototype.setCaretPosition = function (start, end) {
             // IE >= 9 and other browsers
             if (this.setSelectionRange) {
                 this.focus();

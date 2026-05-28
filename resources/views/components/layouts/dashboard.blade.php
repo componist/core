@@ -130,15 +130,11 @@
 
                                             {{-- <div class="border-t border-gray-100"></div> --}}
 
-                                            <!-- Authentication -->
-                                            {{-- <form method="POST" action="{{ route('logout') }}" x-data>
-                                                @csrf
-                                                <x:component::menu.account-link href="{{ route('logout') }}"
-                                                    class="flex items-center gap-2" @click.prevent="$root.submit();">
-                                                    {{ __('Log Out') }}
-                                                    <x:component::icon.logout class="h-5 text-red-500" />
-                                                </x:component::menu.account-link>
-                                            </form> --}}
+                                            <x-componist-auth::logout-form
+                                                button-class="flex items-center gap-2 w-full px-4 py-2 text-left leading-5 text-slate-700 hover:bg-slate-100 focus:outline-none focus:bg-slate-100 transition duration-150 ease-in-out">
+                                                {{ __('Log Out') }}
+                                                <x:component::icon.logout class="h-5 text-red-500" />
+                                            </x-componist-auth::logout-form>
                                         </div>
                                     </div>
                                 </div>

@@ -99,22 +99,15 @@
                                     </div>
 
                                     <div class="p-4 text-left">
-                                        @if ($value['type'] == 'route' or $value['type'] == 'page')
-                                            @if (Route::has($value['name']))
-                                                <a href="{{ route($value['name']) }}" target="_blank"
-                                                    class="hover:text-dashboard-500">{{ $value['name'] }}</a>
-                                            @elseif(Route::has($value['view_path']))
-                                                <a href="{{ route($value['view_path']) }}" target="_blank"
-                                                    class="hover:text-dashboard-500">{{ $value['view_path'] }}</a>
-                                            @else
+                                        @php($href = componist_menu_href($value))
+                                        @if ($href)
+                                            <a href="{{ $href }}" target="_blank"
+                                                class="hover:text-dashboard-500">{{ $value['type'] === 'url' ? $value['name'] : ($value['name'] ?? $value['view_path']) }}</a>
+                                        @else
+                                            @if ($value['type'] == 'route' or $value['type'] == 'page')
                                                 <span class="text-sm font-bold text-red-500">Route wurde nicht
                                                     gefunden</span>
                                             @endif
-                                        @endif
-
-                                        @if ($value['type'] == 'url')
-                                            <a href="{{ url($value['name']) }}" target="_blank"
-                                                class="hover:text-dashboard-500">{{ $value['name'] }}</a>
                                         @endif
                                     </div>
 
@@ -204,26 +197,17 @@
                                                             @endswitch
                                                         </div>
                                                         <div class="p-4">
-                                                            @if ($children['type'] == 'route' or $children['type'] == 'page')
-                                                                @if (Route::has($children['name']))
-                                                                    <a href="{{ route($children['name']) }}"
-                                                                        target="_blank"
-                                                                        class="hover:text-dashboard-900">{{ $children['name'] }}</a>
-                                                                @elseif(Route::has($value['view_path']))
-                                                                    <a href="{{ route($value['view_path']) }}"
-                                                                        target="_blank"
-                                                                        class="hover:text-dashboard-500">{{ $value['view_path'] }}</a>
-                                                                @else
+                                                            @php($childHref = componist_menu_href($children))
+                                                            @if ($childHref)
+                                                                <a href="{{ $childHref }}" target="_blank"
+                                                                    class="hover:text-dashboard-900">{{ $children['type'] === 'url' ? $children['name'] : ($children['name'] ?? $children['view_path']) }}</a>
+                                                            @else
+                                                                @if ($children['type'] == 'route' or $children['type'] == 'page')
                                                                     <span class="text-sm font-bold text-red-500">Route
                                                                         wurde
                                                                         nicht
                                                                         gefunden</span>
                                                                 @endif
-                                                            @endif
-
-                                                            @if ($children['type'] == 'url')
-                                                                <a href="{{ $children['name'] }}" target="_blank"
-                                                                    class="hover:text-dashboard-900">{{ $children['name'] }}</a>
                                                             @endif
                                                         </div>
 

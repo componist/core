@@ -3,10 +3,13 @@
 namespace Componist\Core\Livewire\Notification;
 
 use Componist\Core\Models\ComponistCoreNotification;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Notification show')]
+#[Layout(\Componist\Core\View\Components\DashboardLayout::class)]
 class NotificationShow extends Component
 {
     public string $title = '';
@@ -15,6 +18,7 @@ class NotificationShow extends Component
 
     public function mount(ComponistCoreNotification $componistCoreNotification)
     {
+        abort_unless((int) $componistCoreNotification->user_id === (int) Auth::id(), 403);
 
         $this->title = $componistCoreNotification['title'];
         $this->message = $componistCoreNotification['message'];
@@ -32,6 +36,6 @@ class NotificationShow extends Component
 
     public function render()
     {
-        return view('component::livewire.notification.componist-core-notification-show')->layout(config('componist.template.dashboard'));
+        return view('component::livewire.notification.componist-core-notification-show');
     }
 }

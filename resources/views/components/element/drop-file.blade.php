@@ -8,19 +8,16 @@
             isUploading = false;
             progress = 0;
         }
-    }"
-        x-on:livewire-upload-start="isUploading = true"{{-- x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" --}} x-on:livewire-upload-progress="">
+    }" x-on:livewire-upload-start="isUploading = true" {{-- x-on:livewire-upload-finish="isUploading = false"
+        x-on:livewire-upload-error="isUploading = false" --}} x-on:livewire-upload-progress="">
 
         <label for="{{ $id }}" x-bind:class="dropingFile ? 'bg-dashboard-50 ' : ' bg-slate-100'"
-            x-on:drop="dropingFile=false"
-            x-on:drop.prevent="
+            x-on:drop="dropingFile=false" x-on:drop.prevent="
             if (event.dataTransfer.files.length > 0) {
                 isUploading= true;
 
                 const files = $event.dataTransfer.files;
-                console.log('{{ $name }} {{ isset($multiple) ? $multiple : null }}');
                 if (event.dataTransfer.files.length > 1 && '{{ isset($multiple) ? $multiple : null }}') {
-                    console.log('multi');
                     @this.uploadMultiple('{{ $name }}', files,
                         () => {
                             progress = 0;
@@ -28,22 +25,18 @@
 
                         }, () => {}, (event) => {
                             progress = event.detail.progress;
-                            console.log(progress);
                         })
                 } else {
-                    console.log('singel');
                     @this.upload('{{ $name }}', files[0], () => {
                         progress = 0;
                         isUploading= false;
                     },
                         () => {}, (event) => {
                             progress = event.detail.progress;
-                            console.log(progress);
                         });
                 }
             }
-        "
-            x-on:dragover.prevent="dropingFile=true, console.log('dragover')" x-on:dragleave.prevent="dropingFile=false"
+        " x-on:dragover.prevent="dropingFile=true" x-on:dragleave.prevent="dropingFile=false"
             class="flex flex-col items-center justify-center w-full py-12 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer group hover:bg-dashboard-50 ">
             <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center">
                 <svg class="w-10 h-10 mb-3 text-slate-400 group-hover:text-dashboard-500" fill="none"
@@ -80,8 +73,7 @@
                     </div>
                 </div>
             </div>
-            <input id="{{ $id }}" type="file" class="hidden" {{ $attributes->wire('model') }}
-                @if (isset($multiple) && $multiple) multiple @endif />
+            <input id="{{ $id }}" type="file" class="hidden" {{ $attributes->wire('model') }} @if (isset($multiple) && $multiple) multiple @endif />
         </label>
     </div>
 </div>

@@ -3,6 +3,7 @@
 namespace Componist\Core;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
@@ -26,13 +27,16 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadSeedsFrom(__DIR__.'/../database/seeders');
 
-        Route::group(['middleware' => ['web']], function () {
-            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        });
-
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'component');
 
-        $this->loadHelpers();
+        // Fallback: ensure helper functions are available even if composer autoload
+        // hasn't been refreshed in the host app yet.
+        if (! function_exists('componist_menu_href')) {
+            $helpers = __DIR__.'/Helpers/helpers.php';
+            if (is_file($helpers)) {
+                require_once $helpers;
+            }
+        }
 
     }
 
@@ -43,6 +47,14 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Gate::define('componist.core.manage', function ($user): bool {
+            return (bool) data_get($user, 'is_admin', data_get($user, 'isAdmin', false));
+        });
+
+        Route::middleware('web')->group(function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        });
+
         $this->publishes([
             __DIR__.'/../resources/views/components' => resource_path('/views/components'),
             __DIR__.'/View/Components/Element' => app_path('View/Components/Element'),
@@ -89,16 +101,6 @@ class CoreServiceProvider extends ServiceProvider
 
         // livewire componente
         $this->bootLivewireComponents();
-    }
-
-    /**
-     * Load helpers.
-     */
-    protected function loadHelpers()
-    {
-        foreach (glob(__DIR__.'/Helpers/*.php') as $filename) {
-            require_once $filename;
-        }
     }
 
     private function bootBladeComponents()

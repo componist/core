@@ -101,6 +101,10 @@ class MarkdownX extends Component
      */
     public function upload($payload)
     {
+        if (! is_array($payload) || ! isset($payload['image'], $payload['name'], $payload['key'], $payload['text'])) {
+            abort(422);
+        }
+
         $payload = (object) $payload;
 
         $path = 'images/'.strtolower(date('FY')).'/';
@@ -120,8 +124,8 @@ class MarkdownX extends Component
             $fullPath = $path.$filename.'.'.$extension;
 
             // Get the Base64 string to store
-            @[$type, $file_data] = explode(';', $payload->image);
-            @[, $file_data] = explode(',', $file_data);
+            @[$type, $file_data] = explode(';', (string) $payload->image);
+            @[, $file_data] = explode(',', (string) $file_data);
             $type = explode('/', $type)[1];
 
             if (! in_array($type, config('markdownx.image.allowed_file_types'))) {
@@ -135,7 +139,24 @@ class MarkdownX extends Component
                 return;
             }
 
-            Storage::disk(config('markdownx.storage.disk'))->put($fullPath, base64_decode($file_data), 'public');
+            $decoded = base64_decode((string) $file_data, true);
+            if ($decoded === false) {
+                throw new Exception('Invalid base64 payload.');
+            }
+
+            $maxFileSizeInBytes = ((int) config('markdownx.image.max_file_size', 5000)) * 1024;
+            if (strlen($decoded) > $maxFileSizeInBytes) {
+                $this->dispatch('markdown-x-image-uploaded', [
+                    'status' => 400,
+                    'message' => 'Datei ist zu gross. Maximal '.(int) config('markdownx.image.max_file_size', 5000).' KB erlaubt.',
+                    'key' => $payload->key,
+                    'text' => $payload->text,
+                ]);
+
+                return;
+            }
+
+            Storage::disk(config('markdownx.storage.disk'))->put($fullPath, $decoded, 'public');
 
             $this->dispatch('markdown-x-image-uploaded', [
                 'status' => 200,
@@ -159,7 +180,7 @@ class MarkdownX extends Component
     {
         $api_key = config('markdownx.integrations.giphy.api_key');
 
-        $response = Http::get('https://api.giphy.com/v1/gifs/trending', [
+        $response = Http::timeout(10)->get('https://api.giphy.com/v1/gifs/trending', [
             'api_key' => $api_key,
             'limit' => 30,
             'rating' => 'pg',
@@ -174,7 +195,7 @@ class MarkdownX extends Component
     {
         $api_key = config('markdownx.integrations.giphy.api_key');
 
-        $response = Http::get('https://api.giphy.com/v1/gifs/trending', [
+        $response = Http::timeout(10)->get('https://api.giphy.com/v1/gifs/trending', [
             'api_key' => $api_key,
             'limit' => 30,
             'rating' => 'pg',
@@ -189,7 +210,7 @@ class MarkdownX extends Component
     {
         $api_key = config('markdownx.integrations.giphy.api_key');
 
-        $response = Http::get('api.giphy.com/v1/gifs/search', [
+        $response = Http::timeout(10)->get('https://api.giphy.com/v1/gifs/search', [
             'api_key' => $api_key,
             'q' => $payload['search'],
             'limit' => 30,
