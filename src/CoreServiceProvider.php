@@ -22,7 +22,7 @@ class CoreServiceProvider extends ServiceProvider
             return new Component;
         });
 
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'componistConfig');
+        $this->mergeConfigFrom(__DIR__.'/../config/componist.php', 'componist');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadSeedsFrom(__DIR__.'/../database/seeders');
@@ -105,15 +105,15 @@ class CoreServiceProvider extends ServiceProvider
 
     private function bootBladeComponents()
     {
-        foreach (config('componistConfig.components', []) as $alias => $component) {
-            Blade::component(config('componistConfig.prefix').$alias, $component);
+        foreach (config('componist.components', []) as $alias => $component) {
+            Blade::component(config('componist.prefix').$alias, $component);
         }
     }
 
     private function bootLivewireComponents()
     {
-        foreach (config('componistConfig.livewire', []) as $alias => $component) {
-            Livewire::component(config('componistConfig.prefix').$alias, $component);
+        foreach (config('componist.livewire', []) as $alias => $component) {
+            Livewire::component(config('componist.prefix').$alias, $component);
         }
     }
 }
