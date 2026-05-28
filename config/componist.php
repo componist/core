@@ -6,11 +6,6 @@ return [
         // Component Fuatures
     ],
 
-    'routes' => [
-        'settings' => true,
-        'menu' => true,
-    ],
-
     'template' => [
         'dashboard' => Componist\Core\View\Components\DashboardLayout::class,
         'app' => Componist\Core\View\Components\GuestLayout::class,
