@@ -101,6 +101,7 @@ return [
     'menu_route_aliases' => [
         'logout' => 'componist.auth.logout',
         'componist.auth.logout.show' => 'componist.auth.logout',
+        'profile.show' => 'profile',
     ],
 
     /*

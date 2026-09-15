@@ -37,9 +37,9 @@ class Notification extends Component
             ->where('user_id', Auth::id())
             ->first();
         if ($notification && $notification->delete()) {
-            $this->bannerMessage('success', 'Eintrag wurde erfolgreich gelöscht');
+            $this->flashMessage('success', 'Eintrag wurde erfolgreich gelöscht');
         } else {
-            $this->bannerMessage('danger', 'Fehler beim löschen des Eintrags.');
+            $this->flashMessage('danger', 'Fehler beim löschen des Eintrags.');
         }
     }
 }

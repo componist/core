@@ -12,7 +12,7 @@
         <div class="container px-3 mx-auto pb-14">
 
             <div class="flex justify-end gap-5 my-12">
-                <x:component::element.search wire:model.live.debounce="search" placeholder="Suche" />
+                <x:component::element.search wire:model.live.debounce.400ms="search" placeholder="Suche" />
             </div>
 
 

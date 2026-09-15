@@ -80,7 +80,7 @@ class Index extends Component
         $setting['created_at'] = date('Y-m-d H:i:s');
 
         if ($setting->save()) {
-            $this->bannerMessage('success', 'Eintrag wurde erfolgreich gespeichert');
+            $this->flashMessage('success', 'Eintrag wurde erfolgreich gespeichert');
             $this->clearValue();
             $this->refreshContent();
         }
@@ -100,7 +100,7 @@ class Index extends Component
     {
         $this->authorizeManage();
         if ($setting->delete()) {
-            $this->bannerMessage('success', 'Eintrag wurde erfolgreich gelöscht');
+            $this->flashMessage('success', 'Eintrag wurde erfolgreich gelöscht');
             $this->refreshContent();
         }
     }

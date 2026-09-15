@@ -14,18 +14,18 @@ Es liefert:
 ## Inhalt
 
 - [1) Voraussetzungen](#1-voraussetzungen)
-- [2) Installation](#2-installation)
+- [2) Installation](#installation)
 - [3) Publish-Tags im Ueberblick](#3-publish-tags-im-ueberblick)
 - [4) Datenbank: Migrationen und Seeder](#4-datenbank-migrationen-und-seeder)
-- [5) Routing und Module](#5-routing-und-module)
-- [6) Berechtigungen und Sicherheit](#6-berechtigungen-und-sicherheit)
-- [7) Konfiguration](#7-konfiguration)
+- [5) Routing und Module](#nutzung)
+- [6) Berechtigungen und Sicherheit](#berechtigungen)
+- [7) Konfiguration](#konfiguration)
 - [8) Blade- und Livewire-Komponenten](#8-blade--und-livewire-komponenten)
 - [9) Helper-Funktionen mit Beispielen](#9-helper-funktionen-mit-beispielen)
 - [10) Benachrichtigungen erstellen](#10-benachrichtigungen-erstellen)
 - [11) Assets (Vite, JS, CSS)](#11-assets-vite-js-css)
 - [12) Typische Integrations-Workflows](#12-typische-integrations-workflows)
-- [13) Troubleshooting](#13-troubleshooting)
+- [13) Troubleshooting](#hinweise)
 - [14) Lizenz](#14-lizenz)
 
 ---
@@ -39,7 +39,7 @@ Es liefert:
 
 ---
 
-## 2) Installation
+## Installation
 
 ### Monorepo (dieses Projekt)
 
@@ -91,12 +91,14 @@ php artisan vendor:publish --tag=core.publishes
 # Core Components (Views)
 php artisan vendor:publish --tag=core.components
 
-# Error-Pages
+# Error-Pages (Canonical unter packages/componist/core/resources/views/errors)
 php artisan vendor:publish --tag=core.pages.errors
 
 # Dashboard-Layout als anpassbare App-Kopie
 php artisan vendor:publish --tag=core.page.dashboard
 ```
+
+Error-Pages: Locale aus `app()->getLocale()`, Light/Dark, Primary Teal. Nach Änderungen im Package erneut publishen bzw. Root syncen.
 
 ---
 
@@ -133,13 +135,19 @@ Der `MenuItemTableSeeder` legt u. a. Standardeintraege fuer folgende Route-Namen
 
 ---
 
-## 5) Routing und Module
+## Nutzung
 
 Das Package registriert seine Routen unter:
 
 - Prefix: `/dashboard`
 - Name-Prefix: `componist.core.`
 - Middleware: `config('componist.auth')` (Standard: `['auth']`)
+
+### Home-Routen (Auth)
+
+- `dashboard.index` -> `/dashboard` (Middleware: `auth`, `twofactor`, `verify`)
+- `profile` -> `/profile` (gleiche Middleware)
+- Views: `component::backend.dashboard`, `component::backend.profile`
 
 ### Verfuegbare Routen (je nach Modul-Flags)
 
@@ -161,7 +169,7 @@ Beispiel zum Deaktivieren eines Bereichs:
 
 ---
 
-## 6) Berechtigungen und Sicherheit
+## Berechtigungen
 
 Standardmaessig wird eine Gate-Ability registriert:
 
@@ -194,7 +202,7 @@ Gate::define('admin.panel.manage', function ($user): bool {
 
 ---
 
-## 7) Konfiguration
+## Konfiguration
 
 ### `config/componist.php`
 
@@ -369,7 +377,7 @@ Diese Zeile ist in den Package-CSS-Dateien (`app.css`, `dashboard.css`, `guest.c
 
 ---
 
-## 13) Troubleshooting
+## Hinweise
 
 ### Menue-Links erscheinen nicht
 
@@ -392,6 +400,16 @@ Diese Zeile ist in den Package-CSS-Dateien (`app.css`, `dashboard.css`, `guest.c
 - Vorher bestehende Dateien sichern oder gezielt einzelne Publish-Tags verwenden.
 
 ---
+
+## Commands
+
+Keine Artisan-Commands in diesem Package.
+
+## Tests
+
+```bash
+php artisan test --compact --testsuite="Componist Core"
+```
 
 ## 14) Lizenz
 

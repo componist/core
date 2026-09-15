@@ -7,13 +7,13 @@
     $isChecked = filter_var($status, FILTER_VALIDATE_BOOLEAN);
 @endphp
 
-<label for="{{ $id }}" class="relative inline-flex items-center cursor-pointer">
+<label for="{{ $id }}" class="relative inline-flex cursor-pointer items-center">
     <input
         @if (isset($attributes['wire:change'])) {{ $attributes->wire('change') }}
     @else
         {{ $attributes->wire('model.live') }} @endif
-        type="checkbox" id="{{ $id }}" class="sr-only peer" @checked($isChecked)>
+        type="checkbox" id="{{ $id }}" class="peer sr-only" @checked($isChecked)>
     <div
-        class="w-16 h-8 bg-slate-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-transparent dark:peer-focus:ring-transparent rounded-full peer dark:bg-slate-700 after:left-[2px] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all dark:border-gray-600 peer-checked:bg-teal-500">
+        class="h-7 w-12 rounded-full bg-slate-300 after:absolute after:left-[2px] after:top-[2px] after:h-6 after:w-6 after:rounded-full after:border after:border-slate-200 after:bg-white after:transition-all after:content-[''] peer-checked:bg-teal-500 peer-checked:after:translate-x-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-500/40 dark:bg-slate-700 dark:after:border-slate-600">
     </div>
 </label>

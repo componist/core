@@ -2,6 +2,8 @@
 
 namespace Componist\Core\Livewire\Menu;
 
+use Componist\Core\Application\MenuService;
+use Componist\Core\Domain\MenuRules;
 use Componist\Core\Models\Menu;
 use Componist\Core\Traits\addLivewireControlleFunctions;
 use Illuminate\Support\Facades\Gate;
@@ -47,28 +49,17 @@ class Index extends Component
     public function update(): void
     {
         $this->authorizeManage();
-        $this->validate([
-            'name' => 'required|string|min:3',
-        ]);
+        $this->validate(MenuRules::rules());
 
-        if (! empty($this->editId)) {
-            // update
-            $query = Menu::find($this->editId);
-        } else {
-            // create
-            $query = new Menu;
-        }
-
-        $query['name'] = $this->name;
+        $isUpdate = ! empty($this->editId);
+        MenuService::save($this->editId, (string) $this->name);
 
         $this->cloasEditWindow();
 
-        $query->save();
-
-        if ($this->editId) {
-            $this->bannerMessage('success', 'Menu wurde erfolgreich aktualisiert.');
+        if ($isUpdate) {
+            $this->flashMessage('success', 'Menu wurde erfolgreich aktualisiert.');
         } else {
-            $this->bannerMessage('success', 'Menu wurde erfolgreich erstellt.');
+            $this->flashMessage('success', 'Menu wurde erfolgreich erstellt.');
         }
         $this->clearValue();
     }
@@ -76,13 +67,10 @@ class Index extends Component
     public function deleteEntry(Menu $menu): void
     {
         $this->authorizeManage();
-        if ($menu['name'] !== 'admin' && $menu->delete()) {
-            // TODO: flash message
-            // TODO: flesh message admin menu kann nicht gelöscht werden
-            $this->bannerMessage('success', $menu['name'].' Menu wurde erfolgreich gelöscht.');
+        if (MenuService::delete($menu)) {
+            $this->flashMessage('success', $menu['name'].' Menu wurde erfolgreich gelöscht.');
         } else {
-            // TODO: flash message
-            $this->bannerMessage('danger', $menu['name'].' Menu kann nicht gelöscht werden.');
+            $this->flashMessage('danger', $menu['name'].' Menu kann nicht gelöscht werden.');
         }
     }
 

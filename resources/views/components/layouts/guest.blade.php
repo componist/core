@@ -7,6 +7,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="format-detection" content="telephone=no">
 
+    <script>
+        (function () {
+            try {
+                var theme = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (theme === 'dark' || (!theme && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     @stack('meta')
 
     @if (! trim($__env->yieldPushContent('meta')))
@@ -22,7 +34,9 @@
     @vite(['resources/css/guest.css', 'resources/js/guest.js'])
 </head>
 
-<body class="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased">
+<body class="min-h-screen bg-slate-100 font-sans text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+    <x:component::toast-message />
+
     @if (isset($slot))
         {{ $slot }}
     @endif

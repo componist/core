@@ -3,7 +3,7 @@
         <div class="flex items-center gap-1">
             <x:component::icon.setting class="h-12" />
             <h2 class="font-semibold leading-tight">
-                {{ __('Settings') }}
+                {{ __('Einstellungen') }}
             </h2>
         </div>
     </x-slot>
@@ -93,7 +93,7 @@
 
                                                         <x:component::action-message class="mr-3"
                                                             on="saved{{ $value['id'] }}">
-                                                            {{ __('Saved.') }}
+                                                            Gespeichert.
                                                         </x:component::action-message>
                                                     @endif
 
@@ -104,7 +104,7 @@
 
                                                         <x:component::action-message class="mr-3"
                                                             on="saved{{ $value['id'] }}">
-                                                            {{ __('Saved.') }}
+                                                            Gespeichert.
                                                         </x:component::action-message>
                                                     @endif
                                                 </div>
@@ -119,6 +119,10 @@
                         @endforeach
                     </div>
                 </div>
+            @else
+                <p class="mb-10 text-center text-slate-500">
+                    Noch keine Einstellungen vorhanden. Lege unten die erste Einstellung an.
+                </p>
             @endif
 
 

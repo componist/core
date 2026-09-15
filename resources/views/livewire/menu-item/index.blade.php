@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center gap-1">
             <h2 class="font-semibold leading-tight">
-                {{ __('Menu Items') }} - <span class="text-teal-500">{{ $menu['name'] }}</span>
+                {{ __('Menüpunkte') }} - <span class="text-teal-500">{{ $menu['name'] }}</span>
             </h2>
         </div>
     </x-slot>
@@ -38,7 +38,7 @@
 
 
                 <ul wire:sortable="reorder" wire:sortable-group="reorderChildes" class="divide-y divide-gray-200">
-                    @foreach ($content as $value)
+                    @forelse ($content as $value)
                         <li x-data="{ open: false }" class="text-slate-500 hover:bg-slate-50"
                             wire:key="group-{{ $value['id'] }}" wire:sortable.item="{{ $value['id'] }}">
                             <div class="flex items-center justify-between ">
@@ -261,7 +261,11 @@
                                 </div>
                             @endif
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="px-6 py-10 text-center text-slate-500">
+                            Noch keine Menüpunkte vorhanden. Erstelle den ersten Eintrag oben rechts.
+                        </li>
+                    @endforelse
                 </ul>
 
 

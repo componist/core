@@ -36,27 +36,24 @@ trait addLivewireControlleFunctions
     }
 
     /**
-     * Zentrale Toast-Meldung (für alle Packages).
-     * Zeigt eine Toast-Notification über die Komponente component::toast-message.
+     * Flash-Benachrichtigung für alle Packages (Standard).
+     * Persistiert für Redirects (Session) und zeigt Toast auf der aktuellen Seite (Event).
+     *
+     * @param  'success'|'danger'|'warning'|'info'  $style
      */
-    public function toastMessage(string $style, string $message, ?int $durationMs = null): void
+    public function flashMessage(string $style, string $message, ?int $durationMs = null): void
     {
+        session()->flash('flash.banner', $message);
+        session()->flash('flash.bannerStyle', $style);
+
         $this->dispatch('toast-message', style: $style, message: $message, duration: $durationMs);
         $this->dispatch('banner-message', style: $style, message: $message, duration: $durationMs);
-    }
-
-    /**
-     * @deprecated Bitte toastMessage() verwenden. Bleibt als Alias erhalten.
-     */
-    public function bannerMessage(string $type, string $message): void
-    {
-        $this->toastMessage($type, $message);
     }
 
     public function storeAndIndex()
     {
         $this->store();
-        $this->bannerMessage('success', 'Eintrag wurde erfolgreich erstellt');
+        $this->flashMessage('success', 'Eintrag wurde erfolgreich erstellt');
 
         return redirect()->route($this->routeIndex);
     }
@@ -64,7 +61,7 @@ trait addLivewireControlleFunctions
     public function storeAndNew()
     {
         $this->store();
-        $this->bannerMessage('success', 'Eintrag wurde erfolgreich erstellt');
+        $this->flashMessage('success', 'Eintrag wurde erfolgreich erstellt');
 
         return redirect()->route($this->isRoute);
     }
@@ -72,7 +69,7 @@ trait addLivewireControlleFunctions
     public function updateAndIndex()
     {
         $this->update();
-        $this->bannerMessage('success', 'Eintrag wurde erfolgreich aktualisiert');
+        $this->flashMessage('success', 'Eintrag wurde erfolgreich aktualisiert');
 
         return redirect()->route($this->routeIndex);
     }
@@ -80,7 +77,7 @@ trait addLivewireControlleFunctions
     public function updateAndNew()
     {
         $this->update();
-        $this->bannerMessage('success', 'Eintrag wurde erfolgreich aktualisiert');
+        $this->flashMessage('success', 'Eintrag wurde erfolgreich aktualisiert');
 
         return redirect()->route($this->isRoute);
     }

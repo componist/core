@@ -20,7 +20,7 @@
             </div>
 
             <div class="p-5 overflow-x-auto bg-white shadow md:rounded-lg">
-                {!! $message !!}
+                {!! \Componist\Core\Support\SafeHtml::sanitize($message) !!}
             </div>
 
         </div>

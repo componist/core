@@ -5,13 +5,16 @@ use Componist\Core\Facades\Component;
 if (! function_exists('setting')) {
     function setting($key)
     {
-        $result = Component::setting($key);
-        if (isset($result[0])) {
-            return $result[0];
+        try {
+            $result = Component::setting($key);
+            if (isset($result[0])) {
+                return $result[0];
+            }
+
+            return $result;
+        } catch (\Throwable) {
+            return null;
         }
-
-        return $result;
-
     }
 }
 
@@ -23,7 +26,11 @@ if (! function_exists('menu')) {
      */
     function menu(string $menuName, ?string $type = null)
     {
-        return Component::model('Menu')->display($menuName, $type);
+        try {
+            return Component::model('Menu')->display($menuName, $type);
+        } catch (\Throwable) {
+            return $type === 'array' ? collect() : null;
+        }
     }
 }
 

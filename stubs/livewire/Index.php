@@ -32,9 +32,9 @@ class Index extends Component
     public function delete(int $id)
     {
         if (Model::find($id)->delete()) {
-            $this->bannerMessage('success', 'Eintrag wurde erfolgreich gelöscht');
+            $this->flashMessage('success', 'Eintrag wurde erfolgreich gelöscht');
         } else {
-            $this->bannerMessage('danger', 'Fehler beim löschen des Eintrags.');
+            $this->flashMessage('danger', 'Fehler beim löschen des Eintrags.');
         }
     }
 }

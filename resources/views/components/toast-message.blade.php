@@ -2,8 +2,8 @@
     Zentrales Toast-Flash für alle Packages (ein Toast zur Zeit, ohne x-for für Alpine/Livewire-Kompatibilität).
     Event: toast-message (oder banner-message für Abwärtskompatibilität)
     Payload: { style: 'success'|'danger'|'warning'|'info', message: string }
-    Verwendung in Livewire: $this->dispatch('toast-message', ['style' => 'success', 'message' => 'Gespeichert.']);
-    Oder Trait: $this->toastMessage('success', 'Gespeichert.');
+    Verwendung in Livewire: $this->flashMessage('success', 'Gespeichert.');
+    Aliase (deprecated): toastMessage(), bannerMessage()
 --}}
 @props([
     'style' => session('flash.bannerStyle', 'success'),

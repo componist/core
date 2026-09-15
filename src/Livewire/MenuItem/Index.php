@@ -222,11 +222,9 @@ class Index extends Component
             $this->refreshContent();
             $this->refreshParentOptions();
 
-            // TODO: flash message
-            $this->bannerMessage('success', 'Menu wurde erfolgreich erstellt.');
+            $this->flashMessage('success', 'Menüpunkt wurde erfolgreich gespeichert.');
         } else {
-            // TODO: flash message
-            $this->bannerMessage('success', 'Menu wurde erfolgreich aktualisiert.');
+            $this->flashMessage('danger', 'Menüpunkt konnte nicht gespeichert werden.');
         }
     }
 
@@ -241,11 +239,12 @@ class Index extends Component
                 MenuItem::createPageConfigFile();
             }
 
-            // TODO: flash message
+            $this->flashMessage('success', 'Menüpunkt wurde gelöscht.');
+        } else {
+            $this->flashMessage('danger', 'Menüpunkt konnte nicht gelöscht werden.');
         }
         $this->refreshContent();
         $this->refreshParentOptions();
-        // TODO: flash message
     }
 
     public function reorder($orderedIds): void

@@ -36,9 +36,9 @@ class Create extends Component
             'content' => $this->content,
             'created_at' => date('Y-m-d H:i:s'),
         ])) {
-            $this->bannerMessage('success', 'Eintrag wurde erfolgreich gespeichert');
+            $this->flashMessage('success', 'Eintrag wurde erfolgreich gespeichert');
         } else {
-            $this->bannerMessage('danger', 'Fehler beim speichern des Eintrags.');
+            $this->flashMessage('danger', 'Fehler beim speichern des Eintrags.');
         }
     }
 }

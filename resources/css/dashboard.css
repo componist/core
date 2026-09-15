@@ -1,6 +1,7 @@
 @import './componentes/animations.css';
 
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/componist/**/resources/views/**/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -25,6 +26,19 @@ body{
 }
 
 [x-cloak] { display: none !important; }
+
+.default-transition {
+  transition-property: color, background-color, border-color, fill, stroke;
+  transition-duration: 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .default-transition,
+  .bell-ring-animation {
+    animation: none !important;
+    transition: none !important;
+  }
+}
 
 
 .backend-background-image{

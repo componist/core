@@ -2,17 +2,18 @@
 
     {{ $trigger }}
 
-    <div x-show="modal" x-cloak x-transition:enter="transition ease-out duration-100 transform"
-        x-transition:enter-start="opacity-0 scale-30" x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-75 transform" x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-95"
-        class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center px-5 bg-slate-500/70 backdrop-blur-sm">
-        <div @click.outside="modal=false" class="overflow-hidden bg-white rounded-md shadow-sm w-96">
-            <div class="px-5 py-7">
+    <div x-show="modal" x-cloak x-transition:enter="transition ease-out duration-150"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-5 backdrop-blur-sm">
+        <div @click.outside="modal=false"
+            class="w-full max-w-md overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900">
+            <div class="px-5 py-6">
                 {{ $content }}
             </div>
 
-            <div class="grid grid-cols-2 gap-4 px-4 text-right bg-slate-100 py-7 sm:px-6">
+            <div class="grid grid-cols-2 gap-3 border-t border-slate-200 bg-slate-50 px-4 py-4 dark:border-slate-700 dark:bg-slate-800/60">
                 {{ $controller }}
             </div>
         </div>

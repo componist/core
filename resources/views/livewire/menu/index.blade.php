@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center gap-1">
             <h2 class="font-semibold leading-tight">
-                {{ __('Menus') }}
+                {{ __('Menüs') }}
             </h2>
         </div>
     </x-slot>
@@ -31,7 +31,7 @@
                     </x-slot:head>
 
                     <x-slot:body>
-                        @foreach ($content as $value)
+                        @forelse ($content as $value)
                             <x:component::table.row class="hover:bg-slate-50">
 
                                 <x:component::table.cell class="text-slate-500">{{ $value->name }}
@@ -84,7 +84,13 @@
                                     </x:component::element.modal>
                                 </x:component::table.cell>
                             </x:component::table.row>
-                        @endforeach
+                        @empty
+                            <x:component::table.row>
+                                <x:component::table.cell colspan="3" class="py-10 text-center text-slate-500">
+                                    Noch keine Menüs vorhanden. Erstelle das erste Menü oben rechts.
+                                </x:component::table.cell>
+                            </x:component::table.row>
+                        @endforelse
                     </x-slot:body>
 
                 </x:component::table.wrapper>

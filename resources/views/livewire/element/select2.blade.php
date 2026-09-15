@@ -32,7 +32,7 @@
             id="options" role="listbox">
             <div class="sticky top-0 z-10 px-5 py-5 bg-slate-200">
                 <x:component::icon.search class="absolute z-10 h-5 mx-2 my-3 text-slate-400" />
-                <x:component::form.input wire:model.live="search" wire:keydown.enter.prevent="add"
+                <x:component::form.input wire:model.live.debounce.400ms="search" wire:keydown.enter.prevent="add"
                     @keyup.enter.prevent="isOpen=false" name="search" class="py-2 pl-10 pr-5 bg-white" autofocus />
             </div>
             <ul>

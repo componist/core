@@ -45,9 +45,9 @@ class Edit extends Component
             'content' => $this->content,
             'updated_at' => date('Y-m-d H:i:s'),
         ])) {
-            $this->bannerMessage('success', 'Eintrag wurde gespeichert');
+            $this->flashMessage('success', 'Eintrag wurde gespeichert');
         } else {
-            $this->bannerMessage('danger', 'Fehler beim speichern des Eintrags.');
+            $this->flashMessage('danger', 'Fehler beim speichern des Eintrags.');
         }
     }
 }

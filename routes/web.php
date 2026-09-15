@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::middleware(['auth', 'twofactor', 'verify'])->group(function () {
+    Route::view('dashboard', 'component::backend.dashboard')->name('dashboard.index');
+    Route::view('profile', 'component::backend.profile')->name('profile');
+});
+
 Route::middleware(config('componist.auth'))->prefix('dashboard')->name('componist.core.')->group(function () {
     Route::get('settings', Componist\Core\Livewire\Setting\Index::class)->name('settings');
 
@@ -17,10 +22,3 @@ Route::view('404', 'component::error.404')->name('404');
 // TODO:: funktion ist noch nicht fertig
 // stand funktioniert nicht richtig
 // Route::get('/{pageslug}', [\Componist\Core\Controllers\PageController::class, 'index'])->name('page');
-
-// dd(config('pages'));
-// if (config()->has('pages')) {
-//     foreach (config('pages') as $url => $viewPath) {
-//         Route::view($url, $viewPath)->name($viewPath);
-//     }
-// }

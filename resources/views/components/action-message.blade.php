@@ -8,5 +8,5 @@
     x-transition:leave.opacity.duration.1500ms style="display: none;"
     {{ $attributes->merge(['class' => 'text-sm text-slate-600']) }}>
 
-    <p class="mt-3 text-sm font-bold text-right text-dashboard-500">{{ $slot->isEmpty() ? 'Saved.' : $slot }}</p>
+    <p class="mt-3 text-sm font-bold text-right text-dashboard-500">{{ $slot->isEmpty() ? 'Gespeichert.' : $slot }}</p>
 </div>
