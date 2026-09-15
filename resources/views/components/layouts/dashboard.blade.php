@@ -62,6 +62,7 @@
                 this.dark = !this.dark;
                 document.documentElement.classList.toggle('dark', this.dark);
                 localStorage.setItem('theme', this.dark ? 'dark' : 'light');
+                window.dispatchEvent(new CustomEvent('theme-changed', { detail: { dark: this.dark } }));
             }
         }"
         class="flex h-screen overflow-hidden"

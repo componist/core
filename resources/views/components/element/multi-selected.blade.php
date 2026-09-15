@@ -26,11 +26,11 @@
     <x:component::element.search @click.prevent="open = ! open" x-model="search" />
 
     <div x-cloak x-show="open" @click.outside="open = false"
-        class="absolute left-0 bg-white border rounded shadow-sm top-14 w-96">
-        <ul class="divide-y divide-gray-200">
+        class="absolute left-0 top-14 w-96 rounded border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+        <ul class="divide-y divide-slate-200 dark:divide-slate-700">
             <template x-for="(category, index) in filtered()">
-                <li class="p-3 cursor-pointer hover:bg-slate-50" x-text="category.name"
-                    @click.prevent="add(category), open = false">
+                <li class="cursor-pointer p-3 text-slate-900 hover:bg-slate-50 dark:text-slate-100 dark:hover:bg-slate-800"
+                    x-text="category.name" @click.prevent="add(category), open = false">
                 </li>
             </template>
         </ul>

@@ -8,18 +8,18 @@ dd($attributes);
         <input type="hidden" name="date" x-ref="date" :value="$wire.set('{{ $model }}', datepickerValue, true)" />
 
         <div
-            class="flex items-center justify-between w-full h-10 px-3 mt-1 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer items-centerpx-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+            class="mt-1 flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-slate-300 bg-white px-3 text-slate-900 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm dark:border-slate-600 dark:bg-slate-800 dark:text-white">
             <div class="flex items-center gap-1">
                 <span x-text="dateView"></span>
                 <template x-if="dateView">
                     <button @click.prevent="clear()" type="button"
-                        class="relative z-10 flex items-center justify-center w-6 h-6 text-slate-300 hover:text-slate-700">
-                        <x:component::icon.close class="h-9 hover:text-dashboard-500" />
+                        class="relative z-10 flex h-6 w-6 items-center justify-center text-slate-300 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200">
+                        <x:component::icon.close class="h-9 hover:text-teal-500" />
                     </button>
                 </template>
 
             </div>
-            <x:component::icon.calendar class="text-slate-400 w-7" />
+            <x:component::icon.calendar class="w-7 text-slate-400 dark:text-slate-400" />
         </div>
     </div>
 
@@ -29,33 +29,36 @@ dd($attributes);
         x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
         class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center px-5 bg-slate-500/70 backdrop-blur-sm">
 
-        <div @click.outside="showDatepicker = false" class=" p-4 mt-12 bg-slate-200 rounded-lg shadow w-[22rem]">
-            <div class="flex items-center justify-between mb-2">
+        <div @click.outside="showDatepicker = false"
+            class="mt-12 w-[22rem] rounded-lg border border-slate-200 bg-slate-100 p-4 shadow dark:border-slate-700 dark:bg-slate-800">
+            <div class="mb-2 flex items-center justify-between">
                 <div>
-                    <span x-text="MONTH_NAMES[month]" class="text-lg font-bold text-slate-800"></span>
-                    <span x-text="year" class="ml-1 text-lg font-normal text-slate-600"></span>
+                    <span x-text="MONTH_NAMES[month]"
+                        class="text-lg font-bold text-slate-800 dark:text-slate-100"></span>
+                    <span x-text="year"
+                        class="ml-1 text-lg font-normal text-slate-600 dark:text-slate-300"></span>
                 </div>
                 <div>
                     <button type="button"
-                        class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-slate-100"
+                        class="inline-flex cursor-pointer rounded-full p-1 transition duration-100 ease-in-out hover:bg-slate-200 focus:outline-none dark:hover:bg-slate-700"
                         @click.prevent="if (month == 0) {
                         year--;
                         month = 12;
                     } month--; getNoOfDays()">
-                        <svg class="inline-flex w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24"
+                        <svg class="inline-flex h-6 w-6 text-slate-400 dark:text-slate-400" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
                     <button type="button"
-                        class="inline-flex p-1 transition duration-100 ease-in-out rounded-full cursor-pointer focus:outline-none focus:shadow-outline hover:bg-slate-100"
+                        class="inline-flex cursor-pointer rounded-full p-1 transition duration-100 ease-in-out hover:bg-slate-200 focus:outline-none dark:hover:bg-slate-700"
                         @click.prevent="if (month == 11) {
                             month = 0;
                             year++;
                         } else {
                             month++;
                         } getNoOfDays()">
-                        <svg class="inline-flex w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24"
+                        <svg class="inline-flex h-6 w-6 text-slate-400 dark:text-slate-400" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
@@ -63,26 +66,27 @@ dd($attributes);
                 </div>
             </div>
 
-            <div class="grid grid-cols-7 gap-1 my-5">
+            <div class="my-5 grid grid-cols-7 gap-1">
                 <template x-for="(day, index) in DAYS" :key="index">
-                    <div x-text="day" class="text-xs font-semibold text-center text-slate-800"></div>
+                    <div x-text="day"
+                        class="text-center text-xs font-semibold text-slate-800 dark:text-slate-200"></div>
                 </template>
             </div>
 
             <div class="grid grid-cols-7 gap-1">
                 <template x-for="blankday in blankdays">
-                    <div class="w-full h-[42px] p-1 text-sm text-center border border-transparent"></div>
+                    <div class="h-[42px] w-full border border-transparent p-1 text-center text-sm"></div>
                 </template>
 
                 <template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">
                     <div @click.prevent="getDateValue(date)" x-text="date"
-                        class="w-full h-[42px] flex items-center justify-center text-md leading-loose text-center rounded shadow-sm cursor-pointer default-transition"
+                        class="text-md flex h-[42px] w-full cursor-pointer items-center justify-center rounded text-center leading-loose shadow-sm default-transition"
                         :class="{
-                            'bg-dashboard-700 text-white': isToday(date) == true,
-                            'text-slate-600 bg-slate-100 hover:text-white hover:bg-dashboard-500': isToday(date) ==
+                            'bg-teal-700 text-white': isToday(date) == true,
+                            'bg-slate-200 text-slate-600 hover:bg-teal-500 hover:text-white dark:bg-slate-700 dark:text-slate-300': isToday(date) ==
                                 false &&
                                 isSelectedDate(date) == false,
-                            'bg-dashboard-500 text-white hover:bg-white/75': isSelectedDate(date) == true
+                            'bg-teal-500 text-white hover:bg-teal-600': isSelectedDate(date) == true
                         }">
                     </div>
                 </template>

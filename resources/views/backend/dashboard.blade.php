@@ -204,7 +204,7 @@
                                     <span class="min-w-0 flex-1">
                                         <span class="flex items-center justify-between gap-2">
                                             <span class="truncate text-sm font-semibold text-slate-900 dark:text-white">{{ $item['title'] }}</span>
-                                            <span class="text-slate-400 transition duration-200 group-hover:translate-x-0.5 group-hover:text-teal-500 dark:group-hover:text-teal-400" aria-hidden="true">→</span>
+                                            <span class="text-slate-400 transition duration-200 group-hover:translate-x-0.5 group-hover:text-teal-500 dark:text-slate-500 dark:group-hover:text-teal-400" aria-hidden="true">→</span>
                                         </span>
                                         <span class="mt-0.5 block text-xs text-slate-500 dark:text-slate-400">{{ $item['description'] }}</span>
                                     </span>

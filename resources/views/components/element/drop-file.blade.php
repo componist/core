@@ -11,7 +11,8 @@
     }" x-on:livewire-upload-start="isUploading = true" {{-- x-on:livewire-upload-finish="isUploading = false"
         x-on:livewire-upload-error="isUploading = false" --}} x-on:livewire-upload-progress="">
 
-        <label for="{{ $id }}" x-bind:class="dropingFile ? 'bg-dashboard-50 ' : ' bg-slate-100'"
+        <label for="{{ $id }}"
+            x-bind:class="dropingFile ? 'bg-teal-50 dark:bg-teal-950/40' : 'bg-slate-100 dark:bg-slate-800'"
             x-on:drop="dropingFile=false" x-on:drop.prevent="
             if (event.dataTransfer.files.length > 0) {
                 isUploading= true;
@@ -37,25 +38,24 @@
                 }
             }
         " x-on:dragover.prevent="dropingFile=true" x-on:dragleave.prevent="dropingFile=false"
-            class="flex flex-col items-center justify-center w-full py-12 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer group hover:bg-dashboard-50 ">
-            <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center">
-                <svg class="w-10 h-10 mb-3 text-slate-400 group-hover:text-dashboard-500" fill="none"
+            class="group flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 py-12 hover:bg-teal-50 dark:border-slate-600 dark:hover:bg-teal-950/40">
+            <div class="flex flex-col items-center justify-center pb-6 pt-5 text-center">
+                <svg class="mb-3 h-10 w-10 text-slate-400 group-hover:text-teal-500 dark:text-slate-400" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
                     </path>
                 </svg>
                 <div wire:loading.remove wire:target="{{ $name }}">
-                    <p class="mb-2 text-sm font-semibold text-slate-500 group-hover:text-dashboard-500">Click to upload
-                        or
-                        drag and drop</p>
-                    <p class="text-xs text-slate-500 group-hover:text-dashboard-500">{{ $title }}</p>
+                    <p class="mb-2 text-sm font-semibold text-slate-500 group-hover:text-teal-500 dark:text-slate-300">
+                        Klicken zum Hochladen oder Datei hierher ziehen</p>
+                    <p class="text-xs text-slate-500 group-hover:text-teal-500 dark:text-slate-400">{{ $title }}</p>
                 </div>
 
-                <div class="mt-1" wire:loading.flex wire:target="{{ $name }}" class="text-dashboard-500">
+                <div class="mt-1 text-teal-500" wire:loading.flex wire:target="{{ $name }}">
                     <div class="text-center">
                         <div class="flex items-center justify-center gap-2 px-5">
-                            <svg class="text-dashboard-500 w-7 h-7 animate-spin" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="h-7 w-7 animate-spin text-teal-500" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4"></circle>
@@ -63,11 +63,12 @@
                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                 </path>
                             </svg>
-                            <div class="text-dashboard-400 animate-pulse">Processing Files</div>
+                            <div class="animate-pulse text-teal-400">Dateien werden verarbeitet…</div>
                         </div>
 
-                        <div class="w-full h-4 mt-2 overflow-hidden bg-white rounded-full" x-show="isUploading">
-                            <span class="block h-full bg-dashboard-500 animate-pulse"
+                        <div class="mt-2 h-4 w-full overflow-hidden rounded-full bg-white dark:bg-slate-900"
+                            x-show="isUploading">
+                            <span class="block h-full animate-pulse bg-teal-500"
                                 x-bind:style="`width:${progress}%`"></span>
                         </div>
                     </div>

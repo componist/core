@@ -2,7 +2,8 @@
     @if ($openEdit)
         <div
             class="fixed top-0 bottom-0 left-0 right-0 z-50 items-center justify-center p-3 overflow-y-auto bg-slate-900/70 lg:flex backdrop-blur-sm">
-            <div class="w-full overflow-hidden bg-white rounded-md shadow-sm lg:w-6/12">
+            <div
+                class="w-full overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900 lg:w-6/12">
                 <div class="px-5 py-5">
                     <div class="py-3">
                         <x:component::form.label value="Titel" />
@@ -29,13 +30,13 @@
                             $localIconView = $isLocalIcon ? 'component::components.icon.' . $icon : null;
                         @endphp
                         @if ($isLocalIcon && $localIconView && \Illuminate\Support\Facades\View::exists($localIconView))
-                            <div class="flex items-center gap-2 mt-2 text-slate-500">
-                                <x-dynamic-component :component="'component::icon.' . $icon" class="w-6 h-6" />
+                            <div class="mt-2 flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                                <x-dynamic-component :component="'component::icon.' . $icon" class="h-6 w-6" />
                                 <span class="text-xs">{{ $icon }}</span>
                             </div>
                         @elseif(! empty($icon))
-                            <div class="flex items-center gap-2 mt-2 text-slate-500">
-                                <x-dynamic-component :component="$icon" class="w-6 h-6" />
+                            <div class="mt-2 flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                                <x-dynamic-component :component="$icon" class="h-6 w-6" />
                                 <span class="text-xs">{{ $icon }}</span>
                             </div>
                         @endif
@@ -111,11 +112,14 @@
                     @endif
 
                 </div>
-                <div class="grid grid-cols-2 gap-4 px-4 text-right bg-slate-100 py-7 sm:px-6">
+                <div
+                    class="grid grid-cols-2 gap-4 bg-slate-100 px-4 py-7 text-right dark:bg-slate-800 sm:px-6">
                     <x:component::button.cancel wire:click="cloasEditWindow" class="w-full" />
 
                     <button wire:click="update" type="button"
-                        class="flex justify-center w-full px-4 py-2 font-medium text-center text-white border border-transparent rounded-md shadow-sm bg-dashboard-500 hover:bg-dashboard-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">Speichern</button>
+                        class="flex w-full justify-center rounded-md border border-transparent bg-teal-500 px-4 py-2 text-center font-medium text-white shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900">
+                        Speichern
+                    </button>
                 </div>
             </div>
         </div>

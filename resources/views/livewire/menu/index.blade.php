@@ -1,105 +1,57 @@
-<div>
-    <x-slot name="header">
-        <div class="flex items-center gap-1">
-            <h2 class="font-semibold leading-tight">
-                {{ __('Menüs') }}
-            </h2>
-        </div>
-    </x-slot>
+<x:component::page.shell title="Menüs">
+    <x-slot:actions>
+        <x:component::button.primary wire:click="create" type="button">
+            Menü erstellen
+        </x:component::button.primary>
+    </x-slot:actions>
 
-    <div class="py-12">
+    <x:component::table.wrapper>
+        <x-slot:head>
+            <x:component::table.row>
+                <x:component::table.cell class="w-3/12 text-left font-semibold text-slate-700 dark:text-slate-200">
+                    Name
+                </x:component::table.cell>
+                <x:component::table.cell class="w-3/12 text-left font-semibold text-slate-700 dark:text-slate-200">
+                    Snippet
+                </x:component::table.cell>
+                <x:component::table.cell></x:component::table.cell>
+            </x:component::table.row>
+        </x-slot:head>
 
-        <div class="container px-3 mx-auto pb-14">
+        <x-slot:body>
+            @forelse ($content as $value)
+                <x:component::table.row class="hover:bg-slate-50 dark:hover:bg-slate-800/60">
+                    <x:component::table.cell class="text-slate-500 dark:text-slate-300">
+                        {{ $value->name }}
+                    </x:component::table.cell>
 
-            <div class="flex justify-end gap-5 pb-12">
-                <button wire:click="create" type="button"
-                    class="flex items-center justify-center w-56 px-5 py-3 text-white border-0 rounded-md shadow-sm bg-dashboard-500 hover:text-white hover:bg-dashboard-600 default-transition">
-                    Menu erstellen
-                </button>
-            </div>
+                    <x:component::table.cell>
+                        <code
+                            class="cursor-pointer rounded-full bg-teal-500 px-3 py-1 text-sm text-white hover:bg-teal-600">menu('{{ $value->name }}')</code>
+                    </x:component::table.cell>
 
-            <div class="overflow-x-auto bg-white shadow md:rounded-lg">
-                <x:component::table.wrapper>
-                    <x-slot:head>
-                        <x:component::table.row>
-                            <x:component::table.cell class="w-3/12 font-semibold text-left text-slate-700">Name
-                            </x:component::table.cell>
-                            <x:component::table.cell class="w-3/12 font-semibold text-left text-slate-700">Snippet
-                            </x:component::table.cell>
-                            <x:component::table.cell></x:component::table.cell>
-                        </x:component::table.row>
-                    </x-slot:head>
+                    <x:component::table.cell>
+                        <div class="flex justify-end gap-2">
+                            <a href="{{ route('componist.core.menu.items', $value->id) }}"
+                                class="flex h-9 w-9 items-center justify-center rounded-md border-2 border-teal-500 text-teal-500 shadow-sm transition hover:bg-teal-500 hover:text-white">
+                                <x:component::icon.list />
+                            </a>
 
-                    <x-slot:body>
-                        @forelse ($content as $value)
-                            <x:component::table.row class="hover:bg-slate-50">
+                            <x:component::button.edit wire:click.prevent="edit({{ $value->id }})" type="button" />
 
-                                <x:component::table.cell class="text-slate-500">{{ $value->name }}
-                                </x:component::table.cell>
+                            <x:component::element.confirm-delete wire:click="deleteEntry({{ $value->id }})" />
+                        </div>
+                    </x:component::table.cell>
+                </x:component::table.row>
+            @empty
+                <x:component::table.row>
+                    <x:component::table.cell colspan="3" class="py-10 text-center text-slate-500 dark:text-slate-400">
+                        Noch keine Menüs vorhanden. Erstelle das erste Menü oben rechts.
+                    </x:component::table.cell>
+                </x:component::table.row>
+            @endforelse
+        </x-slot:body>
+    </x:component::table.wrapper>
 
-                                <x:component::table.cell><code
-                                        class="px-3 py-1 text-sm text-white rounded-full cursor-pointer bg-dashboard-500 hover:bg-dashboard-600">menu('{{ $value->name }}')</code>
-                                </x:component::table.cell>
-
-                                <x:component::table.cell class="flex justify-end gap-2">
-
-
-                                    <a href="{{ route('componist.core.menu.items', $value->id) }}"
-                                        class="flex items-center justify-center border-2 rounded-md shadow-sm text-dashboard-500 border-dashboard-500 hover:text-white w-9 h-9 hover:bg-dashboard-500 default-transition">
-                                        <x:component::icon.list />
-                                    </a>
-
-                                    <x:component::button.edit wire:click.prevent="edit({{ $value->id }})"
-                                        type="button" />
-
-
-                                    <x:component::element.modal>
-                                        <x-slot:trigger>
-
-                                            <x:component::button.delete @click.prevent="modal=true" />
-
-                                        </x-slot:trigger>
-
-                                        <x-slot:content>
-                                            <div class="flex justify-center ">
-                                                <div
-                                                    class="flex items-center justify-center text-red-500 bg-red-200 rounded-full shadow-sm w-28 h-28">
-                                                    <x:component::icon.delete class="h-16" />
-                                                </div>
-                                            </div>
-                                            <div class="flex justify-center mt-7">
-                                                <h3 class="text-lg font-bold text-center text-slate-700">
-                                                    {{ $value->name }} <br />unwiderruflich löschen?</h3>
-                                            </div>
-                                        </x-slot:content>
-
-                                        <x-slot:controller>
-                                            <button @click.prevent="modal=false" type="button"
-                                                class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
-
-                                            <button wire:click='deleteEntry({{ $value->id }})'
-                                                @click.prevent="modal=false" type="button"
-                                                class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>
-                                        </x-slot:controller>
-                                    </x:component::element.modal>
-                                </x:component::table.cell>
-                            </x:component::table.row>
-                        @empty
-                            <x:component::table.row>
-                                <x:component::table.cell colspan="3" class="py-10 text-center text-slate-500">
-                                    Noch keine Menüs vorhanden. Erstelle das erste Menü oben rechts.
-                                </x:component::table.cell>
-                            </x:component::table.row>
-                        @endforelse
-                    </x-slot:body>
-
-                </x:component::table.wrapper>
-            </div>
-
-        </div>
-
-        @include('component::livewire.menu.edit')
-
-
-    </div>
-</div>
+    @include('component::livewire.menu.edit')
+</x:component::page.shell>

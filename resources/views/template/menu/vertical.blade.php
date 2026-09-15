@@ -6,7 +6,7 @@
     @if (count($item->children) > 0)
         <li x-data="{ open: false }" class="relative">
             <button @click.prevent="open = ! open"
-                class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:text-dashboard-500">
+                class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:text-teal-500 dark:text-slate-300 dark:hover:text-teal-400">
                 @include('component::template.menu._icon', ['item' => $item])
                 <span>{{ $item->title }}</span>
                 <x:component::icon.arrow-down />
@@ -16,7 +16,7 @@
                 x-transition:enter-start="opacity-0 scale-30" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in duration-75 transform"
                 x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                class="relative z-10 flex flex-col font-normal divide-y divide-gray-100 rounded shadow bg-slate-50 md:absolute w-44 dark:bg-slate-700 dark:divide-gray-600">
+                class="relative z-10 flex w-44 flex-col divide-y divide-slate-100 rounded bg-slate-50 font-normal shadow md:absolute dark:divide-slate-600 dark:bg-slate-800">
                 @include('component::template.menu.vertical', [
                     'items' => $item->children,
                     'type' => 'children',
@@ -30,7 +30,7 @@
             @if ($href)
                 <li>
                     <a href="{{ $href }}" target="{{ $item->target }}"
-                        class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
+                        class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-teal-500 dark:text-slate-300 dark:hover:text-teal-400">
                         @include('component::template.menu._icon', ['item' => $item])
                         <span>{{ $item->title }}</span>
                     </a>
@@ -41,7 +41,7 @@
             @if ($href)
                 <li>
                     <a href="{{ $href }}" target="{{ $item->target }}"
-                        class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-dashboard-500">
+                        class="flex items-center gap-2 px-4 py-2 text-slate-600 hover:text-teal-500 dark:text-slate-300 dark:hover:text-teal-400">
                         @include('component::template.menu._icon', ['item' => $item])
                         <span>{{ $item->title }}</span>
                     </a>

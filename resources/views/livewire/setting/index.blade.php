@@ -1,179 +1,127 @@
-<div>
-    <x-slot name="header">
-        <div class="flex items-center gap-1">
-            <x:component::icon.setting class="h-12" />
-            <h2 class="font-semibold leading-tight">
-                {{ __('Einstellungen') }}
-            </h2>
-        </div>
-    </x-slot>
+<x:component::page.shell title="Einstellungen">
+    @if (!empty($content))
+        <div x-data="{ tab: '{{ array_key_first($content) }}' }">
+            <div class="flex overflow-x-auto flex-nowrap">
+                <ul class="flex gap-2">
+                    @foreach ($content as $key => $value)
+                        <li @click.prevent="tab = '{{ $key }}'"
+                            class="block w-52 cursor-pointer rounded-t-md py-3 text-center font-semibold hover:bg-slate-50 dark:hover:bg-slate-800"
+                            :class="{
+                                'bg-slate-100 text-teal-500 dark:bg-slate-800': tab === '{{ $key }}',
+                                'bg-slate-300 text-slate-500 dark:bg-slate-700 dark:text-slate-300': tab != '{{ $key }}'
+                            }">
+                            {{ $key }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
 
-    <div class="py-12">
-        <div class="container px-3 mx-auto pb-14">
-
-            @if (!empty($content))
-
-                <div class="" x-data="{ tab: '{{ array_key_first($content) }}' }">
-                    <div class="flex overflow-x-auto flex-nowrap">
-                        <ul class="flex gap-2">
-                            @foreach ($content as $key => $value)
-                                <li @click.prevent="tab = '{{ $key }}'"
-                                    class="block py-3 font-semibold text-center cursor-pointer w-52 rounded-t-md hover:bg-slate-50"
-                                    :class="{
-                                    
-                                    
-                                        'bg-slate-100 text-teal-500': tab === '{{ $key }}',
-                                        'text-slate-500 bg-slate-300': tab != '{{ $key }}'
-                                    
-                                    }">
-                                    {{ $key }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-
-                    <div class="mb-12 bg-slate-100 px-7 rounded-tr-md rounded-br-md rounded-bl-md py-7">
-
-                        @foreach ($content as $key => $setting)
-                            <div x-show="tab === '{{ $key }}'">
-                                <div class="grid grid-cols-1 gap-7">
-                                    @if (!empty($setting))
-                                        @foreach ($setting as $value)
-                                            <div class="bg-white rounded-md shadow-sm p-7">
-                                                <div class="flex items-center justify-between gap-5 px-2 mb-5">
-                                                    <div class="items-center gap-5 md:flex ">
-                                                        <h3 class="font-bold">{{ $value['display_name'] }}</h3>
-                                                        <code
-                                                            class="px-3 py-1 text-sm text-white rounded-full cursor-pointer bg-dashboard-500 hover:bg-dashboard-600">setting('{{ $value['key'] }}')</code>
-                                                    </div>
-                                                    <div class="flex justify-end gap-5">
-                                                        <x:component::element.modal>
-                                                            <x-slot:trigger>
-
-                                                                <button @click.prevent="modal=true" type="button">
-                                                                    <x:component::icon.delete
-                                                                        class="text-slate-300 hover:text-slate-700" />
-                                                                </button>
-
-                                                            </x-slot:trigger>
-
-                                                            <x-slot:content>
-                                                                <div class="flex justify-center ">
-                                                                    <div
-                                                                        class="flex items-center justify-center text-red-500 bg-red-200 rounded-full shadow-sm w-28 h-28">
-                                                                        <x:component::icon.delete class="h-16" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="flex justify-center mt-7">
-                                                                    <h3
-                                                                        class="text-lg font-bold text-center text-slate-700">
-                                                                        {{ $value['display_name'] }}
-                                                                        <br />unwiderruflich
-                                                                        löschen?
-                                                                    </h3>
-                                                                </div>
-                                                            </x-slot:content>
-
-                                                            <x-slot:controller>
-                                                                <button @click.prevent="modal=false" type="button"
-                                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
-
-                                                                <button wire:click='deleteEntry({{ $value['id'] }})'
-                                                                    @click.prevent="modal=false" type="button"
-                                                                    class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>
-                                                            </x-slot:controller>
-                                                        </x:component::element.modal>
-                                                    </div>
-                                                </div>
-                                                <div class="">
-                                                    @if ($value['type'] == 'text')
-                                                        <x:component::form.input
-                                                            wire:keydown.debounce.500ms="input($event.target.value, {{ $value['id'] }})"
-                                                            type="text" value="{{ $value['value'] }}" />
-
-                                                        <x:component::action-message class="mr-3"
-                                                            on="saved{{ $value['id'] }}">
-                                                            Gespeichert.
-                                                        </x:component::action-message>
-                                                    @endif
-
-                                                    @if ($value['type'] == 'text_area')
-                                                        <x:component::form.textarea
-                                                            wire:keydown.debounce.500ms="input($event.target.value, {{ $value['id'] }})"
-                                                            value="{{ $value['value'] }}" />
-
-                                                        <x:component::action-message class="mr-3"
-                                                            on="saved{{ $value['id'] }}">
-                                                            Gespeichert.
-                                                        </x:component::action-message>
-                                                    @endif
-                                                </div>
+            <div
+                class="mb-12 rounded-tr-md rounded-br-md rounded-bl-md bg-slate-100 px-7 py-7 dark:bg-slate-800">
+                @foreach ($content as $key => $setting)
+                    <div x-show="tab === '{{ $key }}'">
+                        <div class="grid grid-cols-1 gap-7">
+                            @if (!empty($setting))
+                                @foreach ($setting as $value)
+                                    <div
+                                        class="rounded-md border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                                        <div class="mb-5 flex items-center justify-between gap-5 px-2">
+                                            <div class="items-center gap-5 md:flex">
+                                                <h3 class="font-bold text-slate-900 dark:text-white">
+                                                    {{ $value['display_name'] }}</h3>
+                                                <code
+                                                    class="cursor-pointer rounded-full bg-teal-500 px-3 py-1 text-sm text-white hover:bg-teal-600">setting('{{ $value['key'] }}')</code>
                                             </div>
-                                        @endforeach
-                                    @else
-                                        <p>Noch kein Eintrag vorhanden.</p>
-                                    @endif
+                                            <div class="flex justify-end gap-5">
+                                                <x:component::element.confirm-delete
+                                                    wire:click="deleteEntry({{ $value['id'] }})" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            @if ($value['type'] == 'text')
+                                                <x:component::form.input
+                                                    wire:keydown.debounce.500ms="input($event.target.value, {{ $value['id'] }})"
+                                                    type="text" value="{{ $value['value'] }}" />
 
-                                </div>
-                            </div>
-                        @endforeach
+                                                <x:component::action-message class="mr-3"
+                                                    on="saved{{ $value['id'] }}">
+                                                    Gespeichert.
+                                                </x:component::action-message>
+                                            @endif
+
+                                            @if ($value['type'] == 'text_area')
+                                                <x:component::form.textarea
+                                                    wire:keydown.debounce.500ms="input($event.target.value, {{ $value['id'] }})"
+                                                    value="{{ $value['value'] }}" />
+
+                                                <x:component::action-message class="mr-3"
+                                                    on="saved{{ $value['id'] }}">
+                                                    Gespeichert.
+                                                </x:component::action-message>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p class="text-slate-500 dark:text-slate-400">Noch kein Eintrag vorhanden.</p>
+                            @endif
+                        </div>
                     </div>
-                </div>
-            @else
-                <p class="mb-10 text-center text-slate-500">
-                    Noch keine Einstellungen vorhanden. Lege unten die erste Einstellung an.
-                </p>
-            @endif
+                @endforeach
+            </div>
+        </div>
+    @else
+        <p class="mb-10 text-center text-slate-500 dark:text-slate-400">
+            Noch keine Einstellungen vorhanden. Lege unten die erste Einstellung an.
+        </p>
+    @endif
 
-
-            <div class="">
-                <h3 class="font-bold text-center text-slate-500 mb-7">Neue Einstellung</h3>
-                <div class="grid grid-cols-1 gap-4 bg-white rounded-md md:grid-cols-4 p-7">
-                    <div class="">
-                        <x:component::form.label value="Name" />
-                        <x:component::form.input wire:model.live="display_name" type="text" name="display_name"
-                            placeholder="Einstellungs-Name z.B. Site Titel" required />
-                        <x:component::form.input-error :for="$display_name" />
-                    </div>
-
-                    <div class="">
-                        <x:component::form.label value="Key" />
-                        <x:component::form.input wire:model.live="key" type="text" name="key"
-                            placeholder="Einstellungs-Schlüssel z.B. title" required />
-                        <x:component::form.input-error :for="$key" />
-                    </div>
-
-                    <div class="">
-                        <x:component::form.label value="Type" />
-                        <x:component::form.select wire:model.live="type" name="type" required>
-                            <x:component::form.select-option name="" value="Typ auswählen" />
-                            <x:component::form.select-option name="text" value="Text Input" />
-                            <x:component::form.select-option name="text_area" value="Text Area" />
-                        </x:component::form.select>
-                        <x:component::form.input-error :for="$type" />
-                    </div>
-
-                    <div class="">
-                        <x:component::form.label value="Gruppe" />
-                        <x:component::form.select wire:model.live="group" name="group" required>
-                            <x:component::form.select-option name="" value="Bestehende Gruppe auswählen" />
-                            <x:component::form.select-option name="Site" value="Site" />
-                            <x:component::form.select-option name="Admin" value="Admin" />
-                        </x:component::form.select>
-                        <x:component::form.input-error :for="$group" />
-                    </div>
-                </div>
-                <div class="flex justify-center gap-4 md:justify-end mt-7">
-                    <button wire:click="createNewSettingEntry" type="button"
-                        class="w-56 px-5 py-2 text-center text-white rounded-md bg-dashboard-500 hover:bg-dashboard-600">Erstellen</button>
-                </div>
+    <div>
+        <h3 class="mb-7 text-center font-bold text-slate-500 dark:text-slate-300">Neue Einstellung</h3>
+        <div
+            class="grid grid-cols-1 gap-4 rounded-md border border-slate-200 bg-white p-7 dark:border-slate-700 dark:bg-slate-900 md:grid-cols-4">
+            <div>
+                <x:component::form.label value="Name" />
+                <x:component::form.input wire:model.live="display_name" type="text" name="display_name"
+                    placeholder="Einstellungs-Name z.B. Site Titel" required />
+                <x:component::form.input-error :for="$display_name" />
             </div>
 
-
-            <div class="mt-14">
-                @livewire('setting.test-mail-notification')
+            <div>
+                <x:component::form.label value="Key" />
+                <x:component::form.input wire:model.live="key" type="text" name="key"
+                    placeholder="Einstellungs-Schlüssel z.B. title" required />
+                <x:component::form.input-error :for="$key" />
             </div>
 
+            <div>
+                <x:component::form.label value="Type" />
+                <x:component::form.select wire:model.live="type" name="type" required>
+                    <x:component::form.select-option name="" value="Typ auswählen" />
+                    <x:component::form.select-option name="text" value="Text Input" />
+                    <x:component::form.select-option name="text_area" value="Text Area" />
+                </x:component::form.select>
+                <x:component::form.input-error :for="$type" />
+            </div>
+
+            <div>
+                <x:component::form.label value="Gruppe" />
+                <x:component::form.select wire:model.live="group" name="group" required>
+                    <x:component::form.select-option name="" value="Bestehende Gruppe auswählen" />
+                    <x:component::form.select-option name="Site" value="Site" />
+                    <x:component::form.select-option name="Admin" value="Admin" />
+                </x:component::form.select>
+                <x:component::form.input-error :for="$group" />
+            </div>
+        </div>
+        <div class="mt-7 flex justify-center gap-4 md:justify-end">
+            <x:component::button.primary wire:click="createNewSettingEntry" type="button" class="w-56">
+                Erstellen
+            </x:component::button.primary>
         </div>
     </div>
-</div>
+
+    <div class="mt-14">
+        @livewire('setting.test-mail-notification')
+    </div>
+</x:component::page.shell>

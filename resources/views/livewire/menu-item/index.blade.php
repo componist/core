@@ -1,278 +1,190 @@
-<div>
-    <x-slot name="header">
-        <div class="flex items-center gap-1">
-            <h2 class="font-semibold leading-tight">
-                {{ __('Menüpunkte') }} - <span class="text-teal-500">{{ $menu['name'] }}</span>
-            </h2>
-        </div>
-    </x-slot>
+<x:component::page.shell title="Menüpunkte" description="{{ $menu['name'] }}">
+    <x-slot:actions>
+        <x:component::button.primary wire:click="create" type="button">
+            Menüpunkt erstellen
+        </x:component::button.primary>
+    </x-slot:actions>
 
-
-    <div class="py-12">
-
-        <div class="container px-3 mx-auto pb-14">
-
-            <div class="flex justify-end gap-5 pb-12">
-                <button wire:click="create" type="button"
-                    class="flex items-center justify-center w-56 px-5 py-3 text-white border-0 rounded-md shadow-sm bg-dashboard-500 hover:text-white hover:bg-dashboard-600 default-transition">
-                    Menu Item erstellen
-                </button>
+    <div
+        class="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900 md:rounded-lg">
+        <div class="flex gap-3 bg-slate-100 text-sm dark:bg-slate-800">
+            <div class="w-[50px] p-4"></div>
+            <div class="w-[350px] p-4 text-left font-semibold text-slate-700 dark:text-slate-200">
+                <p>Titel</p>
             </div>
+            <div class="p-4 text-center font-semibold text-slate-700 dark:text-slate-200">
+                <p>Status</p>
+            </div>
+            <div class="p-4 text-center font-semibold text-slate-700 dark:text-slate-200">
+                <p>Typ</p>
+            </div>
+            <div class="p-4 text-left font-semibold text-slate-700 dark:text-slate-200">
+                <p>Name / Dateipfad</p>
+            </div>
+        </div>
 
-            <div class="overflow-x-auto bg-white shadow md:rounded-lg">
-                <div class="flex gap-3 text-sm bg-slate-100">
-                    <div class="w-[50px] p-4"></div>
-                    <div class="w-[350px] p-4 font-semibold text-left text-slate-700">
-                        <p class="">Title</p>
-                    </div>
-                    <div class="p-4 font-semibold text-center text-slate-700">
-                        <p>Status</p>
-                    </div>
-                    <div class="p-4 font-semibold text-center text-slate-700">
-                        <p>Type</p>
-                    </div>
-                    <div class="p-4 font-semibold text-left text-slate-700">
-                        <p>Name / File Path</p>
-                    </div>
-                </div>
+        <ul wire:sortable="reorder" wire:sortable-group="reorderChildes"
+            class="divide-y divide-slate-200 dark:divide-slate-700">
+            @forelse ($content as $value)
+                <li x-data="{ open: false }"
+                    class="text-slate-500 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/60"
+                    wire:key="group-{{ $value['id'] }}" wire:sortable.item="{{ $value['id'] }}">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="flex w-[50px] cursor-pointer items-center justify-center p-4 text-slate-300 hover:text-teal-500 dark:text-slate-500"
+                                wire:sortable.handle>
+                                <x:component::icon.drag-indicator />
+                            </div>
+                            <div class="w-[350px] p-4">
+                                @if (count($value['children']) > 0)
+                                    <button @click.prevent="open = ! open" class="flex gap-1" type="button">
+                                        <span>{{ $value['title'] }}</span>
 
+                                        <template x-if="open">
+                                            <x:component::icon.arrow-up class="text-teal-500" />
+                                        </template>
 
-                <ul wire:sortable="reorder" wire:sortable-group="reorderChildes" class="divide-y divide-gray-200">
-                    @forelse ($content as $value)
-                        <li x-data="{ open: false }" class="text-slate-500 hover:bg-slate-50"
-                            wire:key="group-{{ $value['id'] }}" wire:sortable.item="{{ $value['id'] }}">
-                            <div class="flex items-center justify-between ">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-[50px] flex items-center justify-center text-slate-300 cursor-pointer hover:text-dashboard-500 p-4"
-                                        wire:sortable.handle>
-                                        <x:component::icon.drag-indicator />
-                                    </div>
-                                    <div class="w-[350px] p-4">
-                                        @if (count($value['children']) > 0)
-                                            <button @click.prevent="open = ! open" class="flex gap-1">
-                                                <span>{{ $value['title'] }}</span>
-
-                                                <template x-if="open">
-                                                    <x:component::icon.arrow-up class="text-dashboard-500" />
-                                                </template>
-
-                                                <template x-if="!open">
-                                                    <x:component::icon.arrow-down class="text-dashboard-500" />
-                                                </template>
-                                            </button>
-                                        @else
-                                            {{ $value['title'] }}
-                                        @endif
-                                    </div>
-                                    <div class="p-4 font-semibold text-center text-slate-700">
-                                        <x:component::form.toggle wire:change="toggle({{ $value['id'] }},'status')"
-                                            status="{{ $value['status'] }}" />
-                                    </div>
-
-                                    <div class="text-center">
-                                        @switch($value['type'])
-                                            @case('page')
-                                                <span
-                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-yellow-500 rounded-full">{{ $value['type'] }}</span>
-                                            @break
-
-                                            @case('parent')
-                                                <span
-                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-green-500 rounded-full">{{ $value['type'] }}</span>
-                                            @break
-
-                                            @case('route')
-                                                <span
-                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-blue-500 rounded-full">{{ $value['type'] }}</span>
-                                            @break
-
-                                            @case('url')
-                                                <span
-                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-orange-500 rounded-full">{{ $value['type'] }}</span>
-                                            @break
-
-                                            @default
-                                                <span
-                                                    class="inline-block w-16 py-1 text-xs text-center text-white bg-red-500 rounded-full">{{ $value['type'] }}</span>
-                                        @endswitch
-
-                                    </div>
-
-                                    <div class="p-4 text-left">
-                                        @php($href = componist_menu_href($value))
-                                        @if ($href)
-                                            <a href="{{ $href }}" target="_blank"
-                                                class="hover:text-dashboard-500">{{ $value['type'] === 'url' ? $value['name'] : ($value['name'] ?? $value['view_path']) }}</a>
-                                        @else
-                                            @if ($value['type'] == 'route' or $value['type'] == 'page')
-                                                <span class="text-sm font-bold text-red-500">Route wurde nicht
-                                                    gefunden</span>
-                                            @endif
-                                        @endif
-                                    </div>
-
-                                </div>
-
-                                <div class="flex justify-end gap-2 p-4">
-
-                                    <x:component::button.edit wire:click.prevent="edit({{ $value['id'] }})"
-                                        type="button" />
-
-
-                                    <x:component::element.modal>
-                                        <x-slot:trigger>
-
-                                            <x:component::button.delete @click.prevent="modal=true" />
-
-                                        </x-slot:trigger>
-
-                                        <x-slot:content>
-                                            <div class="flex justify-center ">
-                                                <div
-                                                    class="flex items-center justify-center text-red-500 bg-red-200 rounded-full shadow-sm w-28 h-28">
-                                                    <x:component::icon.delete class="h-16" />
-                                                </div>
-                                            </div>
-                                            <div class="flex justify-center mt-7">
-                                                <h3 class="text-lg font-bold text-center text-slate-700">
-                                                    {{ $value['title'] }} <br />unwiderruflich löschen?</h3>
-                                            </div>
-                                        </x-slot:content>
-
-                                        <x-slot:controller>
-                                            <button @click.prevent="modal=false" type="button"
-                                                class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
-
-                                            <button wire:click='deleteEntry({{ $value['id'] }})'
-                                                @click.prevent="modal=false" type="button"
-                                                class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>
-                                        </x-slot:controller>
-                                    </x:component::element.modal>
-                                </div>
+                                        <template x-if="!open">
+                                            <x:component::icon.arrow-down class="text-teal-500" />
+                                        </template>
+                                    </button>
+                                @else
+                                    {{ $value['title'] }}
+                                @endif
+                            </div>
+                            <div class="p-4 text-center font-semibold text-slate-700 dark:text-slate-200">
+                                <x:component::form.toggle wire:change="toggle({{ $value['id'] }},'status')"
+                                    status="{{ $value['status'] }}" />
                             </div>
 
-                            @if (count($value['children']) > 0)
-                                <div x-cloak x-show="open" class="border-t border-gray-200">
-                                    <ul class="border-l-8 divide-y border-dashboard-500 divide-primary-300"
-                                        wire:sortable-group.item-group="{{ $value['id'] }}">
+                            <div class="text-center">
+                                @switch($value['type'])
+                                    @case('page')
+                                        <span
+                                            class="inline-block w-16 rounded-full bg-yellow-500 py-1 text-center text-xs text-white">{{ $value['type'] }}</span>
+                                    @break
 
-                                        @foreach ($value->children->sortBy('order') as $children)
-                                            <li class="text-slate-500 bg-dashboard-100 hover:bg-dashboard-500 hover:text-white"
-                                                wire:key="children-{{ $children['id'] }}"
-                                                wire:sortable-group.item="{{ $children['id'] }}">
-                                                <div class="flex items-center justify-between ">
-                                                    <div class="flex items-center">
-                                                        <div class="w-[50px] flex items-center justify-center  cursor-pointer p-4 text-dashboard-200 hover:text-dashboard-900"
-                                                            wire:sortable-group.handle>
-                                                            <x:component::icon.drag-indicator />
-                                                        </div>
-                                                        <div class="w-[350px]  p-4">
-                                                            {{ $children['title'] }}
-                                                        </div>
-                                                        <div class="p-4">
-                                                            @switch($children['type'])
-                                                                @case('page')
-                                                                    <span
-                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-yellow-500 rounded-full">{{ $children['type'] }}</span>
-                                                                @break
+                                    @case('parent')
+                                        <span
+                                            class="inline-block w-16 rounded-full bg-green-500 py-1 text-center text-xs text-white">{{ $value['type'] }}</span>
+                                    @break
 
-                                                                @case('parent')
-                                                                    <span
-                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-green-500 rounded-full">{{ $children['type'] }}</span>
-                                                                @break
+                                    @case('route')
+                                        <span
+                                            class="inline-block w-16 rounded-full bg-blue-500 py-1 text-center text-xs text-white">{{ $value['type'] }}</span>
+                                    @break
 
-                                                                @case('route')
-                                                                    <span
-                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-blue-500 rounded-full">{{ $children['type'] }}</span>
-                                                                @break
+                                    @case('url')
+                                        <span
+                                            class="inline-block w-16 rounded-full bg-orange-500 py-1 text-center text-xs text-white">{{ $value['type'] }}</span>
+                                    @break
 
-                                                                @case('url')
-                                                                    <span
-                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-orange-500 rounded-full">{{ $children['type'] }}</span>
-                                                                @break
+                                    @default
+                                        <span
+                                            class="inline-block w-16 rounded-full bg-red-500 py-1 text-center text-xs text-white">{{ $value['type'] }}</span>
+                                @endswitch
+                            </div>
 
-                                                                @default
-                                                                    <span
-                                                                        class="inline-block w-16 py-1 text-xs text-center text-white bg-red-500 rounded-full">{{ $children['type'] }}</span>
-                                                            @endswitch
-                                                        </div>
-                                                        <div class="p-4">
-                                                            @php($childHref = componist_menu_href($children))
-                                                            @if ($childHref)
-                                                                <a href="{{ $childHref }}" target="_blank"
-                                                                    class="hover:text-dashboard-900">{{ $children['type'] === 'url' ? $children['name'] : ($children['name'] ?? $children['view_path']) }}</a>
-                                                            @else
-                                                                @if ($children['type'] == 'route' or $children['type'] == 'page')
-                                                                    <span class="text-sm font-bold text-red-500">Route
-                                                                        wurde
-                                                                        nicht
-                                                                        gefunden</span>
-                                                                @endif
-                                                            @endif
-                                                        </div>
+                            <div class="p-4 text-left">
+                                @php($href = componist_menu_href($value))
+                                @if ($href)
+                                    <a href="{{ $href }}" target="_blank"
+                                        class="hover:text-teal-500">{{ $value['type'] === 'url' ? $value['name'] : ($value['name'] ?? $value['view_path']) }}</a>
+                                @else
+                                    @if ($value['type'] == 'route' or $value['type'] == 'page')
+                                        <span class="text-sm font-bold text-red-500">Route wurde nicht
+                                            gefunden</span>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
 
-                                                    </div>
+                        <div class="flex justify-end gap-2 p-4">
+                            <x:component::button.edit wire:click.prevent="edit({{ $value['id'] }})"
+                                type="button" />
+                            <x:component::element.confirm-delete wire:click="deleteEntry({{ $value['id'] }})" />
+                        </div>
+                    </div>
 
-                                                    <div class="flex justify-end gap-2 p-4">
-
-                                                        <x:component::button.edit
-                                                            wire:click.prevent="edit({{ $children['id'] }})"
-                                                            type="button" />
-
-
-                                                        <x:component::element.modal>
-                                                            <x-slot:trigger>
-
-                                                                <x:component::button.delete
-                                                                    @click.prevent="modal=true" />
-
-                                                            </x-slot:trigger>
-
-                                                            <x-slot:content>
-                                                                <div class="flex justify-center ">
-                                                                    <div
-                                                                        class="flex items-center justify-center text-red-500 bg-red-200 rounded-full shadow-sm w-28 h-28">
-                                                                        <x:component::icon.delete class="h-16" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="flex justify-center mt-7">
-                                                                    <h3
-                                                                        class="text-lg font-bold text-center text-slate-700">
-                                                                        {{ $children['title'] }} <br />unwiderruflich
-                                                                        löschen?</h3>
-                                                                </div>
-                                                            </x-slot:content>
-
-                                                            <x-slot:controller>
-                                                                <button @click.prevent="modal=false" type="button"
-                                                                    class="flex justify-center w-full px-4 py-2 mr-2 font-medium text-center text-white bg-slate-300 border border-transparent rounded-md shadow-sm hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Abbrechen</button>
-
-                                                                <button
-                                                                    wire:click='deleteEntry({{ $children['id'] }})'
-                                                                    @click.prevent="modal=false" type="button"
-                                                                    class="flex justify-center w-full px-4 py-2 font-medium text-center text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">löschen</button>
-                                                            </x-slot:controller>
-                                                        </x:component::element.modal>
-                                                    </div>
+                    @if (count($value['children']) > 0)
+                        <div x-cloak x-show="open" class="border-t border-slate-200 dark:border-slate-700">
+                            <ul class="divide-y divide-slate-200 border-l-8 border-teal-500 dark:divide-slate-700"
+                                wire:sortable-group.item-group="{{ $value['id'] }}">
+                                @foreach ($value->children->sortBy('order') as $children)
+                                    <li class="bg-teal-50 text-slate-600 hover:bg-teal-500 hover:text-white dark:bg-teal-950/40 dark:text-slate-300 dark:hover:bg-teal-600 dark:hover:text-white"
+                                        wire:key="children-{{ $children['id'] }}"
+                                        wire:sortable-group.item="{{ $children['id'] }}">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <div class="flex w-[50px] cursor-pointer items-center justify-center p-4 text-teal-300 hover:text-teal-900 dark:text-teal-400 dark:hover:text-white"
+                                                    wire:sortable-group.handle>
+                                                    <x:component::icon.drag-indicator />
                                                 </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </li>
-                    @empty
-                        <li class="px-6 py-10 text-center text-slate-500">
-                            Noch keine Menüpunkte vorhanden. Erstelle den ersten Eintrag oben rechts.
-                        </li>
-                    @endforelse
-                </ul>
+                                                <div class="w-[350px] p-4">
+                                                    {{ $children['title'] }}
+                                                </div>
+                                                <div class="p-4">
+                                                    @switch($children['type'])
+                                                        @case('page')
+                                                            <span
+                                                                class="inline-block w-16 rounded-full bg-yellow-500 py-1 text-center text-xs text-white">{{ $children['type'] }}</span>
+                                                        @break
 
+                                                        @case('parent')
+                                                            <span
+                                                                class="inline-block w-16 rounded-full bg-green-500 py-1 text-center text-xs text-white">{{ $children['type'] }}</span>
+                                                        @break
 
-            </div>
-        </div>
+                                                        @case('route')
+                                                            <span
+                                                                class="inline-block w-16 rounded-full bg-blue-500 py-1 text-center text-xs text-white">{{ $children['type'] }}</span>
+                                                        @break
 
-        @include('component::livewire.menu-item.edit')
+                                                        @case('url')
+                                                            <span
+                                                                class="inline-block w-16 rounded-full bg-orange-500 py-1 text-center text-xs text-white">{{ $children['type'] }}</span>
+                                                        @break
 
+                                                        @default
+                                                            <span
+                                                                class="inline-block w-16 rounded-full bg-red-500 py-1 text-center text-xs text-white">{{ $children['type'] }}</span>
+                                                    @endswitch
+                                                </div>
+                                                <div class="p-4">
+                                                    @php($childHref = componist_menu_href($children))
+                                                    @if ($childHref)
+                                                        <a href="{{ $childHref }}" target="_blank"
+                                                            class="hover:text-teal-900 dark:hover:text-white">{{ $children['type'] === 'url' ? $children['name'] : ($children['name'] ?? $children['view_path']) }}</a>
+                                                    @else
+                                                        @if ($children['type'] == 'route' or $children['type'] == 'page')
+                                                            <span class="text-sm font-bold text-red-500">Route
+                                                                wurde nicht gefunden</span>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="flex justify-end gap-2 p-4">
+                                                <x:component::button.edit
+                                                    wire:click.prevent="edit({{ $children['id'] }})"
+                                                    type="button" />
+                                                <x:component::element.confirm-delete
+                                                    wire:click="deleteEntry({{ $children['id'] }})" />
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </li>
+            @empty
+                <li class="px-6 py-10 text-center text-slate-500 dark:text-slate-400">
+                    Noch keine Menüpunkte vorhanden. Erstelle den ersten Eintrag oben rechts.
+                </li>
+            @endforelse
+        </ul>
     </div>
-</div>
+
+    @include('component::livewire.menu-item.edit')
+</x:component::page.shell>

@@ -1,29 +1,16 @@
-<div>
-    <x-slot name="header">
-        <div class="flex items-center gap-1">
-            <h2 class="font-semibold leading-tight">
-                Benachrichtigung
-            </h2>
-        </div>
-    </x-slot>
+<x:component::page.shell title="Benachrichtigung">
+    <x-slot:actions>
+        <x:component::button.secondary href="{{ route('componist.core.notification') }}">
+            Zurück
+        </x:component::button.secondary>
+    </x-slot:actions>
 
-    <div class="py-12">
-
-        <div class="container px-3 mx-auto pb-14">
-
-            <div class="flex items-center justify-between mb-14">
-                <div>
-                    <span class="text-2xl text-teal-500">{{ $title }}</span>
-                </div>
-                <a href="{{ route('componist.core.notification') }}"
-                    class="flex items-center justify-center w-56 px-5 py-2 text-white border-0 rounded-md shadow-sm whitespace-nowrap bg-dashboard-500 hover:text-white hover:bg-dashboard-600 default-transition ">zurück</a>
-            </div>
-
-            <div class="p-5 overflow-x-auto bg-white shadow md:rounded-lg">
-                {!! \Componist\Core\Support\SafeHtml::sanitize($message) !!}
-            </div>
-
-        </div>
-
+    <div class="mb-6">
+        <span class="text-2xl text-teal-500">{{ $title }}</span>
     </div>
-</div>
+
+    <div
+        class="overflow-x-auto rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:rounded-lg">
+        {!! \Componist\Core\Support\SafeHtml::sanitize($message) !!}
+    </div>
+</x:component::page.shell>
