@@ -1,3 +1,7 @@
+@php
+    use Componist\Core\Support\Ui;
+@endphp
+
 <div x-data="{
     open: false,
     search: '',
@@ -22,31 +26,30 @@
     pullSelected() {
         @this.set('{{ $selected }}', this.selected);
     }
-}" class="relative">
-    <x:component::element.search @click.prevent="open = ! open" x-model="search" />
+}" class="relative space-y-3">
+    <x:component::element.search @click.prevent="open = ! open" x-model="search" placeholder="Suchen…" />
 
     <div x-cloak x-show="open" @click.outside="open = false"
-        class="absolute left-0 top-14 w-96 rounded border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
-        <ul class="divide-y divide-slate-200 dark:divide-slate-700">
+        class="{{ Ui::DROPDOWN }} absolute left-0 top-12 z-20 w-full max-w-sm overflow-hidden">
+        <ul class="max-h-56 divide-y divide-slate-200 overflow-auto dark:divide-slate-700">
             <template x-for="(category, index) in filtered()">
-                <li class="cursor-pointer p-3 text-slate-900 hover:bg-slate-50 dark:text-slate-100 dark:hover:bg-slate-800"
+                <li class="cursor-pointer px-4 py-2.5 text-sm text-slate-900 hover:bg-slate-50 dark:text-slate-100 dark:hover:bg-slate-700/80"
                     x-text="category.name" @click.prevent="add(category), open = false">
                 </li>
             </template>
         </ul>
     </div>
 
-    <div class="flex flex-wrap gap-2 px-2">
-
+    <div class="flex flex-wrap gap-2">
         <template x-for="(category, index) in selected">
-            <div
-                class="flex gap-2 px-5 py-2 mt-5 text-white rounded-full shadow-sm bg-dashboard-500 hover:bg-dashboard-600">
+            <div class="{{ Ui::CHIP }}">
                 <span x-text="category.name"></span>
-                <button type="button" @click.prevent="deleted(index)">
-                    <x:component::icon.close />
+                <button type="button" @click.prevent="deleted(index)"
+                    class="inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-teal-600"
+                    aria-label="Entfernen">
+                    <x:component::icon.close class="h-3.5 w-3.5" />
                 </button>
             </div>
         </template>
-
     </div>
 </div>

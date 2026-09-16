@@ -1,5 +1,9 @@
 @props(['for' => null])
 
+@php
+    use Componist\Core\Support\Ui;
+@endphp
+
 @error($for)
-    <p {{ $attributes->merge(['class' => 'mt-2 text-sm text-red-600 dark:text-red-400']) }}>{{ $message }}</p>
+    <p {{ $attributes->merge(['class' => Ui::ERROR]) }} role="alert">{{ $message }}</p>
 @enderror

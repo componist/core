@@ -1,19 +1,27 @@
 @props([
-    'id' => uniqid(),
+    'id' => null,
     'status' => false,
 ])
 
 @php
+    $toggleId = $id ?? 'toggle-'.uniqid();
     $isChecked = filter_var($status, FILTER_VALIDATE_BOOLEAN);
 @endphp
 
-<label for="{{ $id }}" class="relative inline-flex cursor-pointer items-center">
+<label for="{{ $toggleId }}" class="relative inline-flex cursor-pointer items-center">
     <input
-        @if (isset($attributes['wire:change'])) {{ $attributes->wire('change') }}
-    @else
-        {{ $attributes->wire('model.live') }} @endif
-        type="checkbox" id="{{ $id }}" class="peer sr-only" @checked($isChecked)>
+        @if (isset($attributes['wire:change']))
+            {{ $attributes->wire('change') }}
+        @else
+            {{ $attributes->wire('model.live') }}
+        @endif
+        type="checkbox"
+        id="{{ $toggleId }}"
+        class="peer sr-only"
+        @checked($isChecked)
+    >
     <div
-        class="h-7 w-12 rounded-full bg-slate-300 after:absolute after:left-[2px] after:top-[2px] after:h-6 after:w-6 after:rounded-full after:border after:border-slate-200 after:bg-white after:transition-all after:content-[''] peer-checked:bg-teal-500 peer-checked:after:translate-x-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-500/40 dark:bg-slate-700 dark:after:border-slate-600">
-    </div>
+        class="h-6 w-11 rounded-full bg-slate-300 transition-colors duration-200 after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-slate-200 after:bg-white after:shadow-sm after:transition-all after:content-[''] peer-checked:bg-teal-500 peer-checked:after:translate-x-5 peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-teal-500/40 peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-60 dark:bg-slate-600 dark:after:border-slate-500 dark:peer-focus-visible:ring-offset-slate-900"
+        aria-hidden="true"
+    ></div>
 </label>

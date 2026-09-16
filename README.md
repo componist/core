@@ -239,6 +239,24 @@ Dann lautet z. B. der Alias:
 
 ## 8) Blade- und Livewire-Komponenten
 
+### Form- und Button-Primitives (einheitlich)
+
+Alle Form-/Button-Klassen liegen zentral in `Componist\Core\Support\Ui`. Nutze die Blade-Komponenten statt eigener Tailwind-Strings:
+
+```blade
+<x:component::form.label value="E-Mail" />
+<x:component::form.input type="email" wire:model="email" />
+<x:component::form.input-error for="email" />
+
+<x:component::form.textarea wire:model="notes" />
+<x:component::form.select wire:model="status">…</x:component::form.select>
+
+<x:component::button.primary wire:click="save">Speichern</x:component::button.primary>
+<x:component::button.secondary wire:click="cancel">Abbrechen</x:component::button.secondary>
+```
+
+Tokens (Auszug): `Ui::FIELD`, `Ui::TEXTAREA`, `Ui::LABEL`, `Ui::BUTTON_PRIMARY`, `Ui::BUTTON_SECONDARY`, `Ui::SURFACE`. Light/Dark und Teal-Focus sind darin enthalten; Fehlerzustände über `aria-invalid="true"`.
+
 ### Blade
 
 ```blade

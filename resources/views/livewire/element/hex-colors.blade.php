@@ -7,7 +7,7 @@
             </button>
         @else
             <button type="button" @click.prevent="open = ! open"
-                class="flex items-center justify-center text-teal-500 border-2 border-teal-500 rounded-md shadow-sm hover:text-white w-9 h-9 hover:bg-dashboard-500 default-transition">
+                class="flex h-9 w-9 items-center justify-center rounded-md border-2 border-teal-500 text-teal-500 shadow-sm transition-colors hover:bg-teal-500 hover:text-white">
                 <x:component::icon.colorize />
             </button>
         @endif

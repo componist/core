@@ -38,7 +38,7 @@
                 }
             }
         " x-on:dragover.prevent="dropingFile=true" x-on:dragleave.prevent="dropingFile=false"
-            class="group flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 py-12 hover:bg-teal-50 dark:border-slate-600 dark:hover:bg-teal-950/40">
+            class="group flex w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed border-slate-300 py-12 transition-colors duration-200 hover:border-teal-400 hover:bg-teal-50 dark:border-slate-600 dark:hover:border-teal-500 dark:hover:bg-teal-950/40">
             <div class="flex flex-col items-center justify-center pb-6 pt-5 text-center">
                 <svg class="mb-3 h-10 w-10 text-slate-400 group-hover:text-teal-500 dark:text-slate-400" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

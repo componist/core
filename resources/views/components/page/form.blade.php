@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+    <div class="{{ \Componist\Core\Support\Ui::SURFACE }}">
         <div class="grid grid-cols-1 gap-5 p-5 sm:p-6">
             {{ $slot }}
         </div>

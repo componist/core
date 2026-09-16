@@ -8,18 +8,17 @@ dd($attributes);
         <input type="hidden" name="date" x-ref="date" :value="$wire.set('{{ $model }}', datepickerValue, true)" />
 
         <div
-            class="mt-1 flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-slate-300 bg-white px-3 text-slate-900 shadow-sm focus:border-teal-500 focus:outline-none focus:ring-teal-500 sm:text-sm dark:border-slate-600 dark:bg-slate-800 dark:text-white">
-            <div class="flex items-center gap-1">
-                <span x-text="dateView"></span>
+            class="{{ \Componist\Core\Support\Ui::FIELD }} mt-0 flex cursor-pointer items-center justify-between">
+            <div class="flex min-w-0 items-center gap-1.5">
+                <span class="truncate" x-text="dateView || 'Datum wählen'" :class="{ 'text-slate-400 dark:text-slate-500': !dateView }"></span>
                 <template x-if="dateView">
                     <button @click.prevent="clear()" type="button"
-                        class="relative z-10 flex h-6 w-6 items-center justify-center text-slate-300 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200">
-                        <x:component::icon.close class="h-9 hover:text-teal-500" />
+                        class="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-700 dark:hover:text-slate-200">
+                        <x:component::icon.close class="h-4 w-4" />
                     </button>
                 </template>
-
             </div>
-            <x:component::icon.calendar class="w-7 text-slate-400 dark:text-slate-400" />
+            <x:component::icon.calendar class="h-5 w-5 shrink-0 text-slate-400 dark:text-slate-500" />
         </div>
     </div>
 
@@ -30,7 +29,7 @@ dd($attributes);
         class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center px-5 bg-slate-500/70 backdrop-blur-sm">
 
         <div @click.outside="showDatepicker = false"
-            class="mt-12 w-[22rem] rounded-lg border border-slate-200 bg-slate-100 p-4 shadow dark:border-slate-700 dark:bg-slate-800">
+            class="mt-12 w-[22rem] rounded-lg border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-700 dark:bg-slate-900">
             <div class="mb-2 flex items-center justify-between">
                 <div>
                     <span x-text="MONTH_NAMES[month]"

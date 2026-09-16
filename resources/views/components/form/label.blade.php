@@ -1,4 +1,7 @@
-@props(['value'])
+@props(['value' => null])
 
-<label
-    {{ $attributes->merge(['class' => 'mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200']) }}>{{ $value ?? $slot }}</label>
+@php
+    use Componist\Core\Support\Ui;
+@endphp
+
+<label {{ $attributes->merge(['class' => Ui::LABEL]) }}>{{ $value ?? $slot }}</label>

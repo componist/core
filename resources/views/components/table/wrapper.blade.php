@@ -1,4 +1,4 @@
-<div class="overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+<div class="{{ \Componist\Core\Support\Ui::SURFACE }}">
     <div class="overflow-x-auto">
         <table class="min-w-full">
             <thead class="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/80">

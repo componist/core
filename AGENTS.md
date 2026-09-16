@@ -6,9 +6,10 @@ Basis-Package für Dashboard-Layouts, Menüs, Settings, Notifications und gemein
 
 ## Grenzen & Abhängigkeiten
 
-- Gehört rein: Layouts, Core-UI, Menü/Settings/Notifications, Home-Routen `dashboard.index` / `profile`
+- Gehört rein: Layouts, **gemeinsame UI-Primitives** (Form, Button, Page, Table, Element, …), Menü/Settings/Notifications, Home-Routen `dashboard.index` / `profile`
 - Gehört nicht: Feature-Domänen (Invoice, Bookmarks, …), Auth-Flows (→ `componist/auth`), Local-Dev-Endpoints (→ `componist/developer-tools`)
 - Abhängigkeit: Livewire, `componist/reminder-notifications`
+- **Host-Regel:** Jedes Feature-Package muss `componist/core` require-n und **nur** Core-UI nutzen. Fehlt eine Komponente → hier in Core anlegen (`resources/views/components/…` + `Support\Ui`), nicht im Feature-Package (Cursor-Rule `componist-core-ui.mdc`)
 
 ## Struktur
 
@@ -31,13 +32,16 @@ src/Http/Middleware/SetSecurityHeaders.php
 - Config: `config('componist')` (Host oft published)
 - Views: `component::…`
 - Auth-Home: `config('componist_auth.home')` → `dashboard.index`
+- **Lokal im Monorepo:** Path-Symlink Pflicht (`packages/componist/core` ↔ `vendor/componist/core`). Host: `composer run componist-link`. Siehe `packages/componist/AGENTS.md` und `.cursor/rules/componist-local-path-packages.mdc`.
 
 ## Konventionen
 
 - UI-Texte: Deutsch
 - Light + Dark (`dark:`) — `class="dark"` auf `<html>`, Toggle in der Topbar
 - Primary: Teal
+- **Form-/Button-Styles:** zentral in `Componist\Core\Support\Ui` (`FIELD`, `TEXTAREA`, `LABEL`, `BUTTON_*`, `BUTTON_FAB`, `TAB_*`, `SURFACE`, …). Blade-Primitives unter `components/form/*`, `components/button/*`, `element/search|password|datepicker|…` müssen diese Tokens nutzen – keine abweichenden Radii (`rounded-md`), Focus-Ringe (`ring-teal-500/30`) oder Padding-Werte
 - Resource-UI: `page.shell` / `page.form` / `button.primary` / `element.confirm-delete`
+- Menüpunkt-Dialog (`livewire/menu-item/edit`): Header + Beschreibung, Fieldsets mit Hilfetexten, typabhängige Verknüpfungsfelder, Sticky-Footer (`button.secondary` / `button.primary`), Escape/Backdrop schließen
 - Dashboard-Home: Bento-Übersicht (`backend/dashboard`) mit Greeting, echten Route-Shortcuts, Light/Dark und `dash-enter`-Motion (`prefers-reduced-motion` beachten)
 - Dashboard-Chrome: Teal-Marke, Glas-Topbar, Sidebar-Userfuß, Canvas-Glow; Display-Font Sora via `font-display`
 - Flash: Trait `addLivewireControlleFunctions` / `flashMessage()`
@@ -62,6 +66,8 @@ php artisan test --compact --testsuite="Componist Core"
 ## Do / Don’t
 
 - Do: Dashboard/Profil-Views im Package halten (`component::backend.*`)
+- Do: Neue wiederverwendbare UI (Input-Varianten, Badges, Filter-Bars, …) **hier** als `x:component::…` + `Ui`-Token bauen
 - Do: Error-Views zuerst in Core ändern, dann nach Root syncen (`php artisan vendor:publish --tag=core.pages.errors`)
+- Don’t: Feature-Packages eigene parallele Form-/Button-/Table-Komponenten erlauben
 - Don’t: Root `routes/web.php` wieder mit Dashboard-Routen füllen
 - Don’t: Error-Layouts nur in Root anpassen (Publish überschreibt)
