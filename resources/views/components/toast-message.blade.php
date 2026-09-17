@@ -35,6 +35,7 @@
     aria-live="polite"
 >
     <div
+        x-cloak
         x-show="current"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-x-full"
@@ -49,6 +50,7 @@
             'bg-slate-600 shadow-slate-900/50': current && (current.style === 'info' || !['success','danger','warning'].includes(current.style))
         }"
         class="pointer-events-auto flex min-w-[280px] max-w-md items-start gap-3 rounded-lg py-3 pl-4 pr-3 shadow-lg"
+        style="display: none;"
     >
         <span class="shrink-0 rounded p-1" :class="{
             'bg-emerald-700': current && current.style === 'success',
@@ -56,16 +58,16 @@
             'bg-amber-600': current && current.style === 'warning',
             'bg-slate-700': current && (current.style === 'info' || !['success','danger','warning'].includes(current.style))
         }">
-            <svg x-show="current && current.style === 'success'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg x-cloak x-show="current && current.style === 'success'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <svg x-show="current && current.style === 'danger'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg x-cloak x-show="current && current.style === 'danger'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <svg x-show="current && current.style === 'warning'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg x-cloak x-show="current && current.style === 'warning'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <svg x-show="current && current.style !== 'success' && current.style !== 'danger' && current.style !== 'warning'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg x-cloak x-show="current && current.style !== 'success' && current.style !== 'danger' && current.style !== 'warning'" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
         </span>

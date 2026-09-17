@@ -94,6 +94,9 @@ php artisan vendor:publish --tag=core.components
 # Error-Pages (Canonical unter packages/componist/core/resources/views/errors)
 php artisan vendor:publish --tag=core.pages.errors
 
+# E-Mail-Branding (config/componist_mail.php)
+php artisan vendor:publish --tag=componist.core.mail
+
 # Dashboard-Layout als anpassbare App-Kopie
 php artisan vendor:publish --tag=core.page.dashboard
 ```
@@ -234,6 +237,42 @@ Dann lautet z. B. der Alias:
 
 - Blade: `<x-core-layouts-dashboard />`
 - Livewire: `@livewire('core-menu.index')`
+
+### `config/componist_mail.php` (E-Mail-Design)
+
+Einheitliches **Soft-Split**-Layout (linke Teal-Akzentschiene, strukturierte Blöcke) für die ganze App:
+
+| Key | Bedeutung |
+|-----|-----------|
+| `brand_name` | Markenname (Default: `APP_NAME`) |
+| `logo_path` | Logo unter `public/` oder absolute URL |
+| `primary` | CTA-/Akzentfarbe (Default `#14b8a6`) |
+| `footer_text` | Optionaler Footer-Hinweis |
+| `support_url` | Support-Link im Footer |
+| `theme` | Laravel-Markdown-Theme (Default `componist`) |
+
+**MailMessage / Auth-Notifications** nutzen automatisch Theme `componist` (Provider setzt `mail.markdown.*`).
+
+**HTML-Mailables** wrappen Inhalt so:
+
+```blade
+<x:component::mail.shell title="Passwort zurücksetzen" label="Sicherheit" preheader="Link 60 Minuten gültig">
+    <x:component::mail.heading title="Passwort zurücksetzen" greeting="Hallo Anna," />
+    <x:component::mail.sep />
+    <x:component::mail.section>
+        <p>wir haben eine Anfrage erhalten …</p>
+    </x:component::mail.section>
+    <x:component::mail.sep />
+    <x:component::mail.section padding="cta">
+        <x:component::mail.button url="{{ $url }}">Neues Passwort festlegen</x:component::mail.button>
+    </x:component::mail.section>
+    <x:component::mail.section>
+        <x:component::mail.panel title="Sicherheitshinweis">…</x:component::mail.panel>
+    </x:component::mail.section>
+</x:component::mail.shell>
+```
+
+Neue Feature-Mails sollen **kein** eigenes HTML-Layout erfinden.
 
 ---
 

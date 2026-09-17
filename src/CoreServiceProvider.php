@@ -2,6 +2,7 @@
 
 namespace Componist\Core;
 
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,20 @@ class CoreServiceProvider extends ServiceProvider
         });
 
         $this->mergeConfigFrom(__DIR__.'/../config/componist.php', 'componist');
+        $this->mergeConfigFrom(__DIR__.'/../config/mail.php', 'componist_mail');
+
+        $this->app->beforeResolving(Markdown::class, function (): void {
+            $mailViews = realpath(__DIR__.'/../resources/views/mail') ?: (__DIR__.'/../resources/views/mail');
+            $paths = array_values(array_filter(array_unique([
+                $mailViews,
+                ...config('mail.markdown.paths', []),
+            ])));
+
+            config([
+                'mail.markdown.theme' => config('componist_mail.theme', 'componist'),
+                'mail.markdown.paths' => $paths,
+            ]);
+        });
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadSeedsFrom(__DIR__.'/../database/seeders');
@@ -67,6 +82,10 @@ class CoreServiceProvider extends ServiceProvider
         //     __DIR__ . '/View/Components/GuestLayout.php' => app_path('View/Components/GuestLayout.php')], 'components.publishes.layouts');
 
         $this->publishes([
+            __DIR__.'/../config/mail.php' => config_path('componist_mail.php'),
+        ], 'componist.core.mail');
+
+        $this->publishes([
             // CSS & Javascript
             __DIR__.'/../resources/css/' => resource_path('css/'),
             __DIR__.'/../resources/js/' => resource_path('js/'),
@@ -78,6 +97,7 @@ class CoreServiceProvider extends ServiceProvider
             // configs
             __DIR__.'/../config/markdownx.php' => config_path('markdownx.php'),
             __DIR__.'/../config/componist.php' => config_path('componist.php'),
+            __DIR__.'/../config/mail.php' => config_path('componist_mail.php'),
         ], 'componist.core.install');
 
         $this->publishes([
