@@ -238,6 +238,16 @@ Dann lautet z. B. der Alias:
 - Blade: `<x-core-layouts-dashboard />`
 - Livewire: `@livewire('core-menu.index')`
 
+### Dark / Light Mode
+
+Einheitlich über Alpine:
+
+1. Im Layout-`<head>`: `@include('component::components.layouts.partials.theme-boot')`
+2. Toggle: `$store.theme.toggle()` / Zustand: `$store.theme.dark`
+3. Persistenz: `localStorage.theme` (`dark`|`light`), Klasse `dark` auf `<html>`
+
+Keine parallelen Theme-Scripts oder `sessionStorage`. Details: Cursor-Rule `.cursor/rules/theming.mdc`.
+
 ### `config/componist_mail.php` (E-Mail-Design)
 
 Einheitliches **Soft-Split**-Layout (linke Teal-Akzentschiene, strukturierte Blöcke) für die ganze App:

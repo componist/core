@@ -7,18 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="format-detection" content="telephone=no">
 
-    <script>
-        (function () {
-            try {
-                var theme = localStorage.getItem('theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
-                    document.documentElement.classList.add('dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
-    <style>[x-cloak]{display:none!important}</style>
+    @include('component::components.layouts.partials.theme-boot')
 
     @stack('meta')
 

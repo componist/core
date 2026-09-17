@@ -41,7 +41,7 @@ src/Http/Middleware/SetSecurityHeaders.php
 ## Konventionen
 
 - UI-Texte: Deutsch
-- Light + Dark (`dark:`) — `class="dark"` auf `<html>`, Toggle in der Topbar
+- Light + Dark (`dark:`) — Steuerung über Alpine `Alpine.store('theme')` (`$store.theme.toggle()` / `$store.theme.dark`); Persistenz `localStorage.theme`; Partial `components/layouts/partials/theme-boot` (FOUC-Boot + Store-Registrierung inkl. Re-Apply nach Livewire `wire:navigate`)
 - Primary: Teal
 - **E-Mails:** Soft Split (linke Teal-Schiene `#14b8a6`, Surface `#f4f5f3`, strukturierte Blöcke); neue Mails nur über Core-Mail-UI (`MailMessage` oder `x:component::mail.shell`) — keine parallelen HTML-Layouts in Feature-Packages
 - **Form-/Button-Styles:** zentral in `Componist\Core\Support\Ui` (`FIELD`, `TEXTAREA`, `LABEL`, `BUTTON_*`, `BUTTON_FAB`, `TAB_*`, `SURFACE`, …). Blade-Primitives unter `components/form/*`, `components/button/*`, `element/search|password|datepicker|…` müssen diese Tokens nutzen – keine abweichenden Radii (`rounded-md`), Focus-Ringe (`ring-teal-500/30`) oder Padding-Werte

@@ -6,18 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <script>
-        (function () {
-            try {
-                var theme = localStorage.getItem('theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
-                    document.documentElement.classList.add('dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
-    <style>[x-cloak]{display:none!important}</style>
+    @include('component::components.layouts.partials.theme-boot')
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{ url('favicon/apple-icon-57x57.png') }}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{ url('favicon/apple-icon-60x60.png') }}">
@@ -52,18 +41,11 @@
 
     <div x-data="{
             sidebarOpen: window.innerWidth >= 1024 && localStorage.getItem('sidebarOpen') !== '0',
-            dark: document.documentElement.classList.contains('dark'),
             toggleSidebar() {
                 this.sidebarOpen = !this.sidebarOpen;
                 if (window.innerWidth >= 1024) {
                     localStorage.setItem('sidebarOpen', this.sidebarOpen ? '1' : '0');
                 }
-            },
-            toggleDark() {
-                this.dark = !this.dark;
-                document.documentElement.classList.toggle('dark', this.dark);
-                localStorage.setItem('theme', this.dark ? 'dark' : 'light');
-                window.dispatchEvent(new CustomEvent('theme-changed', { detail: { dark: this.dark } }));
             }
         }"
         class="flex h-screen overflow-hidden"
@@ -176,14 +158,14 @@
                     <div class="flex items-center gap-1 sm:gap-2">
                         <button
                             type="button"
-                            x-on:click="toggleDark()"
+                            x-on:click="$store.theme.toggle()"
                             class="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl text-slate-600 transition duration-200 hover:bg-slate-100 hover:text-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-teal-400"
                             aria-label="Darstellung umschalten"
                         >
-                            <span x-show="!dark">
+                            <span x-show="! $store.theme.dark">
                                 <x:component::icon.moon class="h-5 w-5" />
                             </span>
-                            <span x-show="dark" x-cloak>
+                            <span x-show="$store.theme.dark" x-cloak>
                                 <x:component::icon.sun class="h-5 w-5" />
                             </span>
                         </button>

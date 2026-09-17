@@ -7,6 +7,8 @@
 
         <title>@yield('title')</title>
 
+        @include('component::components.layouts.partials.theme-boot')
+
         <style>
             :root {
                 color-scheme: light dark;
@@ -15,12 +17,10 @@
                 --error-accent: #14b8a6;
             }
 
-            @media (prefers-color-scheme: dark) {
-                :root {
-                    --error-bg: #0f172a;
-                    --error-fg: #cbd5e1;
-                    --error-accent: #2dd4bf;
-                }
+            html.dark {
+                --error-bg: #0f172a;
+                --error-fg: #cbd5e1;
+                --error-accent: #2dd4bf;
             }
 
             html, body {

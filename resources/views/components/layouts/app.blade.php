@@ -9,17 +9,7 @@
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
 
-    <script>
-        (function () {
-            try {
-                var theme = localStorage.getItem('theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
-                    document.documentElement.classList.add('dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
+    @include('component::components.layouts.partials.theme-boot')
 
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
 
