@@ -45,7 +45,7 @@ src/Http/Middleware/SetSecurityHeaders.php
 - Primary: Teal
 - **E-Mails:** Soft Split (linke Teal-Schiene `#14b8a6`, Surface `#f4f5f3`, strukturierte Blöcke); neue Mails nur über Core-Mail-UI (`MailMessage` oder `x:component::mail.shell`) — keine parallelen HTML-Layouts in Feature-Packages
 - **Form-/Button-Styles:** zentral in `Componist\Core\Support\Ui` (`FIELD`, `TEXTAREA`, `LABEL`, `BUTTON_*`, `BUTTON_FAB`, `TAB_*`, `SURFACE`, …). Blade-Primitives unter `components/form/*`, `components/button/*`, `element/search|password|datepicker|…` müssen diese Tokens nutzen – keine abweichenden Radii (`rounded-md`), Focus-Ringe (`ring-teal-500/30`) oder Padding-Werte
-- Resource-UI: `page.shell` / `page.form` / `button.primary` / `element.confirm-delete`
+- Resource-UI: `page.shell` (`fullWidth` für volle Inhaltsbreite) / `page.form` / `button.primary` / `element.confirm-delete`
 - Menüpunkt-Dialog (`livewire/menu-item/edit`): Header + Beschreibung, Fieldsets mit Hilfetexten, typabhängige Verknüpfungsfelder, Sticky-Footer (`button.secondary` / `button.primary`), Escape/Backdrop schließen
 - Dashboard-Home: Bento-Übersicht (`backend/dashboard`) mit Greeting, echten Route-Shortcuts, Light/Dark und `dash-enter`-Motion (`prefers-reduced-motion` beachten)
 - Dashboard-Chrome: Teal-Marke, Glas-Topbar, Sidebar-Userfuß, Canvas-Glow; Display-Font Sora via `font-display`
