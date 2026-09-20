@@ -102,6 +102,11 @@ class Index extends Component
 
     public function render()
     {
+        // Livewire rehydrates public Eloquent properties by re-fetching from the
+        // database, dropping any eager-loaded relations. Re-loading here on every
+        // render guarantees `children` is available for the recursive tree view.
+        $this->refreshContent();
+
         if ($this->type == 'url') {
             if ($this->slug == null && $this->slug == '' && ! empty($this->title)) {
                 $this->slug = Str::slug($this->title);
