@@ -1,6 +1,9 @@
 <?php
 
 use Componist\Core\Facades\Component;
+use Componist\Core\Models\MenuItem;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 
 if (! function_exists('setting')) {
     function setting($key)
@@ -12,7 +15,7 @@ if (! function_exists('setting')) {
             }
 
             return $result;
-        } catch (\Throwable) {
+        } catch (Throwable) {
             return null;
         }
     }
@@ -22,13 +25,13 @@ if (! function_exists('menu')) {
     /**
      * get menu by name with childrens
      *
-     * @return Component
+     * @return HtmlString|Collection<int, MenuItem>|null
      */
     function menu(string $menuName, ?string $type = null)
     {
         try {
             return Component::model('Menu')->display($menuName, $type);
-        } catch (\Throwable) {
+        } catch (Throwable) {
             return $type === 'array' ? collect() : null;
         }
     }
@@ -48,7 +51,7 @@ if (! function_exists('componist_route_exists')) {
         if ($names === null) {
             try {
                 $names = array_fill_keys(array_keys(app('router')->getRoutes()->getRoutesByName()), true);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $names = [];
             }
         }
@@ -97,7 +100,7 @@ if (! function_exists('componist_menu_requires_post')) {
 
         try {
             $route = app('router')->getRoutes()->getByName($resolved);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return false;
         }
 
@@ -139,6 +142,7 @@ if (! function_exists('componist_menu_href')) {
         }
 
         $url = $item->name ?? null;
+
         return is_string($url) && $url !== '' ? url($url) : null;
     }
 }

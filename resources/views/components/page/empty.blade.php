@@ -10,4 +10,9 @@
             {{ $description ?? $slot }}
         </p>
     @endif
+    @isset($actions)
+        <div class="mt-4 flex items-center justify-center gap-3">
+            {{ $actions }}
+        </div>
+    @endisset
 </div>

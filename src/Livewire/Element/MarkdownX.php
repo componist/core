@@ -61,7 +61,7 @@ class MarkdownX extends Component
     {
         $content = $data['content'];
         $this->content = $content;
-        $this->emitUp('markdown-x:update', $this->content);
+        $this->dispatch('markdown-x:update', $this->content);
     }
 
     /**
@@ -70,7 +70,7 @@ class MarkdownX extends Component
      */
     public function updatedContent()
     {
-        $this->emitUp('markdown-x:update', $this->content);
+        $this->dispatch('markdown-x:update', $this->content);
     }
 
     /**
@@ -96,7 +96,7 @@ class MarkdownX extends Component
      *      text: "![" + file.name + "](Uploading...)"
      * }
      *
-     * @param  array  $payload
+     * @param  mixed  $payload
      * @return void
      */
     public function upload($payload)

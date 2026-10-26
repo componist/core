@@ -54,5 +54,20 @@ final class Ui
 
     public const CHIP = 'inline-flex items-center gap-1.5 rounded-full bg-teal-500 px-3 py-1 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-teal-600';
 
+    /**
+     * Status-/Kategorie-Pills. Basis-Layout + eine Farbvariante pro Bedeutung (neutral/Marke/Warnung/Erfolg/Fehler).
+     */
+    public const BADGE = 'inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium';
+
+    public const BADGE_SLATE = self::BADGE.' bg-slate-100 text-slate-700 dark:bg-slate-500/15 dark:text-slate-300';
+
+    public const BADGE_TEAL = self::BADGE.' bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300';
+
+    public const BADGE_AMBER = self::BADGE.' bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300';
+
+    public const BADGE_GREEN = self::BADGE.' bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-300';
+
+    public const BADGE_RED = self::BADGE.' bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300';
+
     private function __construct() {}
 }

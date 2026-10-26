@@ -10,18 +10,6 @@ class MessageNotification extends Notification
 {
     use Queueable;
 
-    private $params = null;
-
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct(?array $params = null)
-    {
-        $this->params = $params;
-    }
-
     /**
      * Get the notification's delivery channels.
      *
@@ -37,7 +25,7 @@ class MessageNotification extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {

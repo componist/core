@@ -5,16 +5,18 @@ namespace Componist\Core\Livewire\MenuItem;
 use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Componist\Core\View\Components\DashboardLayout;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Menu Item')]
-#[Layout(\Componist\Core\View\Components\DashboardLayout::class)]
+#[Layout(DashboardLayout::class)]
 class Index extends Component
 {
     use addLivewireControlleFunctions;
@@ -108,20 +110,20 @@ class Index extends Component
         $this->refreshContent();
 
         if ($this->type == 'url') {
-            if ($this->slug == null && $this->slug == '' && ! empty($this->title)) {
+            if (($this->slug ?? '') === '' && ! empty($this->title)) {
                 $this->slug = Str::slug($this->title);
             }
         }
 
         if ($this->type == 'page') {
 
-            if ($this->slug == null && $this->slug == '' && ! empty($this->title)) {
+            if (($this->slug ?? '') === '' && ! empty($this->title)) {
 
-                if ($this->view_path == null && $this->view_path == '') {
+                if (($this->view_path ?? '') === '') {
                     $this->view_path = 'page.'.Str::slug($this->title);
                 }
 
-                if ($this->name == null && $this->name == '') {
+                if (($this->name ?? '') === '') {
                     $this->name = $this->view_path;
                 }
             } else {
@@ -268,7 +270,7 @@ class Index extends Component
         $case = $rows->map(fn ($r) => 'WHEN '.$r['id'].' THEN '.$r['order'])->implode(' ');
 
         MenuItem::whereIn('id', $ids)->update([
-            'order' => \Illuminate\Support\Facades\DB::raw('CASE id '.$case.' END'),
+            'order' => DB::raw('CASE id '.$case.' END'),
         ]);
 
         $this->refreshContent();
@@ -294,7 +296,7 @@ class Index extends Component
             return;
         }
 
-        \Illuminate\Support\Facades\DB::transaction(function () use ($updates): void {
+        DB::transaction(function () use ($updates): void {
             foreach ($updates as $u) {
                 MenuItem::where('id', $u['id'])
                     ->where('parent_id', $u['parent_id'])
@@ -329,7 +331,7 @@ class Index extends Component
         }
 
         $temp = MenuItem::findOrFail($id);
-        $temp->$field = ! $temp->$field;
+        $temp->$field = $temp->$field ? 0 : 1;
         $temp->save();
 
         if ($temp['type'] == 'page') {

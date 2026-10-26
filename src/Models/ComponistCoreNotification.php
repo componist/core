@@ -6,8 +6,20 @@ use App\Models\User;
 use Componist\Core\Notifications\ComponistCoreNotification\MessageNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property int $read
+ * @property Carbon|null $read_at
+ * @property string|null $title
+ * @property string|null $message
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ */
 class ComponistCoreNotification extends Model
 {
     use HasFactory;
@@ -15,7 +27,7 @@ class ComponistCoreNotification extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var list<string>
      */
     protected $fillable = [
         'user_id',
@@ -43,20 +55,18 @@ class ComponistCoreNotification extends Model
         }
 
         if (is_int($userId)) {
-
-            if ($result = self::create([
+            $result = self::create([
                 'user_id' => $userId,
                 'title' => trim($title),
                 'message' => trim($message),
                 'created_at' => date('Y-m-d H:i:s'),
-            ])) {
-                if ($user) {
+            ]);
 
-                    Notification::send($user, new MessageNotification);
-                }
-
-                return $result;
+            if ($user) {
+                Notification::send($user, new MessageNotification);
             }
+
+            return $result;
         }
 
         return null;

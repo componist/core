@@ -5,13 +5,31 @@ namespace Componist\Core\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property int $id
+ * @property int $menu_id
+ * @property string $title
+ * @property string|null $icon
+ * @property string $type
+ * @property string $target
+ * @property int|null $parent_id
+ * @property int|null $page_id
+ * @property int|null $order
+ * @property string|null $name
+ * @property string|null $slug
+ * @property int $status
+ * @property string|null $view_path
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
 class MenuItem extends Model
 {
     use HasFactory;
 
     /**
-     * @return HasMany<MenuItem>
+     * @return HasMany<MenuItem, $this>
      */
     public function children(): HasMany
     {
