@@ -33,4 +33,12 @@ class CoreHelpersTest extends TestCase
 
         $this->assertSame(' <div> Hallo Welt </div> ', HTML_Minifier($input));
     }
+
+    public function test_helpers_do_not_define_a_global_test_function(): void
+    {
+        $helpers = (string) file_get_contents(__DIR__.'/../../src/Helpers/helpers.php');
+
+        // Pest's global test() must not be shadowed in host apps.
+        $this->assertStringNotContainsString("function_exists('test')", $helpers);
+    }
 }

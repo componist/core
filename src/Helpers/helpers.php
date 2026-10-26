@@ -158,10 +158,3 @@ if (! function_exists('HTML_Minifier')) {
         return $string;
     }
 }
-
-if (! function_exists('test')) {
-    function test($text)
-    {
-        return $text;
-    }
-}
