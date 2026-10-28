@@ -6,6 +6,8 @@ use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
 use Componist\Core\Traits\addLivewireControlleFunctions;
 use Componist\Core\View\Components\DashboardLayout;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -21,15 +23,19 @@ class Index extends Component
 {
     use addLivewireControlleFunctions;
 
+    /** @var array<string, string> */
     protected $listeners = [
         'menuItemIconSelected' => 'menuItemIconSelected',
     ];
 
+    /** @var array<int, mixed> */
     public array $listOrder = [];
 
-    public $menu;
+    /** @var array<string, mixed> */
+    public array $menu = [];
 
-    public $content;
+    /** @var Collection<int, MenuItem>|null */
+    public ?Collection $content = null;
 
     /**
      * Flat list of MenuItems for the "parent_id" select.
@@ -67,7 +73,8 @@ class Index extends Component
 
     public ?string $view_path = null;
 
-    protected $rules = [
+    /** @var array<string, string|list<string>> */
+    protected array $rules = [
         'title' => 'required|min:3',
         'icon' => 'nullable|string|max:255',
         'type' => 'required|string|max:255',
@@ -102,7 +109,7 @@ class Index extends Component
         $this->refreshParentOptions();
     }
 
-    public function render()
+    public function render(): View
     {
         // Livewire rehydrates public Eloquent properties by re-fetching from the
         // database, dropping any eager-loaded relations. Re-loading here on every
@@ -190,7 +197,7 @@ class Index extends Component
 
         if (! empty($this->editId)) {
             // update
-            $query = MenuItem::find($this->editId);
+            $query = MenuItem::findOrFail($this->editId);
         } else {
             // create
             $query = new MenuItem;
@@ -254,7 +261,10 @@ class Index extends Component
         $this->refreshParentOptions();
     }
 
-    public function reorder($orderedIds): void
+    /**
+     * @param  array<int, array{value?: int|string, order?: int|string}>  $orderedIds
+     */
+    public function reorder(array $orderedIds): void
     {
         $this->authorizeManage();
         $rows = collect($orderedIds)
@@ -266,22 +276,24 @@ class Index extends Component
             return;
         }
 
-        $ids = $rows->pluck('id')->all();
-        $case = $rows->map(fn ($r) => 'WHEN '.$r['id'].' THEN '.$r['order'])->implode(' ');
-
-        MenuItem::whereIn('id', $ids)->update([
-            'order' => DB::raw('CASE id '.$case.' END'),
-        ]);
+        DB::transaction(function () use ($rows): void {
+            foreach ($rows as $row) {
+                MenuItem::whereKey($row['id'])->update(['order' => $row['order']]);
+            }
+        });
 
         $this->refreshContent();
         $this->refreshParentOptions();
     }
 
-    public function reorderChildes($orderedIds)
+    /**
+     * @param  array<int, array{value?: int|string, items?: array<int, array{value?: int|string, order?: int|string}>}>  $orderedIds
+     */
+    public function reorderChildes(array $orderedIds): void
     {
         $this->authorizeManage();
         $updates = [];
-        foreach ((array) $orderedIds as $element) {
+        foreach ($orderedIds as $element) {
             $parentId = isset($element['value']) ? (int) $element['value'] : null;
             $items = $element['items'] ?? [];
             foreach ((array) $items as $item) {
@@ -341,9 +353,9 @@ class Index extends Component
         $this->refreshParentOptions();
     }
 
-    public function menuItemIconSelected($value = null): void
+    public function menuItemIconSelected(?string $value = null): void
     {
-        $this->icon = ! empty($value) ? (string) $value : null;
+        $this->icon = ! empty($value) ? $value : null;
     }
 
     private function authorizeManage(): void

@@ -3,6 +3,7 @@
 namespace Componist\Core\View\Components\Element;
 
 use Closure;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class DropFile extends Component
@@ -20,7 +21,7 @@ class DropFile extends Component
      *
      * @return void
      */
-    public function __construct(string $name, bool $multiple = false, $title = null)
+    public function __construct(string $name, bool $multiple = false, ?string $title = null)
     {
         $this->id = uniqid();
         $this->name = $name;
@@ -31,7 +32,7 @@ class DropFile extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|Closure|string
+     * @return View|Closure|string
      */
     public function render()
     {

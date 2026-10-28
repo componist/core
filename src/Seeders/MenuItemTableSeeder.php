@@ -52,7 +52,7 @@ class MenuItemTableSeeder extends Seeder
 
     }
 
-    protected function findRoute($key)
+    protected function findRoute(string $key): MenuItem
     {
         return MenuItem::firstOrNew(['name' => $key]);
     }

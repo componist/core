@@ -4,6 +4,8 @@ namespace Componist\Core\Livewire\Notification;
 
 use Componist\Core\Models\ComponistCoreNotification;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Componist\Core\View\Components\DashboardLayout;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -11,7 +13,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Title('Notification')]
-#[Layout(\Componist\Core\View\Components\DashboardLayout::class)]
+#[Layout(DashboardLayout::class)]
 class Notification extends Component
 {
     use addLivewireControlleFunctions;
@@ -19,7 +21,7 @@ class Notification extends Component
 
     public ?string $search = null;
 
-    public function render()
+    public function render(): View
     {
         $content = ComponistCoreNotification::where('user_id', Auth::id())
             ->where('title', 'LIKE', '%'.trim($this->search).'%')

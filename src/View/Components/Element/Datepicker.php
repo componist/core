@@ -3,11 +3,12 @@
 namespace Componist\Core\View\Components\Element;
 
 use Closure;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Datepicker extends Component
 {
-    public $model;
+    public ?string $model;
 
     /**
      * Create a new component instance.
@@ -22,7 +23,7 @@ class Datepicker extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|Closure|string
+     * @return View|Closure|string
      */
     public function render()
     {

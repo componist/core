@@ -4,13 +4,15 @@ namespace Componist\Core\Livewire\Setting;
 
 use Componist\Core\Models\Setting;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Componist\Core\View\Components\DashboardLayout;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Settings')]
-#[Layout(\Componist\Core\View\Components\DashboardLayout::class)]
+#[Layout(DashboardLayout::class)]
 class Index extends Component
 {
     use addLivewireControlleFunctions;
@@ -27,16 +29,19 @@ class Index extends Component
     /** @var string|null */
     public $group = null;
 
-    public $content;
+    /** @var array<string, array<int, array<string, mixed>>> */
+    public array $content = [];
 
-    protected $rules = [
+    /** @var array<string, string> */
+    protected array $rules = [
         'display_name' => 'required|unique:settings|string|max:50',
         'key' => 'required|unique:settings|string|max:50',
         'type' => 'required|string|max:25',
         'group' => 'required|string|max:25',
     ];
 
-    protected $validationAttributes = [
+    /** @var array<string, string> */
+    protected array $validationAttributes = [
         'display_name' => 'Name',
         'key' => 'Key',
         'type' => 'Type',
@@ -49,7 +54,7 @@ class Index extends Component
         $this->refreshContent();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('component::livewire.setting.index');
     }

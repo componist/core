@@ -123,14 +123,14 @@ class CoreServiceProvider extends ServiceProvider
         $this->bootLivewireComponents();
     }
 
-    private function bootBladeComponents()
+    private function bootBladeComponents(): void
     {
         foreach (config('componist.components', []) as $alias => $component) {
             Blade::component(config('componist.prefix').$alias, $component);
         }
     }
 
-    private function bootLivewireComponents()
+    private function bootLivewireComponents(): void
     {
         foreach (config('componist.livewire', []) as $alias => $component) {
             Livewire::component(config('componist.prefix').$alias, $component);

@@ -3,11 +3,12 @@
 namespace Componist\Core\Livewire\Notification;
 
 use Componist\Core\Models\ComponistCoreNotification;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class ComponistCoreNotificationBell extends Component
 {
-    public function render()
+    public function render(): View
     {
         $content = ComponistCoreNotification::where('user_id', auth()->user()->id)->where('read', 0)->count();
 

@@ -2,6 +2,7 @@
 
 namespace Componist\Core\Livewire\Element;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Livewire\Component;
@@ -18,6 +19,7 @@ class Select2 extends Component
 
     public string $order = '';
 
+    /** @var array<int, array<string, mixed>> */
     public array $list = [];
 
     /** @var int|string|null */
@@ -34,13 +36,13 @@ class Select2 extends Component
     /**
      * @param  array<int, string>|null  $items
      */
-    public function mount(string $table, string $event, string $column, string $order, ?string $filter = null, $selected = null, bool $add_function = false, $key = null, ?array $items = null): void
+    public function mount(string $table, string $event, string $column, string $order, ?string $filter = null, int|string|null $selected = null, bool $add_function = false, ?string $key = null, ?array $items = null): void
     {
         $this->table = $table;
         $this->event = $event;
         $this->column = $column;
         $this->order = $order;
-        $this->filter = $filter;
+        $this->filter = $filter ?? '';
         $this->selected = $selected;
         $this->add_function = $add_function;
         $this->key = $key;
@@ -71,7 +73,7 @@ class Select2 extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('component::livewire.element.select2');
     }
@@ -105,6 +107,7 @@ class Select2 extends Component
             } else {
                 $this->clearSearch();
             }
+
             return;
         }
 
@@ -179,6 +182,7 @@ class Select2 extends Component
             if (! empty($this->table)) {
                 $this->getDatabaseList();
             }
+
             return;
         }
 
@@ -186,8 +190,10 @@ class Select2 extends Component
             $search = mb_strtolower($this->search);
             $this->list = array_values(array_filter($this->list, function (array $row) use ($search) {
                 $value = (string) ($row['name'] ?? '');
+
                 return str_contains(mb_strtolower($value), $search);
             }));
+
             return;
         }
 

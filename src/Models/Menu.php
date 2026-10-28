@@ -2,6 +2,7 @@
 
 namespace Componist\Core\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,6 +18,7 @@ use Illuminate\Support\HtmlString;
  */
 class Menu extends Model
 {
+    /** @use HasFactory<Factory<static>> */
     use HasFactory;
 
     /**

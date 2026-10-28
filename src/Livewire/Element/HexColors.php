@@ -2,12 +2,14 @@
 
 namespace Componist\Core\Livewire\Element;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class HexColors extends Component
 {
     public string $event = 'hexColor';
 
+    /** @var array<string, list<string>> */
     public array $colorListe = [];
 
     public ?string $selectedColor = null;
@@ -29,7 +31,7 @@ class HexColors extends Component
         $this->colorListe = $this->colorsList();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('component::livewire.element.hex-colors');
     }
@@ -40,6 +42,9 @@ class HexColors extends Component
         $this->dispatch($this->event, $color, $this->rowId);
     }
 
+    /**
+     * @return array<string, list<string>>
+     */
     private function colorsList(): array
     {
         // tailwindcss color

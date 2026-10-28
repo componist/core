@@ -6,13 +6,15 @@ use Componist\Core\Application\MenuService;
 use Componist\Core\Domain\MenuRules;
 use Componist\Core\Models\Menu;
 use Componist\Core\Traits\addLivewireControlleFunctions;
+use Componist\Core\View\Components\DashboardLayout;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Menus')]
-#[Layout(\Componist\Core\View\Components\DashboardLayout::class)]
+#[Layout(DashboardLayout::class)]
 class Index extends Component
 {
     use addLivewireControlleFunctions;
@@ -28,7 +30,7 @@ class Index extends Component
         $this->authorizeManage();
     }
 
-    public function render()
+    public function render(): View
     {
         $content = Menu::all();
 

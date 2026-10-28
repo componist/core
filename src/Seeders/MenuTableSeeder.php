@@ -51,7 +51,7 @@ class MenuTableSeeder extends Seeder
         }
     }
 
-    protected function findName($key)
+    protected function findName(string $key): Menu
     {
         return Menu::firstOrNew(['name' => $key]);
     }

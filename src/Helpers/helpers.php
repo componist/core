@@ -1,12 +1,13 @@
 <?php
 
 use Componist\Core\Facades\Component;
+use Componist\Core\Models\Menu;
 use Componist\Core\Models\MenuItem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 
 if (! function_exists('setting')) {
-    function setting($key)
+    function setting(string $key): mixed
     {
         try {
             $result = Component::setting($key);
@@ -30,7 +31,7 @@ if (! function_exists('menu')) {
     function menu(string $menuName, ?string $type = null)
     {
         try {
-            return Component::model('Menu')->display($menuName, $type);
+            return app(Menu::class)->display($menuName, $type);
         } catch (Throwable) {
             return $type === 'array' ? collect() : null;
         }
@@ -118,7 +119,7 @@ if (! function_exists('componist_menu_href')) {
     /**
      * Resolve a MenuItem href with minimal overhead.
      */
-    function componist_menu_href($item): ?string
+    function componist_menu_href(?object $item): ?string
     {
         if (! $item) {
             return null;
@@ -148,13 +149,8 @@ if (! function_exists('componist_menu_href')) {
 }
 
 if (! function_exists('HTML_Minifier')) {
-    function HTML_Minifier($string)
+    function HTML_Minifier(string $string): string
     {
-        $string = preg_replace('/\s+/', ' ', $string);
-        $string = preg_replace('/\t+/', '', $string);
-        $string = preg_replace('/\r+/', '', $string);
-        $string = preg_replace('/\n+/', '', $string);
-
-        return $string;
+        return preg_replace('/\s+/', ' ', $string) ?? $string;
     }
 }

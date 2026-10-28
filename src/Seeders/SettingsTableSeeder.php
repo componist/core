@@ -39,7 +39,7 @@ class SettingsTableSeeder extends Seeder
         }
     }
 
-    protected function findSetting(string $key): object
+    protected function findSetting(string $key): Setting
     {
         return Setting::firstOrNew(['key' => $key]);
     }

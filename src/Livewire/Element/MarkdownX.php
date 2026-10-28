@@ -3,6 +3,8 @@
 namespace Componist\Core\Livewire\Element;
 
 use Exception;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -10,22 +12,25 @@ use Livewire\Component;
 
 class MarkdownX extends Component
 {
-    public $content;
+    public string $content = '';
 
-    public $contentPreview;
+    public string $contentPreview = '';
 
-    public $name;
+    public string $name = '';
 
-    public $key;
+    public string $key = '';
 
-    public $style;
+    /** @var array<string, string>|null */
+    public ?array $style = null;
 
-    public $section = 'write';
+    public string $section = 'write';
 
     /**
      * Laravel livewire listeners, learn more at https://laravel-livewire.com/docs/events#event-listeners
      *
      * 'markdown-x-image-upload' => uploads image files from the editor
+     *
+     * @var array<string, string>
      */
     protected $listeners = [
         'markdown-x-image-upload' => 'upload',
@@ -37,15 +42,10 @@ class MarkdownX extends Component
      * Mount the MarkdownX component, you can pass the current content, the name for the textarea field,
      * and a generic Key. This key can be specified so that way you can include multiple MarkdownX
      * editors in a single page.
-     *
-     * @param  string  $content
-     * @param  string  $name
-     * @param  string  $key
-     * @return void
      */
-    public function mount($content = '', $name = '', $key = '')
+    public function mount(?string $content = '', string $name = '', string $key = ''): void
     {
-        $this->content = $content;
+        $this->content = $content ?? '';
         $this->name = $name;
         $this->key = $key;
         $this->updateContentPreview();
@@ -55,9 +55,9 @@ class MarkdownX extends Component
      * Anytime the editor is blurred, this function will be triggered and it will updated the $content,
      * this will also emit an event to the parent component with the updated content.
      *
-     * @param  array  $data
+     * @param  array{content: string}  $data
      */
-    public function update($data)
+    public function update(array $data): void
     {
         $content = $data['content'];
         $this->content = $content;
@@ -68,7 +68,7 @@ class MarkdownX extends Component
      * When the content changes this function will fire an event with the updatedPmark
      * content is being emitted to the parent component.
      */
-    public function updatedContent()
+    public function updatedContent(): void
     {
         $this->dispatch('markdown-x:update', $this->content);
     }
@@ -81,7 +81,7 @@ class MarkdownX extends Component
      * only function that will/can be changed when you upgrade to the latest version of the
      * MarkdownX editor.
      */
-    public function updateContentPreview()
+    public function updateContentPreview(): void
     {
         $this->contentPreview = Str::markdown($this->content);
     }
@@ -113,7 +113,11 @@ class MarkdownX extends Component
         try {
             $original_filename = pathinfo($payload->name, PATHINFO_FILENAME);
             $filename = $original_filename;
-            $extension = explode('/', mime_content_type($payload->image))[1];
+            $mimeType = mime_content_type($payload->image);
+            if ($mimeType === false) {
+                throw new Exception('Unknown mime type.');
+            }
+            $extension = explode('/', $mimeType)[1];
             $filename_counter = 1;
 
             // Make sure the filename does not exist, if it does make sure to add a number to the end 1, 2, 3, etc...
@@ -176,22 +180,18 @@ class MarkdownX extends Component
         }
     }
 
-    public function getGiphyImages($payload)
+    /**
+     * @param  array{key: string}  $payload
+     */
+    public function getGiphyImages(array $payload): void
     {
-        $api_key = config('markdownx.integrations.giphy.api_key');
-
-        $response = Http::timeout(10)->get('https://api.giphy.com/v1/gifs/trending', [
-            'api_key' => $api_key,
-            'limit' => 30,
-            'rating' => 'pg',
-        ]);
-
-        if ($response->ok()) {
-            $this->sendResultsToView($response, $api_key);
-        }
+        $this->getGiphyTrendingImages($payload);
     }
 
-    public function getGiphyTrendingImages($payload)
+    /**
+     * @param  array{key: string}  $payload
+     */
+    public function getGiphyTrendingImages(array $payload): void
     {
         $api_key = config('markdownx.integrations.giphy.api_key');
 
@@ -206,7 +206,10 @@ class MarkdownX extends Component
         }
     }
 
-    public function getGiphySearchImages($payload)
+    /**
+     * @param  array{key: string, search: string}  $payload
+     */
+    public function getGiphySearchImages(array $payload): void
     {
         $api_key = config('markdownx.integrations.giphy.api_key');
 
@@ -222,7 +225,7 @@ class MarkdownX extends Component
         }
     }
 
-    public function sendResultsToView($response, $key)
+    protected function sendResultsToView(Response $response, string $key): void
     {
         $parse_giphy_results = [];
         foreach ($response->json()['data'] as $result) {
@@ -246,7 +249,7 @@ class MarkdownX extends Component
     /**
      * Render the markdown-x view. Hazah!
      */
-    public function render()
+    public function render(): View
     {
         return view('component::livewire.element.markdown-x');
     }

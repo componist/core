@@ -2,9 +2,11 @@
 
 namespace Componist\Core\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -26,6 +28,7 @@ use Illuminate\Support\Carbon;
  */
 class MenuItem extends Model
 {
+    /** @use HasFactory<Factory<static>> */
     use HasFactory;
 
     /**
@@ -37,12 +40,15 @@ class MenuItem extends Model
             ->with('children');
     }
 
-    public function parent_title()
+    public function parent_title(): ?string
     {
         return $this->hasOne(MenuItem::class, 'id', 'parent_id')->value('title');
     }
 
-    public function page()
+    /**
+     * @return HasOne<Page, $this>
+     */
+    public function page(): HasOne
     {
         return $this->hasOne(Page::class, 'id', 'page_id');
     }
@@ -54,7 +60,11 @@ class MenuItem extends Model
             foreach ($pages as $page) {
                 $liste .= "'".$page['slug']."'".' => '."'".$page['view_path']."',\r\n\t";
             }
-            $stub = file_get_contents(__DIR__.'../../../stubs/settings/pages.stub');
+            $stub = file_get_contents(dirname(__DIR__, 2).'/stubs/settings/pages.stub');
+
+            if ($stub === false) {
+                return false;
+            }
 
             $content = str_replace('[array]', $liste, $stub);
 
@@ -76,7 +86,7 @@ class MenuItem extends Model
 
         $countExplodes = count($explode) - 1;
 
-        $view_path = __DIR__.'../../../../../../resources/views';
+        $view_path = resource_path('views');
 
         foreach ($explode as $key => $path) {
 
@@ -87,10 +97,9 @@ class MenuItem extends Model
                 $file = $view_path.'.blade.php';
 
                 if (! file_exists($file)) {
-                    $stub = file_get_contents(__DIR__.'../../../stubs/view/page.stub');
-                    file_put_contents($file, $stub);
+                    $stub = file_get_contents(dirname(__DIR__, 2).'/stubs/view/page.stub');
 
-                    return true;
+                    return $stub !== false && file_put_contents($file, $stub) !== false;
                 }
             } else {
                 // folder

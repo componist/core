@@ -2,6 +2,8 @@
 
 namespace Componist\Core\Traits;
 
+use Illuminate\Http\RedirectResponse;
+
 trait addLivewireControlleFunctions
 {
     public function updatingSearch(): void
@@ -50,7 +52,7 @@ trait addLivewireControlleFunctions
         $this->dispatch('banner-message', style: $style, message: $message, duration: $durationMs);
     }
 
-    public function storeAndIndex()
+    public function storeAndIndex(): RedirectResponse
     {
         $this->store();
         $this->flashMessage('success', 'Eintrag wurde erfolgreich erstellt');
@@ -58,7 +60,7 @@ trait addLivewireControlleFunctions
         return redirect()->route($this->routeIndex);
     }
 
-    public function storeAndNew()
+    public function storeAndNew(): RedirectResponse
     {
         $this->store();
         $this->flashMessage('success', 'Eintrag wurde erfolgreich erstellt');
@@ -66,7 +68,7 @@ trait addLivewireControlleFunctions
         return redirect()->route($this->isRoute);
     }
 
-    public function updateAndIndex()
+    public function updateAndIndex(): RedirectResponse
     {
         $this->update();
         $this->flashMessage('success', 'Eintrag wurde erfolgreich aktualisiert');
@@ -74,7 +76,7 @@ trait addLivewireControlleFunctions
         return redirect()->route($this->routeIndex);
     }
 
-    public function updateAndNew()
+    public function updateAndNew(): RedirectResponse
     {
         $this->update();
         $this->flashMessage('success', 'Eintrag wurde erfolgreich aktualisiert');
@@ -82,7 +84,7 @@ trait addLivewireControlleFunctions
         return redirect()->route($this->isRoute);
     }
 
-    public function cancel()
+    public function cancel(): RedirectResponse
     {
         return redirect()->route($this->routeIndex);
     }
